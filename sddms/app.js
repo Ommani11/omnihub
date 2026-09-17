@@ -2,10 +2,10 @@ const REAL_CAR = [
   {
     id: "r1",
     letter: "R",
-    title: "Regulated by the FCA",
+    title: "Regulated by the Financial Conduct Authority",
     say: "We're authorised and regulated by the Financial Conduct Authority.",
     detail:
-      "Eastern Western Motor Group Ltd is authorised and regulated by the FCA. FRN 310505. Eastern Motor Company Ltd (FRN 565317) and Western Automobile Company Ltd (FRN 565318) are appointed representatives of the Group.",
+      "Eastern Western Motor Group Ltd is authorised and regulated by the Finacial Conduct Authority. FRN 310505. Eastern Motor Company Ltd (FRN 565317) and Western Automobile Company Ltd (FRN 565318) are appointed representatives of the Group.",
     tone: "navy",
   },
   {

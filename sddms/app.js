@@ -269,7 +269,7 @@ function watchPanel() {
       </div>
       <a class="link" href="https://youtu.be/Nb1ceL0uGDM" target="_blank" rel="noreferrer">Open on YouTube</a>
       <h3>Framework guide</h3>
-      <img src="./real-car-guide.png" alt="SDD Made Simple: Mastering the REAL CAR compliance framework" />
+      <img src="/sddms/real-car-guide.png" alt="SDD Made Simple: Mastering the REAL CAR compliance framework" />
     </section>`;
 }
 
@@ -283,7 +283,7 @@ function sddPanel() {
           <h2>Status Disclosure Document</h2>
           <p class="muted">EWMG – GSDDNA – V11 – 06.07.2026</p>
         </div>
-        <a class="btn navy" href="./sdd.pdf" download>Download PDF</a>
+        <a class="btn navy" href="/sddms/sdd.pdf" download>Download PDF</a>
       </div>
       <article class="doc">
         <p>The Financial Conduct Authority is the independent watchdog that regulates financial services. It requires us to give you this document to help you decide if our services are right for you.</p>

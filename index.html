@@ -11,7 +11,6 @@
   <style>
     :root {
       --bg: #0b0d10;
-      --bg-2: #12161c;
       --card: #171c24;
       --line: rgba(255,255,255,0.08);
       --text: #eef2f6;
@@ -75,7 +74,7 @@
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
       gap: 16px;
     }
-    .card {
+    a.card {
       background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent),
                   var(--card);
       border: 1px solid var(--line);
@@ -83,7 +82,11 @@
       padding: 20px;
       min-height: 180px;
       display: flex; flex-direction: column;
+      color: inherit;
+      text-decoration: none;
     }
+    a.card:hover { border-color: rgba(126,224,198,0.35); }
+    .card.muted { opacity: 0.7; pointer-events: none; }
     .card h2 { font-size: 18px; margin-bottom: 8px; }
     .card p { color: var(--muted); font-size: 14px; flex: 1; }
     .status {
@@ -118,26 +121,21 @@
     </section>
 
     <section class="grid">
-      <article class="card">
-        <h2>Landing</h2>
-        <p>This page. The index for everything that follows.</p>
-        <div class="status">live</div>
-      </article>
-      <article class="card">
-        <h2>Tool 01</h2>
-        <p>Next small app will land here. Swap this card when it ships.</p>
-        <div class="status soon">coming soon</div>
-      </article>
-      <article class="card">
+      <a class="card" href="/sddms">
+        <h2>SDD made simple</h2>
+        <p>First tool under the umbrella. Open directly at /sddms.</p>
+        <div class="status">/sddms</div>
+      </a>
+      <a class="card muted" href="#">
         <h2>Tool 02</h2>
-        <p>Placeholder for another work utility in the same family.</p>
+        <p>Next utility gets its own folder and path the same way.</p>
         <div class="status soon">coming soon</div>
-      </article>
-      <article class="card">
+      </a>
+      <a class="card muted" href="#">
         <h2>Tool 03</h2>
-        <p>Room to grow. Add cards as each tool gets its own route or repo link.</p>
+        <p>Add a directory, drop an index.html, link a card.</p>
         <div class="status soon">coming soon</div>
-      </article>
+      </a>
     </section>
 
     <footer>

@@ -219,6 +219,25 @@ function letterPanel() {
   const covered = state.checked.includes(item.id);
   return `
     <section class="stack">
+      <div>
+        <p class="kicker">Before you begin</p>
+        <h2>A briefing, not a form</h2>
+        <p class="muted" style="max-width:58ch;margin-top:8px">Cover the points so the customer understands them. When you know them well enough to say them plainly, that calm reads as confidence — and confidence is catching.</p>
+      </div>
+      <div class="intro">
+        <div>
+          <p class="intro-label">Why it comes first</p>
+          <p>The Status Disclosure Document is required before any meaningful discussion of regulated finance or insurance. It is how we set out our role, our limits, and how we are paid — so the customer can decide, with a clear picture, whether to continue.</p>
+        </div>
+        <div>
+          <p class="intro-label">What is at stake</p>
+          <p>If that briefing is missed, rushed, or read as a form, everything that follows sits on weak ground. That is a regulatory failure. It is also a poor start: people notice when something important is treated as a hurdle rather than a conversation.</p>
+        </div>
+        <div>
+          <p class="intro-label">How to use this</p>
+          <p>REAL CAR is a memory aid, not a script. Work the seven points until they sit in ordinary language. When you are sure of the ground, the customer can hear it as plain and fair. Certainty in the briefing is what allows trust in the relationship.</p>
+        </div>
+      </div>
       <div class="row-between">
         <h2>The mnemonic</h2>
         <p class="kicker">${state.step + 1} / ${REAL_CAR.length}</p>

@@ -55,6 +55,15 @@ main { max-width: 1080px; margin: 0 auto; padding: 32px 20px 80px; }
 .btn.navy { background: var(--navy); color: var(--paper); }
 .btn.ghost { background: transparent; color: var(--paper); border: 1px solid color-mix(in oklab, white 20%, transparent); }
 .btn:disabled { opacity: 0.4; }
+.intro { overflow: hidden; border: 1px solid var(--line); border-radius: 18px; }
+.intro > div { display: grid; gap: 4px; padding: 16px 20px; border-bottom: 1px solid var(--line); }
+.intro > div:last-child { border-bottom: 0; }
+.intro > div:nth-child(even) { background: color-mix(in oklab, var(--paper-2) 70%, transparent); }
+.intro-label { font-size: 14px; font-weight: 600; color: var(--navy); }
+.intro p { font-size: 14px; line-height: 1.55; }
+@media (min-width: 640px) {
+  .intro > div { grid-template-columns: 12rem 1fr; gap: 24px; align-items: start; }
+}
 .foundations { display: grid; gap: 12px; }
 @media (min-width: 720px) { .foundations { grid-template-columns: 1fr 1fr 1fr; } }
 .foundations article { background: color-mix(in oklab, var(--paper-2) 60%, transparent); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }

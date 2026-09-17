@@ -42,7 +42,7 @@ main { max-width: 1080px; margin: 0 auto; padding: 32px 20px 80px; }
 .tile.on { opacity: 1; outline: 2px solid var(--ink); outline-offset: 2px; }
 .navy { background: var(--navy); color: var(--paper); }
 .mid { background: #1e4d7a; color: var(--paper); }
-.steel { background: var(--steel); color: var(--navy-deep); }
+.steel { background: var(--steel); color: var(--navy-deep); padding:2px; }
 .pale { background: var(--mist); color: var(--navy); }
 .panel { background: var(--navy-deep); color: var(--paper); border-radius: 18px; padding: 24px; }
 .panel h3 { font-size: 1.8rem; margin: 8px 0 12px; }

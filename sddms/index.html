@@ -4,80 +4,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>SDD made simple — OmniHub</title>
-  <meta name="description" content="SDD made simple: a focused tool under OmniHub." />
+  <meta name="theme-color" content="#143665" />
+  <meta name="description" content="REAL CAR training and reference for presenting the Eastern Western Motor Group Status Disclosure Document." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #0b0d10;
-      --card: #171c24;
-      --line: rgba(255,255,255,0.08);
-      --text: #eef2f6;
-      --muted: #9aa6b4;
-      --accent: #7ee0c6;
-      --accent-2: #8ab4ff;
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: "Instrument Sans", system-ui, sans-serif;
-      background:
-        radial-gradient(1000px 500px at 0% -20%, rgba(126,224,198,0.12), transparent 50%),
-        var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      line-height: 1.5;
-    }
-    .wrap { max-width: 720px; margin: 0 auto; padding: 32px 24px 80px; }
-    a { color: inherit; text-decoration: none; }
-    .crumb {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 40px;
-    }
-    .crumb a:hover { color: var(--accent); }
-    .eyebrow {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 12px;
-      color: var(--accent);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-    }
-    h1 {
-      font-size: clamp(36px, 6vw, 56px);
-      letter-spacing: -0.04em;
-      line-height: 0.95;
-      margin-bottom: 16px;
-    }
-    .lede { color: var(--muted); font-size: 18px; max-width: 40ch; }
-    .panel {
-      margin-top: 40px;
-      border: 1px dashed var(--line);
-      border-radius: 16px;
-      padding: 24px;
-      background: var(--card);
-    }
-    .panel h2 { font-size: 16px; margin-bottom: 8px; }
-    .panel p { color: var(--muted); font-size: 14px; }
-    code {
-      font-family: "IBM Plex Mono", monospace;
-      font-size: 12px;
-      color: var(--accent-2);
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <div class="wrap">
-    <p class="crumb"><a href="/">OmniHub</a> / sddms</p>
-    <p class="eyebrow">Tool stub</p>
-    <h1>SDD made simple</h1>
-    <p class="lede">Direct link: <code>/sddms</code>. This folder is the home for the tool. The app itself lands here next.</p>
-    <div class="panel">
-      <h2>What goes here</h2>
-      <p>Keep everything for this tool under <code>sddms/</code>. The umbrella index links here; this URL can be shared on its own.</p>
+  <header>
+    <div class="wrap">
+      <div class="top">
+        <a href="/">OmniHub</a>
+        <p class="kicker" style="color:#d7e2ee">FRN 310505</p>
+      </div>
+      <div class="hero">
+        <p class="kicker">Status Disclosure Document</p>
+        <h1>SDD made simple</h1>
+        <p class="lede">Present REAL CAR before any talk of regulated finance or insurance. Aim for understanding, not a word-for-word reading.</p>
+      </div>
+      <nav>
+        <button type="button" data-tab="learn" class="active">REAL CAR</button>
+        <button type="button" data-tab="script">60 seconds</button>
+        <button type="button" data-tab="watch">Watch</button>
+        <button type="button" data-tab="sdd">The SDD</button>
+        <button type="button" data-tab="practice">Practice</button>
+      </nav>
     </div>
-  </div>
+  </header>
+  <main id="main"></main>
+  <footer>
+    <div class="foot">
+      <p>Internal training · Eastern Western Motor Group · not a customer-facing SDD.</p>
+    </div>
+  </footer>
+  <script src="./app.js"></script>
 </body>
 </html>

@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EWL Leasing Document Hub</title>
+  <!-- Load Tailwind CSS for interactive application design -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <style>
+    :root {
+      --primary-color: #143655;
+      --primary-light: #e7eff6;
+      --text-dark: #111827;
+      --text-muted: #4b5563;
+      --border-ocr: #1f2937; /* High-contrast sharp charcoal border for scanning */
+      --border-focus: #2563eb;
+      --bg-screen: #f1f5f9;
+      --bg-card: #ffffff;
+      --input-bg: #fafafa;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: var(--bg-screen);
+      color: var(--text-dark);
+      line-height: 1.35;
+    }
+
+    /* Interactive Field Styles */
+    .field-input {
+      font-family: inherit;
+      font-size: 12px;
+      color: var(--text-dark);
+      padding: 6px 10px;
+      border: 1.5px solid var(--border-ocr);
+      border-radius: 4px;
+      background-color: var(--input-bg);
+      outline: none;
+      width: 100%;
+      transition: all 0.1s ease-in-out;
+    }
+
+    .field-input:focus {
+      border-color: var(--border-focus);
+      background-color: #ffffff;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+
+    /* Form Segment Toggles */
+    .segment-switch {
+      display: inline-flex;
+      background-color: #e2e8f0;
+      padding: 3px;
+      border-radius: 6px;
+      border: 1.5px solid var(--border-ocr);
+    }
+
+    .segment-btn {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 4px;
+      transition: all 0.1s ease-in-out;
+    }
+
+    .segment-btn.active {
+      background-color: var(--primary-color);
+      color: #ffffff;
+    }
+
+    /* Maintained Checkboxes */
+    .maintained-box {
+      width: 15px;
+      height: 15px;
+      accent-color: var(--primary-color);
+      cursor: pointer;
+    }
+
+    /* Signature Zones */
+    .signature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      border-top: 1.5px solid var(--border-ocr);
+      padding-top: 12px;
+    }
+
+    .signature-box {
+      border: 1.5px solid var(--border-ocr);
+      background-color: var(--input-bg);
+      height: 60px;
+      border-radius: 4px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 6px 8px;
+    }
+
+    .signature-label {
+      position: absolute;
+      top: 4px;
+      left: 8px;
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .signature-line {
+      border-bottom: 1px dotted var(--text-muted);
+      width: 100%;
+      height: 0;
+      margin-bottom: 2px;
+    }
+
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 6mm 10mm;
+      }
+
+      body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        padding: 0 !important;
+      }
+
+      /* Hide interactive Hub chrome */
+      .no-print {
+        display: none !important;
+      }
+
+      /* Force single document container to scale dynamically */
+      .document-page {
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        background: #ffffff !important;
+      }
+
+      /* Ensure hidden pages stay completely hidden during print */
+      .hidden {
+        display: none !important;
+      }
+
+      /* High contrast black parameters for OCR physical scanning */
+      .field-input {
+        border: 2px solid #000000 !important;
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        font-size: 11px !important;
+        padding: 3px 6px !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .signature-box {
+        border: 2px solid #000000 !important;
+        background-color: #ffffff !important;
+        height: 50px !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .maintained-box {
+        width: 13px !important;
+        height: 13px !important;
+        accent-color: #000000 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .compliance-section-box {
+        background-color: #f8fafc !important;
+        border: 2px solid var(--primary-color) !important;
+        color: var(--primary-color) !important;
+        padding: 6px 10px !important;
+        margin-bottom: 10px !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .compliance-section-box p, 
+      .compliance-section-box ul li {
+        font-size: 8.5px !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-height-screen flex flex-col items-center pb-12 pt-4 px-4">
+
+  <!-- Interactive Navigation & System Hub Controller (Hidden during Printing) -->
+  <header class="no-print w-full max-w-[800px] mb-6 text-center">
+    <div class="flex items-center justify-center gap-2 mb-3">
+      <div class="bg-[#143655] p-1.5 rounded-lg shadow-md">
+        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+        </svg>
+      </div>
+      <h1 class="text-xl font-extrabold text-[#143655] tracking-wide">EWL DOCUMENT MANAGER</h1>
+    </div>
+    
+    <!-- Dynamic Workspace Selector tabs -->
+    <div class="bg-white p-1 rounded-xl shadow-sm border border-slate-200 inline-flex flex-wrap gap-1 justify-center max-w-full">
+      <button onclick="switchDocument('doc-onboarding')" id="tab-doc-onboarding" class="px-4 py-2 text-xs font-bold rounded-lg transition-all bg-[#143655] text-white">
+        1. Onboarding &amp; Declaration
+      </button>
+      <button onclick="switchDocument('doc-broker-order')" id="tab-doc-broker-order" class="px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 hover:bg-slate-50">
+        2. Broker Customer Order Form
+      </button>
+      <button onclick="switchDocument('doc-customer-order')" id="tab-doc-customer-order" class="px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 hover:bg-slate-50">
+        3. Customer Order Form
+      </button>
+    </div>
+  </header>
+
+  <!-- Shared Paper Workspace Wrapper -->
+  <main class="w-full max-w-[800px]">
+
+    <!-- ======================================================================= -->
+    <!-- DOCUMENT 1: CUSTOMER ONBOARDING & DECLARATION                           -->
+    <!-- ======================================================================= -->
+    <div id="doc-onboarding" class="document-page relative bg-white border border-slate-200 shadow-xl rounded-lg p-8 mb-6">
+
+      <!-- Header Grid -->
+      <div class="flex flex-col items-center text-center mb-4">
+        <div class="h-12 flex items-center justify-center mb-2">
+          <img class="logo-image h-12 max-w-[280px] object-contain" src="https://www.easternwesternleasing.co.uk/gfx/logo.png" alt="Eastern Western Leasing Logo" onerror="handleLogoError(this)">
+          <div class="logo-fallback hidden border-2 border-dashed border-[#143655] bg-[#e7eff6] px-4 py-1.5 rounded text-xs font-bold uppercase tracking-wider text-[#143655]">
+            Eastern Western Leasing
+          </div>
+        </div>
+        <h2 class="text-base font-extrabold text-[#143655] tracking-wider uppercase">Declaration &amp; Customer Onboarding</h2>
+        <div id="contract-badge" class="mt-1 text-[10px] font-extrabold bg-[#e7eff6] text-[#143655] px-3 py-0.5 rounded-full border border-[#143655] uppercase tracking-wide">
+          Personal Contract Hire (PCH)
+        </div>
+      </div>
+
+      <!-- Legal Compliance Callout Section -->
+      <section class="compliance-section-box bg-[#143655] text-white p-3 rounded-md mb-4">
+        <h3 id="compliance-title" class="text-[11px] font-bold uppercase tracking-wider mb-1 border-b border-white/20 pb-0.5">Finance Product Declaration</h3>
+        <p id="compliance-text" class="text-[9.5px] leading-relaxed opacity-95 mb-2">
+          EW Leasing exclusively offers Contract Hire Finance agreements, which are fixed-term rental arrangements where you hire the vehicle and will never own it. By proceeding, you acknowledge your commitment to these specific financial obligations and vehicle care responsibilities. Please review the key terms below to ensure this rental product meets your needs.
+        </p>
+        
+        <div id="compliance-bullets-wrapper">
+          <h4 class="text-[10px] font-bold text-sky-300 uppercase tracking-wider mb-1">Key Information</h4>
+          <ul class="space-y-0.5">
+            <li class="text-[9px] pl-3.5 relative before:content-['■'] before:absolute before:left-0 before:text-sky-300 before:text-[7px]">
+              Contract Hire is purely a rental agreement, and you will never own the vehicle or have the option to buy it.
+            </li>
+            <li class="text-[9px] pl-3.5 relative before:content-['■'] before:absolute before:left-0 before:text-sky-300 before:text-[7px]">
+              All rental payments attract VAT, and your regular payment amounts will change if the VAT rate is adjusted.
+            </li>
+            <li class="text-[9px] pl-3.5 relative before:content-['■'] before:absolute before:left-0 before:text-sky-300 before:text-[7px]">
+              You must maintain the vehicle and return it in a condition that meets the standards in the <a href="https://www.bvrla.co.uk/home/consumer-advice/returning-your-leased-vehicle" target="_blank" class="text-sky-300 underline font-semibold hover:text-sky-200">BVRLA Guidelines</a>.
+            </li>
+            <li class="text-[9px] pl-3.5 relative before:content-['■'] before:absolute before:left-0 before:text-sky-300 before:text-[7px]">
+              You will be required to pay additional financial charges if you exceed your agreed annual mileage limit.
+            </li>
+            <li class="text-[9px] pl-3.5 relative before:content-['■'] before:absolute before:left-0 before:text-sky-300 before:text-[7px]">
+              Ending the contract early incurs termination fees, and missing payments can negatively impact your credit score.
+            </li>
+          </ul>
+          <div class="mt-2 pt-1 border-t border-white/10 text-[8.5px] text-sky-200 flex items-center gap-1">
+            <span class="font-bold">Additional Resources:</span>
+            <a href="https://www.specialistautomotivefinance.org.uk/resources/what-contract-hire.html" target="_blank" class="underline hover:text-white">SAF Guide to Contract Hire</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Interactive Inputs Block -->
+      <form class="onboardingForm" autocomplete="off" onsubmit="return false;">
+        <div class="grid grid-cols-2 gap-x-4 gap-y-2.5 mb-4">
+          <!-- Mileage & Term at the Top -->
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="o_mileage">Expected Annual Mileage</label>
+            <input type="number" id="o_mileage" class="field-input" placeholder="e.g. 10000" min="0" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="o_term">Expected Contract Term (Months)</label>
+            <input type="number" id="o_term" class="field-input" placeholder="e.g. 36" min="1" required>
+          </div>
+          
+          <!-- Manufacturer & Model -->
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="o_make">Manufacturer</label>
+            <input type="text" id="o_make" class="field-input" placeholder="e.g. Ford" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="o_model">Model</label>
+            <input type="text" id="o_model" class="field-input" placeholder="e.g. Focus" required>
+          </div>
+
+          <!-- First name and Last name underneath Model -->
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="o_first">First Name</label>
+            <input type="text" id="o_first" class="field-input" placeholder="e.g. John" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="o_last">Last Name</label>
+            <input type="text" id="o_last" class="field-input" placeholder="e.g. Smith" required>
+          </div>
+
+          <!-- Followed by Company Name and Company Registered Number -->
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="o_company">Company Name</label>
+            <input type="text" id="o_company" class="field-input" placeholder="e.g. Acme Corporation">
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="o_company_reg">Company Registered Number</label>
+            <input type="text" id="o_company_reg" class="field-input" placeholder="e.g. 12345678">
+          </div>
+
+          <!-- Address Lines -->
+          <div class="flex flex-col col-span-2">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="o_addr1">Address Line 1</label>
+            <input type="text" id="o_addr1" class="field-input" placeholder="Street Address" required>
+          </div>
+          <div class="flex flex-col col-span-2">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="o_addr2">Address Line 2</label>
+            <input type="text" id="o_addr2" class="field-input" placeholder="Apartment, unit, suite, etc. (optional)">
+          </div>
+
+          <!-- Postcode & Date of Birth -->
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="o_post">Postcode</label>
+            <input type="text" id="o_post" class="field-input" placeholder="e.g. SW1A 1AA" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="o_dob">Date of Birth</label>
+            <input type="date" id="o_dob" class="field-input" required>
+          </div>
+
+          <!-- Contacts (With renamed Telephone Number to Mobile Telephone Number) -->
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="o_phone">Mobile Telephone Number</label>
+            <input type="tel" id="o_phone" class="field-input" placeholder="e.g. +44 7946 019203" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="o_email">Email Address</label>
+            <input type="email" id="o_email" class="field-input" placeholder="e.g. john.smith@domain.com" required>
+          </div>
+          <div class="flex flex-col col-span-2">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="o_notes">Notes</label>
+            <textarea id="o_notes" class="field-input h-10 resize-none py-1.5" placeholder="Additional requirements or lease term specifics..."></textarea>
+          </div>
+          <div class="flex flex-col col-span-2">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="o_disclosed_at">Verbal Status Disclosed at</label>
+            <input type="text" id="o_disclosed_at" class="field-input bg-slate-100 text-slate-500 cursor-not-allowed font-medium border-slate-300" value="Pending Verbal Acknowledgment" readonly>
+          </div>
+        </div>
+
+        <!-- Signature Verification Fields -->
+        <div class="signature-grid mb-3">
+          <div class="signature-box">
+            <span class="signature-label">Customer Signature Verification</span>
+            <div class="signature-line"></div>
+          </div>
+          <div class="signature-box">
+            <span class="signature-label">Date (DD/MM/YYYY)</span>
+            <div class="signature-line"></div>
+          </div>
+        </div>
+
+        <!-- Interactive Contract Toggler (Hidden during printing) -->
+        <div class="no-print flex flex-col items-center gap-1.5 border-t border-dashed border-slate-200 pt-3">
+          <span class="text-[11px] font-bold text-[#143655] uppercase tracking-wide">Select Contract Arrangement Class</span>
+          <div class="segment-switch flex flex-wrap justify-center gap-1 max-w-full">
+            <button type="button" id="switch-pch" class="segment-btn active" onclick="setContractType('PCH')">PCH (Personal)</button>
+            <button type="button" id="switch-bch" class="segment-btn text-slate-600 hover:text-[#143655]" onclick="setContractType('BCH')">BCH (Business)</button>
+            <button type="button" id="switch-bcp" class="segment-btn text-slate-600 hover:text-[#143655]" onclick="setContractType('BCP')">Business Cash Purchase</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- ======================================================================= -->
+    <!-- DOCUMENT 2: BROKER CUSTOMER ORDER FORM                                  -->
+    <!-- ======================================================================= -->
+    <div id="doc-broker-order" class="document-page relative hidden bg-white border border-slate-200 shadow-xl rounded-lg p-8 mb-6">
+
+      <!-- Header -->
+      <div class="flex flex-col items-center text-center mb-4">
+        <div class="h-12 flex items-center justify-center mb-2">
+          <img class="logo-image h-12 max-w-[280px] object-contain" src="https://www.easternwesternleasing.co.uk/gfx/logo.png" alt="Eastern Western Leasing Logo" onerror="handleLogoError(this)">
+          <div class="logo-fallback hidden border-2 border-dashed border-[#143655] bg-[#e7eff6] px-4 py-1.5 rounded text-xs font-bold uppercase tracking-wider text-[#143655]">
+            Eastern Western Leasing
+          </div>
+        </div>
+        <h2 class="text-base font-extrabold text-[#143655] tracking-wider uppercase">Broker Customer Order Form</h2>
+      </div>
+
+      <!-- Fields Configuration -->
+      <form class="brokerForm" autocomplete="off" onsubmit="return false;">
+        <div class="grid grid-cols-2 gap-x-4 gap-y-2 mb-4">
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="b_date">Order Date</label>
+            <input type="date" id="b_date" class="field-input" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="b_vehicle">Brand / Model</label>
+            <input type="text" id="b_vehicle" class="field-input" placeholder="e.g. BMW 3 Series" required>
+          </div>
+          <div class="flex flex-col col-span-2">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="b_options">Vehicle Options</label>
+            <input type="text" id="b_options" class="field-input" placeholder="e.g. M Sport Pro Package, Sunroof" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="b_ext">Exterior Colour</label>
+            <input type="text" id="b_ext" class="field-input" placeholder="e.g. Mineral Grey" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="b_int">Interior Colour</label>
+            <input type="text" id="b_int" class="field-input" placeholder="e.g. Black Vernasca Leather" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="b_finco">Finance Company</label>
+            <input type="text" id="b_finco" class="field-input" placeholder="e.g. Lex Autolease" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="b_quote">Quote Number</label>
+            <input type="text" id="b_quote" class="field-input" placeholder="e.g. QUO-987654" required>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-[10px] font-bold uppercase text-slate-800 mb-0.5">Maintained (Y / N)</span>
+            <div class="field-input flex items-center gap-6 h-[31px] py-0">
+              <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+                <input type="checkbox" id="b_m_yes" class="maintained-box" checked onchange="selectMaintained('broker', 'Y')">
+                <span class="text-xs font-bold text-slate-800">Yes</span>
+              </label>
+              <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+                <input type="checkbox" id="b_m_no" class="maintained-box" onchange="selectMaintained('broker', 'N')">
+                <span class="text-xs font-bold text-slate-800">No</span>
+              </label>
+            </div>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="b_contract">Contract Type</label>
+            <input type="text" id="b_contract" class="field-input" placeholder="e.g. BCH 3+35 10k" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="b_profile">Payment Profile</label>
+            <input type="text" id="b_profile" class="field-input" placeholder="e.g. 3 Months Initial + 35 Monthly" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="b_comms">Broker Comms / Intro Fee</label>
+            <input type="text" id="b_comms" class="field-input" placeholder="e.g. £500.00 + VAT" required>
+          </div>
+          <div class="flex flex-col col-span-2">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="b_source">Introduction Source</label>
+            <input type="text" id="b_source" class="field-input" placeholder="e.g. Broker Network Partner Ltd" required>
+          </div>
+          <div class="flex flex-col col-span-2">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="b_custname">Customer Name</label>
+            <input type="text" id="b_custname" class="field-input" placeholder="Full Individual Name or Registered Company Name" required>
+          </div>
+          <div class="flex flex-col col-span-2">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="b_custaddr">Customer Address</label>
+            <input type="text" id="b_custaddr" class="field-input" placeholder="Full Billing and Registration Address" required>
+          </div>
+          <div class="flex flex-col col-span-2">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="b_deliv">Requested Delivery Date</label>
+            <input type="text" id="b_deliv" class="field-input" placeholder="e.g. Late September 2026 or ASAP" required>
+          </div>
+        </div>
+
+        <!-- Signature Lines -->
+        <div class="grid grid-cols-2 gap-4 mb-4 mt-6">
+          <div class="flex flex-col gap-2">
+            <div class="text-[10px] font-bold text-[#143655] uppercase tracking-wide border-b border-[#143655] pb-0.5">Signed by EWL</div>
+            <div class="signature-box">
+              <span class="signature-label">Authorized Signature</span>
+              <div class="signature-line"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="flex flex-col">
+                <span class="text-[8px] font-bold uppercase text-slate-500">Print Name</span>
+                <input type="text" class="field-input py-1 text-[10px]" placeholder="e.g. J. Doe">
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[8px] font-bold uppercase text-slate-500">Date</span>
+                <input type="text" class="field-input py-1 text-[10px]" placeholder="DD/MM/YYYY">
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <div class="text-[10px] font-bold text-[#143655] uppercase tracking-wide border-b border-[#143655] pb-0.5">Signed by Broker Partner</div>
+            <div class="signature-box">
+              <span class="signature-label">Partner Signature</span>
+              <div class="signature-line"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="flex flex-col">
+                <span class="text-[8px] font-bold uppercase text-slate-500">Print Name</span>
+                <input type="text" class="field-input py-1 text-[10px]" placeholder="e.g. A. Broker">
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[8px] font-bold uppercase text-slate-500">Date</span>
+                <input type="text" class="field-input py-1 text-[10px]" placeholder="DD/MM/YYYY">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Compliance Terms of Business Block -->
+        <footer class="compliance-section-box bg-slate-100 text-slate-800 p-3 rounded border-t-2 border-[#143655] text-[9.5px] leading-relaxed">
+          Our Sales Terms of Business can be found at <a href="https://www.easternwestern.co.uk/site/terms-of-business/" target="_blank" class="text-blue-700 font-bold underline hover:text-blue-900">https://www.easternwestern.co.uk/site/terms-of-business/</a>. Please review and sign only if you agree to be legally bound by them. Attention is drawn to clauses 7, 8, 17 and 24 which relate to sale of New and Used Goods, Part Exchange Vehicle and Distance/Remote sales terms. Copies of our Terms of Business are available on request.
+        </footer>
+      </form>
+    </div>
+
+    <!-- ======================================================================= -->
+    <!-- DOCUMENT 3: CUSTOMER ORDER FORM                                        -->
+    <!-- ======================================================================= -->
+    <div id="doc-customer-order" class="document-page relative hidden bg-white border border-slate-200 shadow-xl rounded-lg p-8 mb-6">
+
+      <!-- Header -->
+      <div class="flex flex-col items-center text-center mb-4">
+        <div class="h-12 flex items-center justify-center mb-2">
+          <img class="logo-image h-12 max-w-[280px] object-contain" src="https://www.easternwesternleasing.co.uk/gfx/logo.png" alt="Eastern Western Leasing Logo" onerror="handleLogoError(this)">
+          <div class="logo-fallback hidden border-2 border-dashed border-[#143655] bg-[#e7eff6] px-4 py-1.5 rounded text-xs font-bold uppercase tracking-wider text-[#143655]">
+            Eastern Western Leasing
+          </div>
+        </div>
+        <h2 class="text-base font-extrabold text-[#143655] tracking-wider uppercase">Customer Order Form</h2>
+      </div>
+
+      <!-- Fields Configuration -->
+      <form class="customerForm" autocomplete="off" onsubmit="return false;">
+        <div class="grid grid-cols-2 gap-x-4 gap-y-2 mb-4">
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="c_date">Order Date</label>
+            <input type="date" id="c_date" class="field-input" required>
+          </div>
+          <div class="flex flex-col">
+            <!-- Split Manufacturer and Model as requested in specification -->
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="c_make">Manufacturer</label>
+            <input type="text" id="c_make" class="field-input" placeholder="e.g. Audi" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="c_model">Model</label>
+            <input type="text" id="c_model" class="field-input" placeholder="e.g. e-tron" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="c_ext">Exterior Colour</label>
+            <input type="text" id="c_ext" class="field-input" placeholder="e.g. Mythos Black" required>
+          </div>
+          <div class="flex flex-col col-span-2">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="c_options">Vehicle Options</label>
+            <input type="text" id="c_options" class="field-input" placeholder="e.g. Technology Pack, Comfort and Sound" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="c_int">Interior Colour</label>
+            <input type="text" id="c_int" class="field-input" placeholder="e.g. Rotor Grey Leather" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="c_finco">Finance Company</label>
+            <input type="text" id="c_finco" class="field-input" placeholder="e.g. Audi Financial Services" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="c_quote">Quote Number</label>
+            <input type="text" id="c_quote" class="field-input" placeholder="e.g. QUO-112233" required>
+          </div>
+          <div class="flex flex-col">
+            <span class="text-[10px] font-bold uppercase text-slate-800 mb-0.5">Maintained (Y / N)</span>
+            <div class="field-input flex items-center gap-6 h-[31px] py-0">
+              <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+                <input type="checkbox" id="c_m_yes" class="maintained-box" checked onchange="selectMaintained('customer', 'Y')">
+                <span class="text-xs font-bold text-slate-800">Yes</span>
+              </label>
+              <label class="inline-flex items-center gap-2 cursor-pointer select-none">
+                <input type="checkbox" id="c_m_no" class="maintained-box" onchange="selectMaintained('customer', 'N')">
+                <span class="text-xs font-bold text-slate-800">No</span>
+              </label>
+            </div>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="c_contract">Contract Type</label>
+            <input type="text" id="c_contract" class="field-input" placeholder="e.g. PCH 6+47 8k" required>
+          </div>
+          <div class="flex flex-col">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="c_profile">Payment Profile</label>
+            <input type="text" id="c_profile" class="field-input" placeholder="e.g. 6 Months Initial + 47 Monthly" required>
+          </div>
+          <div class="flex flex-col col-span-2">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="c_custname">Customer Name</label>
+            <input type="text" id="c_custname" class="field-input" placeholder="Full Registered Name of the Customer" required>
+          </div>
+          <div class="flex flex-col col-span-2">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="c_custaddr">Customer Address</label>
+            <input type="text" id="c_custaddr" class="field-input" placeholder="Complete Billing/Residential Address" required>
+          </div>
+          <div class="flex flex-col col-span-2">
+            <label class="text-[10px] font-bold uppercase text-slate-800 mb-0.5" for="c_deliv">Requested Delivery Date</label>
+            <input type="text" id="c_deliv" class="field-input" placeholder="e.g. September 2026 or Immediate" required>
+          </div>
+        </div>
+
+        <!-- Signature Lines -->
+        <div class="grid grid-cols-2 gap-4 mb-4 mt-6">
+          <div class="flex flex-col gap-2">
+            <div class="text-[10px] font-bold text-[#143655] uppercase tracking-wide border-b border-[#143655] pb-0.5">Signed by EWL</div>
+            <div class="signature-box">
+              <span class="signature-label">Authorized Signature</span>
+              <div class="signature-line"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="flex flex-col">
+                <span class="text-[8px] font-bold uppercase text-slate-500">Print Name</span>
+                <input type="text" class="field-input py-1 text-[10px]" placeholder="e.g. J. Doe">
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[8px] font-bold uppercase text-slate-500">Date</span>
+                <input type="text" class="field-input py-1 text-[10px]" placeholder="DD/MM/YYYY">
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <div class="text-[10px] font-bold text-[#143655] uppercase tracking-wide border-b border-[#143655] pb-0.5">Signed by Customer</div>
+            <div class="signature-box">
+              <span class="signature-label">Customer Signature</span>
+              <div class="signature-line"></div>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div class="flex flex-col">
+                <span class="text-[8px] font-bold uppercase text-slate-500">Print Name</span>
+                <input type="text" class="field-input py-1 text-[10px]" placeholder="e.g. J. Smith">
+              </div>
+              <div class="flex flex-col">
+                <span class="text-[8px] font-bold uppercase text-slate-500">Date</span>
+                <input type="text" class="field-input py-1 text-[10px]" placeholder="DD/MM/YYYY">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Compliance Terms of Business Block -->
+        <footer class="compliance-section-box bg-slate-100 text-slate-800 p-3 rounded border-t-2 border-[#143655] text-[9.5px] leading-relaxed">
+          Our Sales Terms of Business can be found at <a href="https://www.easternwestern.co.uk/site/terms-of-business/" target="_blank" class="text-blue-700 font-bold underline hover:text-blue-900">https://www.easternwestern.co.uk/site/terms-of-business/</a>. Please review and sign only if you agree to be legally bound by them. Attention is drawn to clauses 7, 8, 17 and 24 which relate to sale of New and Used Goods, Part Exchange Vehicle and Distance/Remote sales terms. Copies of our Terms of Business are available on request.
+        </footer>
+      </form>
+    </div>
+
+  </main>
+
+  <!-- Master Workspace Interactive Actions Panel (Hidden during printing) -->
+  <div class="no-print w-full max-w-[800px] flex justify-between gap-3 mt-1">
+    <button type="button" class="btn-clear bg-slate-200 text-slate-700 font-bold text-xs py-3 px-6 rounded-lg hover:bg-slate-300 transition-all shadow-sm" onclick="clearActiveForm()">
+      Reset Current Form
+    </button>
+    <button type="button" class="btn-print bg-[#143655] text-white font-bold text-xs py-3 px-8 rounded-lg hover:bg-slate-800 transition-all shadow-md flex items-center gap-2" onclick="triggerSystemPrint()">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+      </svg>
+      Print / Save Active Page
+    </button>
+  </div>
+
+  <!-- Volatile Local Compliance Notice -->
+  <p class="no-print text-center text-[10px] text-slate-500 mt-4 max-w-[800px] leading-relaxed">
+    <strong>Volatile Data Security Notice:</strong> Active documents process information in local RAM and transient state containers only. Form details are systematically cleared on page reload or when navigating away, fully protecting customer details from leakages.
+  </p>
+
+  <div id="status-disclosure-modal" class="no-print fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm hidden transition-all duration-200">
+    <div class="bg-white rounded-xl shadow-2xl max-w-lg w-full border border-slate-200 overflow-hidden transform scale-95 transition-all duration-200" id="modal-container">
+      <!-- Modal Header Banner -->
+      <div class="bg-[#143655] text-white px-6 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <svg class="w-5 h-5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <h3 class="text-sm font-extrabold tracking-wider uppercase">Verbal Status Disclosure</h3>
+        </div>
+      </div>
+      <!-- Modal Content Body -->
+      <div class="p-6">
+        <p class="text-xs font-semibold text-slate-800 mb-4 leading-relaxed">
+          Before any meaningful conversations regarding regulated activities take place, please ensure to make a verbal disclosure of EW Leasing's status to the customer:
+        </p>
+        <ul class="space-y-3.5 text-xs text-slate-600 mb-6">
+          <li class="flex items-start gap-3">
+            <span class="inline-flex items-center justify-center bg-amber-100 text-amber-800 rounded-full h-5 w-5 text-[10px] font-extrabold shrink-0 mt-0.5">1</span>
+            <span>EW leasing is a trading name of Eastern Western Motor Group, who are authorised and regulated by the Financial Conduct Authority.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="inline-flex items-center justify-center bg-amber-100 text-amber-800 rounded-full h-5 w-5 text-[10px] font-extrabold shrink-0 mt-0.5">2</span>
+            <span>We are authorised to provide financial services and do so acting as a credit broker.</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="inline-flex items-center justify-center bg-amber-100 text-amber-800 rounded-full h-5 w-5 text-[10px] font-extrabold shrink-0 mt-0.5">3</span>
+            <span>A copy of our full Status Disclosure Document is available in the online portal you will be provided. Should you wish a copy provided by another medium please ask us directly.</span>
+          </li>
+        </ul>
+        <!-- Acknowledgment Dismiss Action -->
+        <div class="flex justify-end pt-4 border-t border-slate-100">
+          <button onclick="closeModalAndStamp()" class="px-5 py-2.5 text-xs font-bold bg-[#143655] hover:bg-slate-800 text-white rounded-lg transition-all shadow-md uppercase tracking-wider">
+            I Have Disclosed This Verbally
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Keep track of the currently visible document ID
+    let currentDocumentId = 'doc-onboarding';
+    
+    // Original Form: PCH/BCH/BCP switch status tracker
+    let activeContractType = 'PCH';
+
+    /**
+     * Swaps display visibility between documents
+     * @param {string} targetDocId - ID of document page container
+     */
+    function switchDocument(targetDocId) {
+      currentDocumentId = targetDocId;
+
+      // Update Tab Visual Classes
+      const tabs = ['tab-doc-onboarding', 'tab-doc-broker-order', 'tab-doc-customer-order'];
+      tabs.forEach(tabId => {
+        const tabEl = document.getElementById(tabId);
+        if (tabId === 'tab-' + targetDocId) {
+          tabEl.className = "px-4 py-2 text-xs font-bold rounded-lg transition-all bg-[#143655] text-white shadow-sm";
+        } else {
+          tabEl.className = "px-4 py-2 text-xs font-bold rounded-lg transition-all text-slate-600 hover:bg-slate-100";
+        }
+      });
+
+      // Show Selected / Hide Others
+      const pages = ['doc-onboarding', 'doc-broker-order', 'doc-customer-order'];
+      pages.forEach(pageId => {
+        const pageEl = document.getElementById(pageId);
+        if (pageId === targetDocId) {
+          pageEl.classList.remove('hidden');
+        } else {
+          pageEl.classList.add('hidden');
+        }
+      });
+
+      if (targetDocId === 'doc-onboarding') {
+        openModal();
+      }
+    }
+
+    /**
+     * Handle broker/customer maintained checkbox mutual selection
+     * @param {string} docType - 'broker' or 'customer'
+     * @param {string} val - 'Y' or 'N'
+     */
+    function selectMaintained(docType, val) {
+      const isBroker = docType === 'broker';
+      const yesBox = document.getElementById(isBroker ? 'b_m_yes' : 'c_m_yes');
+      const noBox = document.getElementById(isBroker ? 'b_m_no' : 'c_m_no');
+      if (val === 'Y') {
+        if (yesBox.checked) {
+          noBox.checked = false;
+        }
+      } else if (val === 'N') {
+        if (noBox.checked) {
+          yesBox.checked = false;
+        }
+      }
+    }
+
+    /**
+     * Programmatically sets the maintained checkboxes
+     * @param {string} docType - 'broker' or 'customer'
+     * @param {string} val - 'Y' or 'N'
+     */
+    function setMaintained(docType, val) {
+      const isBroker = docType === 'broker';
+      const yesBox = document.getElementById(isBroker ? 'b_m_yes' : 'c_m_yes');
+      const noBox = document.getElementById(isBroker ? 'b_m_no' : 'c_m_no');
+      if (yesBox && noBox) {
+        yesBox.checked = (val === 'Y');
+        noBox.checked = (val === 'N' || val === 'No');
+      }
+    }
+
+    /**
+     * Updates badge texts, compliance layouts, and dynamic HTML validation properties.
+     * Unified layouts keep all inputs active but dynamically toggle the "required" markers based on mode context.
+     * @param {string} type - 'PCH' or 'BCH' or 'BCP'
+     */
+    function setContractType(type) {
+      activeContractType = type;
+      
+      const btnPch = document.getElementById('switch-pch');
+      const btnBch = document.getElementById('switch-bch');
+      const btnBcp = document.getElementById('switch-bcp');
+      const badge = document.getElementById('contract-badge');
+
+      const complianceTitle = document.getElementById('compliance-title');
+      const complianceText = document.getElementById('compliance-text');
+      const complianceBullets = document.getElementById('compliance-bullets-wrapper');
+
+      // Input elements for toggling structural validations
+      const oFirst = document.getElementById('o_first');
+      const oLast = document.getElementById('o_last');
+      const oCompany = document.getElementById('o_company');
+      const oCompanyReg = document.getElementById('o_company_reg');
+
+      // Reset active segment state styling
+      btnPch.className = "segment-btn text-slate-600 hover:text-[#143655]";
+      btnBch.className = "segment-btn text-slate-600 hover:text-[#143655]";
+      btnBcp.className = "segment-btn text-slate-600 hover:text-[#143655]";
+
+      if (type === 'BCH') {
+        btnBch.className = "segment-btn active";
+        badge.textContent = "Business Contract Hire (BCH)";
+
+        // Toggle strict HTML5 validations dynamically
+        oFirst.required = false;
+        oLast.required = false;
+        oCompany.required = true;
+        oCompanyReg.required = true;
+
+        // Show default compliance block contents
+        complianceTitle.textContent = "Finance Product Declaration";
+        complianceText.textContent = "EW Leasing exclusively offers Contract Hire Finance agreements, which are fixed-term rental arrangements where you hire the vehicle and will never own it. By proceeding, you acknowledge your commitment to these specific financial obligations and vehicle care responsibilities. Please review the key terms below to ensure this rental product meets your needs.";
+        complianceBullets.classList.remove('hidden');
+
+      } else if (type === 'BCP') {
+        btnBcp.className = "segment-btn active";
+        badge.textContent = "Business Cash Purchase";
+
+        // Same Business validation requirements
+        oFirst.required = false;
+        oLast.required = false;
+        oCompany.required = true;
+        oCompanyReg.required = true;
+
+        // BCP specific compliance updates
+        complianceTitle.textContent = "Declaration";
+        complianceText.textContent = "For LTD/PLC purchase only.";
+        complianceBullets.classList.add('hidden');
+
+      } else {
+        btnPch.className = "segment-btn active";
+        badge.textContent = "Personal Contract Hire (PCH)";
+
+        // Swap requirements back to the individual
+        oFirst.required = true;
+        oLast.required = true;
+        oCompany.required = false;
+        oCompanyReg.required = false;
+
+        // Show default compliance block contents
+        complianceTitle.textContent = "Finance Product Declaration";
+        complianceText.textContent = "EW Leasing exclusively offers Contract Hire Finance agreements, which are fixed-term rental arrangements where you hire the vehicle and will never own it. By proceeding, you acknowledge your commitment to these specific financial obligations and vehicle care responsibilities. Please review the key terms below to ensure this rental product meets your needs.";
+        complianceBullets.classList.remove('hidden');
+      }
+    }
+
+    /**
+     * Fallback strategy in case the remote logo image request fails
+     */
+    function handleLogoError(imgEl) {
+      imgEl.style.display = 'none';
+      const container = imgEl.parentElement;
+      const fallback = container.querySelector('.logo-fallback');
+      if (fallback) {
+        fallback.classList.remove('hidden');
+      }
+    }
+
+    /**
+     * Clears all fields inside the active document layout to ensure privacy compliance.
+     */
+    function clearActiveForm() {
+      const activeContainer = document.getElementById(currentDocumentId);
+      const form = activeContainer.querySelector('form');
+      if (form) {
+        form.reset();
+      }
+
+      // Restore specific defaults
+      if (currentDocumentId === 'doc-onboarding') {
+        setContractType(activeContractType);
+        document.getElementById('o_mileage').focus();
+      } else if (currentDocumentId === 'doc-broker-order') {
+        setMaintained('broker', 'Y');
+        document.getElementById('b_date').focus();
+      } else if (currentDocumentId === 'doc-customer-order') {
+        setMaintained('customer', 'Y');
+        document.getElementById('c_date').focus();
+      }
+    }
+
+    /**
+     * Launch host print routine
+     */
+    function triggerSystemPrint() {
+      window.print();
+    }
+
+    /**
+     * Handles displaying the Verbal Status Disclosure warning
+     */
+    function openModal() {
+      const modal = document.getElementById('status-disclosure-modal');
+      const container = document.getElementById('modal-container');
+      modal.classList.remove('hidden');
+      setTimeout(() => {
+        container.classList.remove('scale-95');
+        container.classList.add('scale-100');
+      }, 10);
+    }
+
+    /**
+     * Closes disclosure overlay, generates and injects the live date-time stamp into the form
+     */
+    function closeModalAndStamp() {
+      const modal = document.getElementById('status-disclosure-modal');
+      const container = document.getElementById('modal-container');
+      container.classList.remove('scale-100');
+      container.classList.add('scale-95');
+      
+      // Generate current local date-time stamp (UK Format)
+      const now = new Date();
+      const currentStamp = now.toLocaleDateString('en-GB') + ' ' + now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' });
+      const statusField = document.getElementById('o_disclosed_at');
+      
+      if (statusField) {
+        statusField.value = currentStamp + " (Confirmed via Verbal Disclosure)";
+      }
+      
+      setTimeout(() => {
+        modal.classList.add('hidden');
+      }, 150);
+    }
+
+    // Proactively purge memory on tab closure
+    window.addEventListener('beforeunload', () => {
+      const inputs = document.querySelectorAll('.field-input');
+      inputs.forEach(input => {
+        input.value = '';
+      });
+    });
+
+    // Run setup initialization routines on startup
+    window.onload = function() {
+      setContractType('PCH');
+      openModal();
+    }
+  </script>
+</body>
+</html>

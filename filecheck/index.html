@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>File Check — OmniHub</title>
+  <meta name="theme-color" content="#143665" />
+  <meta name="description" content="Internal work aid for ticking required checks on a document pack." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/filecheck/styles.css" />
+</head>
+<body>
+  <div id="shell">
+    <header>
+      <div class="wrap top">
+        <a href="/">OmniHub</a>
+        <p class="tool-name" id="tool-name">File Check</p>
+        <button type="button" class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-controls="toolbar-actions">
+          <span class="sr-only">Options</span>
+          <span class="burger" aria-hidden="true"></span>
+        </button>
+      </div>
+      <div class="wrap toolbar">
+        <div class="pills" id="scope-pills" hidden></div>
+        <div class="toolbar-actions" id="toolbar-actions">
+          <div class="seg" role="group" aria-label="Map layout">
+            <button type="button" id="layout-constellation" aria-pressed="true">Constellation</button>
+            <button type="button" id="layout-rings" aria-pressed="false">Rings</button>
+          </div>
+          <button type="button" id="open-checklist">Checklist</button>
+          <button type="button" id="change-scope">Change file type</button>
+          <button type="button" id="start-next">Start next file</button>
+        </div>
+      </div>
+      <div class="wrap status-row">
+        <p id="progress-text">Loading document list…</p>
+        <p id="saved-note" aria-live="polite"></p>
+      </div>
+    </header>
+
+    <main id="main">
+      <div id="load-error" class="banner" role="alert" hidden></div>
+
+      <div id="view-map">
+        <div class="workspace">
+          <div class="map-pane">
+            <p id="map-note" class="sr-only">Document map. Click a document to open checks.</p>
+            <div id="network" role="group" aria-describedby="map-note"></div>
+            <div id="map-message" class="map-message" hidden></div>
+            <div class="legend" aria-hidden="true">
+              <div class="legend-group">
+                <span class="legend-label">Importance</span>
+                <span class="legend-item"><i class="dot d-critical"></i> Critical</span>
+                <span class="legend-item"><i class="dot d-high"></i> High</span>
+                <span class="legend-item"><i class="dot d-medium"></i> Medium</span>
+                <span class="legend-item"><i class="dot d-low"></i> Low</span>
+              </div>
+              <div class="legend-group">
+                <span class="legend-label">Links</span>
+                <span class="legend-item"><i class="edge e-align"></i> Align</span>
+                <span class="legend-item"><i class="edge e-co"></i> Co-required</span>
+                <span class="legend-item"><i class="edge e-pre"></i> Precedes</span>
+                <span class="legend-item"><i class="edge e-alt"></i> Alternative</span>
+              </div>
+              <div class="legend-group">
+                <span class="legend-label">Ticks</span>
+                <span class="legend-item"><i class="ring r-none"></i> Untouched</span>
+                <span class="legend-item"><i class="ring r-progress"></i> In progress</span>
+                <span class="legend-item"><i class="ring r-done"></i> Required complete</span>
+              </div>
+            </div>
+          </div>
+          <aside id="drawer" hidden></aside>
+        </div>
+      </div>
+
+      <div id="view-checklist" hidden>
+        <div class="check-layout">
+          <div class="check-side">
+            <button type="button" id="back-to-map" class="btn ghost-ink">Back to map</button>
+            <nav id="doc-nav" aria-label="Documents in this file"></nav>
+          </div>
+          <article id="check-main"></article>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="foot">internal work aid · ticks only · not an official file record</div>
+    </footer>
+  </div>
+
+  <div id="scope-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="scope-title" hidden>
+    <div class="modal-card">
+      <p class="kicker">File type</p>
+      <h2 id="scope-title">What is in this file?</h2>
+      <p class="modal-lede">Answer all three. This only decides which documents are in view. Nothing is typed into the tool.</p>
+      <p id="modal-empty" class="callout" hidden>Document list not loaded. Add entries to data/documents.json.</p>
+      <div id="scope-questions"></div>
+      <div class="modal-actions">
+        <button type="button" id="scope-cancel" class="btn ghost-ink" hidden>Cancel</button>
+        <button type="button" id="scope-continue" class="btn navy" disabled>Continue</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="reset-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="reset-title" hidden>
+    <div class="modal-card narrow">
+      <h2 id="reset-title">Start the next file?</h2>
+      <p class="modal-lede">This clears every tick and the file type stored on this device. It does not record a decision anywhere else.</p>
+      <div class="modal-actions">
+        <button type="button" id="reset-cancel" class="btn ghost-ink">Keep this file</button>
+        <button type="button" id="reset-confirm" class="btn navy">Clear and start</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vis-network@9.1.9/standalone/umd/vis-network.min.js"></script>
+  <script src="/filecheck/app.js"></script>
+</body>
+</html>

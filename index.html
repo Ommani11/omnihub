@@ -27,6 +27,7 @@
     .card p { color: var(--mist); font-size: 14px; flex: 1; }
     .path { margin-top: 16px; font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel); }
     footer { margin-top: 64px; padding-top: 20px; border-top: 1px solid color-mix(in oklab, white 10%, transparent); color: var(--mist); font-size: 14px; }
+    a.card:focus-visible { outline: 2px solid var(--steel); outline-offset: 3px; }
   </style>
 </head>
 <body>
@@ -48,6 +49,11 @@
         <h2>EWL Document Hub</h2>
         <p>Onboarding declaration, broker order and customer order. Print or save the active page.</p>
         <span class="path">/ewldochub</span>
+      </a>
+      <a class="card" href="/filecheck">
+        <h2>File Check</h2>
+        <p>Tick the checks on a document pack, then start the next file. Internal work aid only.</p>
+        <span class="path">/filecheck</span>
       </a>
     </section>
     <footer>OmniHub · Andrew Wright</footer>

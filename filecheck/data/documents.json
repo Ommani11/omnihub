@@ -1,0 +1,1075 @@
+{
+  "meta": {
+    "toolTitle": "File Check",
+    "version": "1.1.0",
+    "scopeQuestions": [
+      {
+        "id": "finance",
+        "label": "Is the customer taking finance?"
+      },
+      {
+        "id": "insurance",
+        "label": "Is the customer taking insurance?"
+      },
+      {
+        "id": "supplementaryInvoice",
+        "label": "Is a supplementary invoice required?"
+      }
+    ]
+  },
+  "documents": [
+    {
+      "id": "order-form",
+      "name": "Order Form",
+      "shortName": "OF",
+      "importance": "critical",
+      "category": "Sales",
+      "scope": [
+        "core"
+      ],
+      "rules": [
+        "Customer details must be accurate.",
+        "Vehicle details must be accurate.",
+        "Vehicle price must be accurate.",
+        "Funding method must be recorded."
+      ],
+      "checks": [
+        {
+          "id": "of-customer-details",
+          "text": "Verify customer details are complete and accurate.",
+          "required": true
+        },
+        {
+          "id": "of-vehicle-details",
+          "text": "Verify vehicle details match the transaction.",
+          "required": true
+        },
+        {
+          "id": "of-price",
+          "text": "Verify vehicle price is correct.",
+          "required": true
+        },
+        {
+          "id": "of-funding-method",
+          "text": "Verify funding method is captured.",
+          "required": true
+        },
+        {
+          "id": "of-products",
+          "text": "Verify selected products are accurately recorded.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "customer-declaration",
+          "what": "Customer details, vehicle details, funding method",
+          "where": "Customer and transaction sections"
+        },
+        {
+          "documentId": "sales-invoice",
+          "what": "Vehicle details, vehicle price, deposit",
+          "where": "Commercial summary"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "customer-declaration",
+          "type": "align",
+          "note": "Customer details, vehicle details and funding method should be concurrent."
+        },
+        {
+          "targetId": "sales-invoice",
+          "type": "align",
+          "note": "Commercial values should reconcile."
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "co-required",
+          "note": "Part of the core document set."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": []
+    },
+    {
+      "id": "customer-declaration",
+      "name": "Customer Declaration (Demands & Needs Questionnaire)",
+      "shortName": "CD",
+      "importance": "critical",
+      "category": "Suitability",
+      "scope": [
+        "core"
+      ],
+      "rules": [
+        "All qualification questions must be completed.",
+        "Customer needs and objectives must be documented.",
+        "Funding intentions should support the final outcome.",
+        "Eligibility responses must be completed."
+      ],
+      "checks": [
+        {
+          "id": "cd-complete",
+          "text": "Verify all questions have been completed.",
+          "required": true
+        },
+        {
+          "id": "cd-funding",
+          "text": "Verify intended funding method is recorded.",
+          "required": true
+        },
+        {
+          "id": "cd-needs",
+          "text": "Verify declared needs support the outcome.",
+          "required": true
+        },
+        {
+          "id": "cd-eligibility",
+          "text": "Verify eligibility questions are completed.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "order-form",
+          "what": "Customer details, vehicle details, funding method",
+          "where": "Customer profile and transaction details"
+        },
+        {
+          "documentId": "finance-agreement",
+          "what": "Funding method, agreement type, agreement term",
+          "where": "Funding requirements and suitability sections"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "order-form",
+          "type": "align",
+          "note": "Customer and transaction details should align."
+        },
+        {
+          "targetId": "finance-agreement",
+          "type": "align",
+          "note": "Funding intentions should support the final finance agreement."
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "co-required",
+          "note": "Part of the core document set."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Funding method differs from final outcome.",
+        "Agreement term differs from finance agreement.",
+        "Incomplete customer responses."
+      ]
+    },
+    {
+      "id": "sales-invoice",
+      "name": "Sales Invoice",
+      "shortName": "SI",
+      "importance": "critical",
+      "category": "Sales",
+      "scope": [
+        "core"
+      ],
+      "rules": [
+        "Vehicle pricing must be accurate.",
+        "Funding balances must be accurate.",
+        "Customer and vehicle details must be accurate.",
+        {
+          "text": "On a cash or self-funded purchase, Invoice to and Deliver to must both be the customer.",
+          "when": {
+            "finance": false
+          }
+        },
+        {
+          "text": "On a financed purchase, Invoice to must be the finance company and Deliver to must be the customer.",
+          "when": {
+            "finance": true
+          }
+        }
+      ],
+      "checks": [
+        {
+          "id": "si-price",
+          "text": "Verify vehicle price.",
+          "required": true
+        },
+        {
+          "id": "si-deposit",
+          "text": "Verify deposit value.",
+          "required": true
+        },
+        {
+          "id": "si-balance",
+          "text": "Verify balance outstanding.",
+          "required": true
+        },
+        {
+          "id": "si-customer",
+          "text": "Verify customer details.",
+          "required": true
+        },
+        {
+          "id": "si-vehicle",
+          "text": "Verify vehicle details.",
+          "required": true
+        },
+        {
+          "id": "si-parties-cash",
+          "text": "Verify Invoice to and Deliver to are both the customer.",
+          "required": true,
+          "when": {
+            "finance": false
+          }
+        },
+        {
+          "id": "si-parties-finance",
+          "text": "Verify Invoice to is the finance company and Deliver to is the customer.",
+          "required": true,
+          "when": {
+            "finance": true
+          }
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "order-form",
+          "what": "Vehicle details, vehicle price, deposit",
+          "where": "Vehicle and commercial sections"
+        },
+        {
+          "documentId": "finance-agreement",
+          "what": "Balance to finance",
+          "where": "Financial summary",
+          "when": {
+            "finance": true
+          }
+        },
+        {
+          "documentId": "demands-needs-2",
+          "what": "Purchased products and funding method",
+          "where": "Additional products"
+        },
+        {
+          "documentId": "finance-agreement",
+          "what": "Invoice to is the finance company and Deliver to is the customer",
+          "where": "Invoice header",
+          "when": {
+            "finance": true
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "order-form",
+          "type": "align",
+          "note": "Commercial details should reconcile."
+        },
+        {
+          "targetId": "finance-agreement",
+          "type": "align",
+          "note": "Balance to finance must reconcile.",
+          "when": {
+            "finance": true
+          }
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "align",
+          "note": "Purchased products should align."
+        },
+        {
+          "targetId": "finance-agreement",
+          "type": "align",
+          "note": "Invoice to must be the finance company. Deliver to must be the customer.",
+          "when": {
+            "finance": true
+          }
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Balance mismatch.",
+        "Incorrect deposit.",
+        "Incorrect vehicle price.",
+        {
+          "text": "Cash or self-funded purchase invoiced to a finance company.",
+          "when": {
+            "finance": false
+          }
+        },
+        {
+          "text": "Financed purchase not invoiced to the finance company.",
+          "when": {
+            "finance": true
+          }
+        },
+        "Deliver to is not the customer."
+      ]
+    },
+    {
+      "id": "supplementary-invoice",
+      "name": "Supplementary Invoice",
+      "shortName": "SUPI",
+      "importance": "high",
+      "category": "Sales",
+      "scope": [
+        "supplementary-invoice"
+      ],
+      "rules": [
+        "Must accurately reflect additional products or charges added after the original invoice.",
+        "Funding method must be clearly documented.",
+        "Values must reconcile to supporting documentation.",
+        "Any regulated product additions must be supported by the appropriate documentation.",
+        "Invoice to and Deliver to must both be the customer.",
+        {
+          "text": "Ancillary items must not be invoiced to the finance company.",
+          "when": {
+            "finance": true
+          }
+        }
+      ],
+      "checks": [
+        {
+          "id": "supi-products",
+          "text": "Verify all supplementary products are correctly itemised.",
+          "required": true
+        },
+        {
+          "id": "supi-values",
+          "text": "Verify all product values and charges are correct.",
+          "required": true
+        },
+        {
+          "id": "supi-funding",
+          "text": "Verify funding method for each supplementary item.",
+          "required": true
+        },
+        {
+          "id": "supi-customer",
+          "text": "Verify customer details match the core file.",
+          "required": true
+        },
+        {
+          "id": "supi-vehicle",
+          "text": "Verify vehicle details match the core file.",
+          "required": true
+        },
+        {
+          "id": "supi-parties",
+          "text": "Verify Invoice to and Deliver to are both the customer.",
+          "required": true
+        },
+        {
+          "id": "supi-not-finance-company",
+          "text": "Verify ancillary items are not invoiced to the finance company.",
+          "required": true,
+          "when": {
+            "finance": true
+          }
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "sales-invoice",
+          "what": "Customer details, vehicle details and total transaction values",
+          "where": "Invoice summary"
+        },
+        {
+          "documentId": "demands-needs-2",
+          "what": "Products purchased and funding method",
+          "where": "Product decision section"
+        },
+        {
+          "documentId": "finance-agreement",
+          "what": "Funded product values",
+          "where": "Additional advances and financed products",
+          "when": {
+            "finance": true
+          }
+        },
+        {
+          "documentId": "sales-invoice",
+          "what": "Supplementary invoice stays customer and customer, even when the sales invoice is invoiced to the finance company",
+          "where": "Invoice header"
+        },
+        {
+          "documentId": "finance-agreement",
+          "what": "Ancillary items are invoiced to the customer, not the finance company",
+          "where": "Invoice header",
+          "when": {
+            "finance": true
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "sales-invoice",
+          "type": "align",
+          "note": "Supplementary items should reconcile to the primary invoice."
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "align",
+          "note": "Products and funding method should reflect the customer's decision."
+        },
+        {
+          "targetId": "finance-agreement",
+          "type": "align",
+          "note": "Funded products must reconcile where included in finance.",
+          "when": {
+            "finance": true
+          }
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "co-required",
+          "note": "Evidence of customer acceptance should exist for regulated products."
+        },
+        {
+          "targetId": "finance-agreement",
+          "type": "align",
+          "note": "Ancillary items must be invoiced to the customer, not the finance company.",
+          "when": {
+            "finance": true
+          }
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Product added but not reflected on D&N2.",
+        "Product funded incorrectly.",
+        "Supplementary amount not reflected in finance documentation.",
+        "Customer details inconsistent with original invoice.",
+        "Vehicle details inconsistent with original invoice.",
+        "Invoice to is not the customer.",
+        "Deliver to is not the customer.",
+        "Ancillary items invoiced to a finance company."
+      ]
+    },
+    {
+      "id": "demands-needs-2",
+      "name": "Demands & Needs 2",
+      "shortName": "DN2",
+      "importance": "critical",
+      "category": "Suitability",
+      "scope": [
+        "core"
+      ],
+      "rules": [
+        "Must reflect the customer's final purchasing decision.",
+        "Accepted and declined products must be recorded.",
+        "Funding method for each product must be recorded.",
+        "Must align with delivery and handover."
+      ],
+      "checks": [
+        {
+          "id": "dn2-products",
+          "text": "Verify accepted and declined products.",
+          "required": true
+        },
+        {
+          "id": "dn2-funding",
+          "text": "Verify funding method for each product.",
+          "required": true
+        },
+        {
+          "id": "dn2-signature",
+          "text": "Verify execution is complete.",
+          "required": true
+        },
+        {
+          "id": "dn2-date",
+          "text": "Verify delivery and execution dates.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "sales-invoice",
+          "what": "Purchased products and values",
+          "where": "Product section"
+        },
+        {
+          "documentId": "insurance-registration",
+          "what": "Purchased products, funding method, customer details, vehicle details",
+          "where": "Product selections"
+        },
+        {
+          "documentId": "supplementary-invoice",
+          "what": "Additional products, values and funding method",
+          "where": "Products accepted section"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "sales-invoice",
+          "type": "align",
+          "note": "Purchased products must align."
+        },
+        {
+          "targetId": "insurance-registration",
+          "type": "align",
+          "note": "Registrations must reflect the final customer decision."
+        },
+        {
+          "targetId": "supplementary-invoice",
+          "type": "align",
+          "note": "Supplementary products should be supported by the customer's recorded decision."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Product selected but not registered.",
+        "Incorrect funding method.",
+        "Date discrepancies."
+      ]
+    },
+    {
+      "id": "finance-agreement",
+      "name": "Finance Agreement",
+      "shortName": "FA",
+      "importance": "critical",
+      "category": "Finance",
+      "scope": [
+        "finance"
+      ],
+      "rules": [
+        "Customer details must match supporting documents.",
+        "Vehicle details must match supporting documents.",
+        "Balance to finance must match the invoice.",
+        "Agreement type must match Adequate Explanations.",
+        "Annual mileage must match Adequate Explanations."
+      ],
+      "checks": [
+        {
+          "id": "fa-customer",
+          "text": "Verify customer details.",
+          "required": true
+        },
+        {
+          "id": "fa-vehicle",
+          "text": "Verify vehicle details.",
+          "required": true
+        },
+        {
+          "id": "fa-price",
+          "text": "Verify vehicle price.",
+          "required": true
+        },
+        {
+          "id": "fa-balance",
+          "text": "Verify balance to finance.",
+          "required": true
+        },
+        {
+          "id": "fa-type",
+          "text": "Verify agreement type.",
+          "required": true
+        },
+        {
+          "id": "fa-term",
+          "text": "Verify agreement term.",
+          "required": true
+        },
+        {
+          "id": "fa-mileage",
+          "text": "Verify annual mileage.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "customer-declaration",
+          "what": "Funding method, agreement type, agreement term",
+          "where": "Suitability and funding intentions"
+        },
+        {
+          "documentId": "sales-invoice",
+          "what": "Balance to finance, vehicle price, deposit",
+          "where": "Financial summary"
+        },
+        {
+          "documentId": "adequate-explanations",
+          "what": "Agreement type, agreement term, annual mileage",
+          "where": "Agreement details section"
+        },
+        {
+          "documentId": "commission-disclosure",
+          "what": "Finance provider and finance product",
+          "where": "Finance summary"
+        },
+        {
+          "documentId": "finance-provider-commission-disclosure",
+          "what": "Finance provider and finance product",
+          "where": "Finance summary"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "customer-declaration",
+          "type": "align",
+          "note": "Funding intentions should support the final agreement."
+        },
+        {
+          "targetId": "sales-invoice",
+          "type": "align",
+          "note": "Balance to finance must reconcile."
+        },
+        {
+          "targetId": "adequate-explanations",
+          "type": "align",
+          "note": "Agreement type, term and mileage must match."
+        },
+        {
+          "targetId": "commission-disclosure",
+          "type": "co-required",
+          "note": "Required on financed transactions."
+        },
+        {
+          "targetId": "finance-provider-commission-disclosure",
+          "type": "co-required",
+          "note": "Required where a lender-specific commission disclosure forms part of the finance journey."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Balance mismatch.",
+        "Agreement term mismatch.",
+        "Mileage mismatch.",
+        "Agreement type mismatch."
+      ]
+    },
+    {
+      "id": "commission-disclosure",
+      "name": "Commission Disclosure",
+      "shortName": "CDIS",
+      "importance": "critical",
+      "category": "Finance",
+      "scope": [
+        "finance"
+      ],
+      "rules": [
+        "Must be executed before finance submission.",
+        "Lender details must be accurate.",
+        "Finance product must be accurate.",
+        "Commission information must be accurate."
+      ],
+      "checks": [
+        {
+          "id": "com-date",
+          "text": "Verify commission disclosure timing.",
+          "required": true
+        },
+        {
+          "id": "com-lender",
+          "text": "Verify lender details.",
+          "required": true
+        },
+        {
+          "id": "com-product",
+          "text": "Verify finance product.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "finance-agreement",
+          "what": "Lender and finance product",
+          "where": "Finance summary"
+        },
+        {
+          "documentId": "proof-of-proposal",
+          "what": "Submission timing",
+          "where": "Execution timeline"
+        },
+        {
+          "documentId": "finance-provider-commission-disclosure",
+          "what": "Commission basis, commission amount, lender and finance product",
+          "where": "Commission disclosure section"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "finance-agreement",
+          "type": "co-required",
+          "note": "Required on financed transactions."
+        },
+        {
+          "targetId": "proof-of-proposal",
+          "type": "precedes",
+          "note": "Must be completed before proposal submission."
+        },
+        {
+          "targetId": "finance-provider-commission-disclosure",
+          "type": "align",
+          "note": "Commission disclosures should contain concurrent lender and commission information."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Signed after submission.",
+        "Incorrect lender.",
+        "Incorrect finance product."
+      ]
+    },
+    {
+      "id": "finance-provider-commission-disclosure",
+      "name": "Finance Provider Commission Disclosure",
+      "shortName": "FPCD",
+      "importance": "critical",
+      "category": "Finance",
+      "scope": [
+        "finance"
+      ],
+      "rules": [
+        "Must be completed where required by the lender.",
+        "Commission details must be accurate.",
+        "Finance provider details must be accurate.",
+        "Must reflect the finance agreement entered into."
+      ],
+      "checks": [
+        {
+          "id": "fpcd-lender",
+          "text": "Verify finance provider is correct.",
+          "required": true
+        },
+        {
+          "id": "fpcd-product",
+          "text": "Verify finance product is correct.",
+          "required": true
+        },
+        {
+          "id": "fpcd-commission",
+          "text": "Verify commission values are accurate.",
+          "required": true
+        },
+        {
+          "id": "fpcd-signature",
+          "text": "Verify customer execution is complete where required.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "finance-agreement",
+          "what": "Finance provider and finance product",
+          "where": "Agreement summary"
+        },
+        {
+          "documentId": "commission-disclosure",
+          "what": "Commission methodology and commission values",
+          "where": "Commission section"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "finance-agreement",
+          "type": "align",
+          "note": "Lender and finance product should match the executed agreement."
+        },
+        {
+          "targetId": "commission-disclosure",
+          "type": "align",
+          "note": "Commission values and methodology should be concurrent."
+        },
+        {
+          "targetId": "adequate-explanations",
+          "type": "co-required",
+          "note": "Expected alongside regulated finance documentation."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Incorrect lender selected.",
+        "Incorrect finance product.",
+        "Commission values differ between lender and group disclosures.",
+        "Missing customer execution where required.",
+        "Outdated disclosure version used."
+      ]
+    },
+    {
+      "id": "proof-of-proposal",
+      "name": "Proof of Proposal",
+      "shortName": "POP",
+      "importance": "high",
+      "category": "Finance",
+      "scope": [
+        "finance"
+      ],
+      "rules": [
+        "Must evidence proposal submission occurred after commission disclosure."
+      ],
+      "checks": [
+        {
+          "id": "pop-timestamp",
+          "text": "Verify submission timestamp.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "commission-disclosure",
+          "what": "Execution timing",
+          "where": "Proposal submission evidence"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "commission-disclosure",
+          "type": "co-required",
+          "note": "Proposal and disclosure timing must be verifiable."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Proposal submitted before disclosure."
+      ]
+    },
+    {
+      "id": "adequate-explanations",
+      "name": "Adequate Explanations",
+      "shortName": "AE",
+      "importance": "critical",
+      "category": "Suitability",
+      "scope": [
+        "finance"
+      ],
+      "rules": [
+        "Must reflect the final finance agreement.",
+        "Agreement type must match.",
+        "Agreement term must match.",
+        "Mileage must match.",
+        "Must be executed at handover."
+      ],
+      "checks": [
+        {
+          "id": "ae-type",
+          "text": "Verify agreement type.",
+          "required": true
+        },
+        {
+          "id": "ae-term",
+          "text": "Verify agreement term.",
+          "required": true
+        },
+        {
+          "id": "ae-mileage",
+          "text": "Verify annual mileage.",
+          "required": true
+        },
+        {
+          "id": "ae-date",
+          "text": "Verify execution date.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "finance-agreement",
+          "what": "Agreement type, agreement term, annual mileage",
+          "where": "Agreement details section"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "finance-agreement",
+          "type": "align",
+          "note": "Must reflect the final agreement entered into."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Mileage mismatch.",
+        "Agreement term mismatch.",
+        "Agreement type mismatch."
+      ]
+    },
+    {
+      "id": "insurance-registration",
+      "name": "Insurance Registration",
+      "shortName": "IR",
+      "importance": "high",
+      "category": "Insurance",
+      "scope": [
+        "insurance"
+      ],
+      "rules": [
+        "Policy registration must be accurate.",
+        "Policy inception date must be accurate.",
+        "Customer details must be accurate.",
+        "Vehicle details must be accurate."
+      ],
+      "checks": [
+        {
+          "id": "ir-customer",
+          "text": "Verify customer details.",
+          "required": true
+        },
+        {
+          "id": "ir-vehicle",
+          "text": "Verify vehicle details.",
+          "required": true
+        },
+        {
+          "id": "ir-inception",
+          "text": "Verify policy inception date.",
+          "required": true
+        },
+        {
+          "id": "ir-registration",
+          "text": "Verify policy registration completed.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "demands-needs-2",
+          "what": "Products purchased, funding method, customer details, vehicle details",
+          "where": "Policy registration details"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "demands-needs-2",
+          "type": "align",
+          "note": "Registration must reflect the customer's final decision."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Incorrect inception date.",
+        "Policy not registered.",
+        "Incorrect customer details.",
+        "Incorrect vehicle details."
+      ]
+    },
+    {
+      "id": "supervisor-notes",
+      "name": "Supervisor Notes",
+      "shortName": "SN",
+      "importance": "medium",
+      "category": "Audit",
+      "scope": [
+        "core",
+        "finance",
+        "insurance",
+        "supplementary-invoice"
+      ],
+      "rules": [
+        "Must explain material variances.",
+        "Must support the audit trail.",
+        "Cannot replace required documentation."
+      ],
+      "checks": [
+        {
+          "id": "sn-rationale",
+          "text": "Verify rationale is sufficient.",
+          "required": true
+        },
+        {
+          "id": "sn-impact",
+          "text": "Verify customer impact is addressed.",
+          "required": true
+        }
+      ],
+      "crossReference": [],
+      "relationships": [],
+      "bestPractice": "",
+      "commonErrors": [
+        "Insufficient explanation.",
+        "No note for material discrepancy.",
+        "Attempting to use notes instead of corrected documents."
+      ]
+    }
+  ],
+  "reconciliations": [
+    {
+      "from": "finance-agreement",
+      "to": "sales-invoice",
+      "check": "Balance to finance",
+      "severity": "critical"
+    },
+    {
+      "from": "finance-agreement",
+      "to": "adequate-explanations",
+      "check": "Agreement type",
+      "severity": "critical"
+    },
+    {
+      "from": "finance-agreement",
+      "to": "adequate-explanations",
+      "check": "Agreement term",
+      "severity": "critical"
+    },
+    {
+      "from": "finance-agreement",
+      "to": "adequate-explanations",
+      "check": "Annual mileage",
+      "severity": "critical"
+    },
+    {
+      "from": "finance-agreement",
+      "to": "customer-declaration",
+      "check": "Agreement term",
+      "severity": "high"
+    },
+    {
+      "from": "finance-agreement",
+      "to": "customer-declaration",
+      "check": "Funding method",
+      "severity": "high"
+    },
+    {
+      "from": "finance-agreement",
+      "to": "finance-provider-commission-disclosure",
+      "check": "Finance provider",
+      "severity": "critical"
+    },
+    {
+      "from": "finance-agreement",
+      "to": "finance-provider-commission-disclosure",
+      "check": "Finance product",
+      "severity": "critical"
+    },
+    {
+      "from": "commission-disclosure",
+      "to": "finance-provider-commission-disclosure",
+      "check": "Commission values",
+      "severity": "critical"
+    },
+    {
+      "from": "commission-disclosure",
+      "to": "finance-provider-commission-disclosure",
+      "check": "Commission methodology",
+      "severity": "critical"
+    },
+    {
+      "from": "sales-invoice",
+      "to": "finance-agreement",
+      "check": "Invoice to is the finance company and Deliver to is the customer",
+      "severity": "critical",
+      "when": {
+        "finance": true
+      }
+    },
+    {
+      "from": "supplementary-invoice",
+      "to": "sales-invoice",
+      "check": "Invoice to and Deliver to are both the customer",
+      "severity": "critical"
+    },
+    {
+      "from": "supplementary-invoice",
+      "to": "finance-agreement",
+      "check": "Ancillary items are not invoiced to the finance company",
+      "severity": "critical",
+      "when": {
+        "finance": true
+      }
+    }
+  ]
+}

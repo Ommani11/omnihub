@@ -189,7 +189,8 @@
           "when": {
             "finance": true
           }
-        }
+        },
+        "The customer signature date must match the handover date."
       ],
       "checks": [
         {
@@ -232,6 +233,11 @@
           "when": {
             "finance": true
           }
+        },
+        {
+          "id": "si-signature-date",
+          "text": "Verify the customer signature date matches the handover date on Demands & Needs 2.",
+          "required": true
         }
       ],
       "crossReference": [
@@ -260,6 +266,11 @@
           "when": {
             "finance": true
           }
+        },
+        {
+          "documentId": "demands-needs-2",
+          "what": "Customer signature date against the handover date",
+          "where": "Customer signature"
         }
       ],
       "relationships": [
@@ -288,6 +299,11 @@
           "when": {
             "finance": true
           }
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "align",
+          "note": "The signature date must match the handover date."
         }
       ],
       "bestPractice": "",
@@ -307,7 +323,8 @@
             "finance": true
           }
         },
-        "Deliver to is not the customer."
+        "Deliver to is not the customer.",
+        "Customer signature date does not match the handover date."
       ]
     },
     {
@@ -330,7 +347,8 @@
           "when": {
             "finance": true
           }
-        }
+        },
+        "The customer signature date must match the handover date."
       ],
       "checks": [
         {
@@ -370,6 +388,11 @@
           "when": {
             "finance": true
           }
+        },
+        {
+          "id": "supi-signature-date",
+          "text": "Verify the customer signature date matches the handover date.",
+          "required": true
         }
       ],
       "crossReference": [
@@ -403,6 +426,11 @@
           "when": {
             "finance": true
           }
+        },
+        {
+          "documentId": "demands-needs-2",
+          "what": "Customer signature date against the handover date",
+          "where": "Customer signature"
         }
       ],
       "relationships": [
@@ -436,6 +464,11 @@
           "when": {
             "finance": true
           }
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "align",
+          "note": "The signature date must match the handover date."
         }
       ],
       "bestPractice": "",
@@ -447,7 +480,8 @@
         "Vehicle details inconsistent with original invoice.",
         "Invoice to is not the customer.",
         "Deliver to is not the customer.",
-        "Ancillary items invoiced to a finance company."
+        "Ancillary items invoiced to a finance company.",
+        "Customer signature date does not match the handover date."
       ]
     },
     {
@@ -463,7 +497,7 @@
         "Must reflect the customer's final purchasing decision.",
         "Accepted and declined products must be recorded.",
         "Funding method for each product must be recorded.",
-        "Must align with delivery and handover."
+        "The date the customer signs this document is the handover date."
       ],
       "checks": [
         {
@@ -483,7 +517,7 @@
         },
         {
           "id": "dn2-date",
-          "text": "Verify delivery and execution dates.",
+          "text": "Verify the signature date. That date is the handover date and must match the iStoreDocs delivery date.",
           "required": true
         }
       ],
@@ -502,6 +536,11 @@
           "documentId": "supplementary-invoice",
           "what": "Additional products, values and funding method",
           "where": "Products accepted section"
+        },
+        {
+          "documentId": "file-timeline",
+          "what": "Handover date against the iStoreDocs delivery date",
+          "where": "Customer signature"
         }
       ],
       "relationships": [
@@ -519,13 +558,19 @@
           "targetId": "supplementary-invoice",
           "type": "align",
           "note": "Supplementary products should be supported by the customer's recorded decision."
+        },
+        {
+          "targetId": "file-timeline",
+          "type": "align",
+          "note": "The signature date is the handover date and must match the file delivery date."
         }
       ],
       "bestPractice": "",
       "commonErrors": [
         "Product selected but not registered.",
         "Incorrect funding method.",
-        "Date discrepancies."
+        "Date discrepancies.",
+        "Signature date does not match the iStoreDocs delivery date."
       ]
     },
     {
@@ -843,7 +888,7 @@
         "Agreement type must match.",
         "Agreement term must match.",
         "Mileage must match.",
-        "Must be executed at handover."
+        "The signature date must match the handover date."
       ],
       "checks": [
         {
@@ -863,7 +908,7 @@
         },
         {
           "id": "ae-date",
-          "text": "Verify execution date.",
+          "text": "Verify the signature date matches the handover date.",
           "required": true
         }
       ],
@@ -872,6 +917,11 @@
           "documentId": "finance-agreement",
           "what": "Agreement type, agreement term, annual mileage",
           "where": "Agreement details section"
+        },
+        {
+          "documentId": "demands-needs-2",
+          "what": "Signature date against the handover date",
+          "where": "Customer signature"
         }
       ],
       "relationships": [
@@ -879,13 +929,19 @@
           "targetId": "finance-agreement",
           "type": "align",
           "note": "Must reflect the final agreement entered into."
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "align",
+          "note": "The signature date must match the handover date."
         }
       ],
       "bestPractice": "",
       "commonErrors": [
         "Mileage mismatch.",
         "Agreement term mismatch.",
-        "Agreement type mismatch."
+        "Agreement type mismatch.",
+        "Signature date does not match the handover date."
       ]
     },
     {
@@ -899,9 +955,10 @@
       ],
       "rules": [
         "Policy registration must be accurate.",
-        "Policy inception date must be accurate.",
+        "Policy inception dates must match the handover date, except a policy agreed or sold after the car had left.",
         "Customer details must be accurate.",
-        "Vehicle details must be accurate."
+        "Vehicle details must be accurate.",
+        "A policy agreed or sold after the car had left is not a handover-date mismatch, but it must have clear supervisor notes."
       ],
       "checks": [
         {
@@ -916,12 +973,17 @@
         },
         {
           "id": "ir-inception",
-          "text": "Verify policy inception date.",
+          "text": "Verify the inception date matches the handover date, unless the policy was agreed or sold after the car had left.",
           "required": true
         },
         {
           "id": "ir-registration",
           "text": "Verify policy registration completed.",
+          "required": true
+        },
+        {
+          "id": "ir-after-handover",
+          "text": "If a policy was agreed or sold after the car had left, verify clear supervisor notes are on the file. This is not a handover-date mismatch.",
           "required": true
         }
       ],
@@ -930,6 +992,16 @@
           "documentId": "demands-needs-2",
           "what": "Products purchased, funding method, customer details, vehicle details",
           "where": "Policy registration details"
+        },
+        {
+          "documentId": "demands-needs-2",
+          "what": "Inception date against the handover date, excluding a policy sold after the car had left",
+          "where": "Inception date"
+        },
+        {
+          "documentId": "supervisor-notes",
+          "what": "Clear explanation of a policy agreed or sold after the car had left",
+          "where": "Supervisor notes"
         }
       ],
       "relationships": [
@@ -937,14 +1009,235 @@
           "targetId": "demands-needs-2",
           "type": "align",
           "note": "Registration must reflect the customer's final decision."
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "align",
+          "note": "Inception dates must match the handover date, except a policy sold after the car had left."
+        },
+        {
+          "targetId": "supervisor-notes",
+          "type": "align",
+          "note": "A policy sold after handover needs clear supervisor notes."
         }
       ],
-      "bestPractice": "",
+      "bestPractice": "Where a policy was agreed or sold after the car had left, keep supporting evidence, such as an email from the customer.",
       "commonErrors": [
         "Incorrect inception date.",
         "Policy not registered.",
         "Incorrect customer details.",
-        "Incorrect vehicle details."
+        "Incorrect vehicle details.",
+        "Inception date does not match the handover date, and the policy was not sold after the car had left.",
+        "Policy sold after the car had left with no clear supervisor notes."
+      ]
+    },
+    {
+      "id": "file-timeline",
+      "name": "File Timeline",
+      "shortName": "FT",
+      "importance": "high",
+      "category": "Audit",
+      "scope": [
+        "core"
+      ],
+      "rules": [
+        "The file on iStoreDocs must be created within 24 hours of the order being confirmed.",
+        "The handover date is the date the customer signs Demands & Needs 2.",
+        "The iStoreDocs delivery date is set from the handover diary and must match that handover date.",
+        "The customer signature date on the Sales Invoice must match the handover date.",
+        "Where finance is taken, the Adequate Explanations signature date must match the handover date.",
+        "Where a supplementary invoice is required, the customer signature date must match the handover date.",
+        "Where insurance is taken, policy inception dates must match the handover date, except a policy agreed or sold after handover, once the car has left.",
+        "The file must be closed within 7 days of handover.",
+        "A file allowed to go overdue is a record-keeping error.",
+        "A file still open 21 days after handover is a TCF issue.",
+        {
+          "text": "A policy agreed or sold after the car had left is not a handover-date mismatch, but it must have clear supervisor notes.",
+          "when": {
+            "insurance": true
+          }
+        }
+      ],
+      "checks": [
+        {
+          "id": "ft-created",
+          "text": "Verify the iStoreDocs file was created within 24 hours of the order being confirmed.",
+          "required": true
+        },
+        {
+          "id": "ft-delivery",
+          "text": "Verify the iStoreDocs delivery date was set from the handover diary and matches the date the customer signed Demands & Needs 2.",
+          "required": true
+        },
+        {
+          "id": "ft-si-date",
+          "text": "Verify the customer signature date on the Sales Invoice matches the handover date.",
+          "required": true
+        },
+        {
+          "id": "ft-ae-date",
+          "text": "Verify the Adequate Explanations signature date matches the handover date.",
+          "required": true,
+          "when": {
+            "finance": true
+          }
+        },
+        {
+          "id": "ft-supi-date",
+          "text": "Verify the supplementary invoice signature date matches the handover date.",
+          "required": true,
+          "when": {
+            "supplementaryInvoice": true
+          }
+        },
+        {
+          "id": "ft-ir-date",
+          "text": "Verify policy inception dates match the handover date, except a policy agreed or sold after the car had left.",
+          "required": true,
+          "when": {
+            "insurance": true
+          }
+        },
+        {
+          "id": "ft-ir-notes",
+          "text": "If a policy was agreed or sold after the car had left, verify clear supervisor notes are on the file. Supporting evidence, such as an email from the customer, should be kept.",
+          "required": true,
+          "when": {
+            "insurance": true
+          }
+        },
+        {
+          "id": "ft-closed",
+          "text": "Verify the file was closed within 7 days of handover.",
+          "required": true
+        },
+        {
+          "id": "ft-overdue",
+          "text": "Verify the file was not allowed to go overdue. Overdue is a record-keeping error.",
+          "required": true
+        },
+        {
+          "id": "ft-open-21",
+          "text": "Verify the file was not still open 21 days after handover. Still open is a TCF issue.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "order-form",
+          "what": "File creation date against the order confirmed date",
+          "where": "Order confirmation"
+        },
+        {
+          "documentId": "demands-needs-2",
+          "what": "Handover date, taken as the customer's signature date",
+          "where": "Signature"
+        },
+        {
+          "documentId": "sales-invoice",
+          "what": "Customer signature date",
+          "where": "Customer signature"
+        },
+        {
+          "documentId": "adequate-explanations",
+          "what": "Signature date against the handover date",
+          "where": "Customer signature",
+          "when": {
+            "finance": true
+          }
+        },
+        {
+          "documentId": "supplementary-invoice",
+          "what": "Customer signature date against the handover date",
+          "where": "Customer signature",
+          "when": {
+            "supplementaryInvoice": true
+          }
+        },
+        {
+          "documentId": "insurance-registration",
+          "what": "Policy inception date against the handover date, excluding a policy sold after the car had left",
+          "where": "Inception date",
+          "when": {
+            "insurance": true
+          }
+        },
+        {
+          "documentId": "supervisor-notes",
+          "what": "Clear explanation of a policy agreed or sold after the car had left",
+          "where": "Supervisor notes",
+          "when": {
+            "insurance": true
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "order-form",
+          "type": "align",
+          "note": "File creation must be within 24 hours of the order being confirmed."
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "align",
+          "note": "The handover date is the date the customer signs Demands & Needs 2."
+        },
+        {
+          "targetId": "sales-invoice",
+          "type": "align",
+          "note": "The Sales Invoice signature date must match the handover date."
+        },
+        {
+          "targetId": "adequate-explanations",
+          "type": "align",
+          "note": "The Adequate Explanations signature date must match the handover date.",
+          "when": {
+            "finance": true
+          }
+        },
+        {
+          "targetId": "supplementary-invoice",
+          "type": "align",
+          "note": "The supplementary invoice signature date must match the handover date.",
+          "when": {
+            "supplementaryInvoice": true
+          }
+        },
+        {
+          "targetId": "insurance-registration",
+          "type": "align",
+          "note": "Inception dates must match the handover date, except a policy sold after the car had left.",
+          "when": {
+            "insurance": true
+          }
+        },
+        {
+          "targetId": "supervisor-notes",
+          "type": "align",
+          "note": "A policy sold after handover needs clear supervisor notes.",
+          "when": {
+            "insurance": true
+          }
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "File created more than 24 hours after the order was confirmed.",
+        "iStoreDocs delivery date was not set from the handover diary.",
+        "iStoreDocs delivery date does not match the Demands & Needs 2 signature.",
+        "Sales Invoice signature date does not match the handover date.",
+        "Adequate Explanations signature date does not match the handover date.",
+        "Supplementary invoice signature date does not match the handover date.",
+        "Policy inception date does not match the handover date, and the policy was not sold after the car had left.",
+        "File not closed within 7 days of handover.",
+        "File allowed to go overdue. Record-keeping error.",
+        "File still open 21 days after handover. TCF issue.",
+        {
+          "text": "Policy sold after the car had left with no clear supervisor notes.",
+          "when": {
+            "insurance": true
+          }
+        }
       ]
     },
     {
@@ -962,7 +1255,13 @@
       "rules": [
         "Must explain material variances.",
         "Must support the audit trail.",
-        "Cannot replace required documentation."
+        "Cannot replace required documentation.",
+        {
+          "text": "A policy agreed or sold after the car had left must be explained clearly.",
+          "when": {
+            "insurance": true
+          }
+        }
       ],
       "checks": [
         {
@@ -974,15 +1273,47 @@
           "id": "sn-impact",
           "text": "Verify customer impact is addressed.",
           "required": true
+        },
+        {
+          "id": "sn-after-handover",
+          "text": "Where a policy was agreed or sold after the car had left, verify the note clearly explains it.",
+          "required": true,
+          "when": {
+            "insurance": true
+          }
         }
       ],
-      "crossReference": [],
-      "relationships": [],
+      "crossReference": [
+        {
+          "documentId": "insurance-registration",
+          "what": "Policy agreed or sold after the car had left",
+          "where": "Inception date",
+          "when": {
+            "insurance": true
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "insurance-registration",
+          "type": "align",
+          "note": "A policy sold after handover must be explained in the notes.",
+          "when": {
+            "insurance": true
+          }
+        }
+      ],
       "bestPractice": "",
       "commonErrors": [
         "Insufficient explanation.",
         "No note for material discrepancy.",
-        "Attempting to use notes instead of corrected documents."
+        "Attempting to use notes instead of corrected documents.",
+        {
+          "text": "No clear note for a policy sold after the car had left.",
+          "when": {
+            "insurance": true
+          }
+        }
       ]
     }
   ],
@@ -1069,6 +1400,60 @@
       "severity": "critical",
       "when": {
         "finance": true
+      }
+    },
+    {
+      "from": "file-timeline",
+      "to": "order-form",
+      "check": "iStoreDocs file created within 24 hours of the order being confirmed",
+      "severity": "critical"
+    },
+    {
+      "from": "file-timeline",
+      "to": "demands-needs-2",
+      "check": "iStoreDocs delivery date matches the Demands & Needs 2 signature",
+      "severity": "critical"
+    },
+    {
+      "from": "sales-invoice",
+      "to": "demands-needs-2",
+      "check": "Customer signature date matches the handover date",
+      "severity": "critical"
+    },
+    {
+      "from": "adequate-explanations",
+      "to": "demands-needs-2",
+      "check": "Signature date matches the handover date",
+      "severity": "critical",
+      "when": {
+        "finance": true
+      }
+    },
+    {
+      "from": "supplementary-invoice",
+      "to": "demands-needs-2",
+      "check": "Customer signature date matches the handover date",
+      "severity": "critical",
+      "when": {
+        "supplementaryInvoice": true
+      }
+    },
+    {
+      "from": "insurance-registration",
+      "to": "demands-needs-2",
+      "check": "Inception date matches the handover date, except a policy sold after the car had left",
+      "severity": "critical",
+      "when": {
+        "insurance": true
+      }
+    },
+    {
+      "from": "insurance-registration",
+      "to": "supervisor-notes",
+      "check": "A policy sold after the car had left has clear supervisor notes",
+      "severity": "high",
+      "when": {
+        "insurance": true
       }
     }
   ]

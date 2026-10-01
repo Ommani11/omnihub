@@ -525,8 +525,8 @@
       tags +
       '<span class="chip">' + progress.done + "/" + progress.required + " required</span>" +
       "</div>" +
-      rules +
       '<section class="section"><h3>Checks</h3>' + checksHtml(doc) + "</section>" +
+      rules +
       reconcileHtml(doc) +
       crossHtml(doc) +
       relationsHtml(doc) +

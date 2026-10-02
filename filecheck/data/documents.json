@@ -31,7 +31,8 @@
         "Customer details must be accurate.",
         "Vehicle details must be accurate.",
         "Vehicle price must be accurate.",
-        "Funding method must be recorded."
+        "Funding method must be recorded.",
+        "Must be signed by all parties."
       ],
       "checks": [
         {
@@ -57,6 +58,11 @@
         {
           "id": "of-products",
           "text": "Verify selected products are accurately recorded.",
+          "required": true
+        },
+        {
+          "id": "of-signed",
+          "text": "Verify the document is signed by all parties.",
           "required": true
         }
       ],
@@ -105,7 +111,9 @@
         "All qualification questions must be completed.",
         "Customer needs and objectives must be documented.",
         "Funding intentions should support the final outcome.",
-        "Eligibility responses must be completed."
+        "Eligibility responses must be completed.",
+        "Expected annual mileage and term must be recorded.",
+        "Must be signed by the customer."
       ],
       "checks": [
         {
@@ -126,6 +134,16 @@
         {
           "id": "cd-eligibility",
           "text": "Verify eligibility questions are completed.",
+          "required": true
+        },
+        {
+          "id": "cd-mileage-term",
+          "text": "Verify the expected annual mileage and term are recorded.",
+          "required": true
+        },
+        {
+          "id": "cd-signed",
+          "text": "Verify the document is signed by the customer.",
           "required": true
         }
       ],
@@ -190,7 +208,8 @@
             "finance": true
           }
         },
-        "The customer signature date must match the handover date."
+        "The customer signature date must match the handover date.",
+        "Must be signed by all parties."
       ],
       "checks": [
         {
@@ -237,6 +256,11 @@
         {
           "id": "si-signature-date",
           "text": "Verify the customer signature date matches the handover date on Demands & Needs 2.",
+          "required": true
+        },
+        {
+          "id": "si-signed",
+          "text": "Verify the document is signed by all parties.",
           "required": true
         }
       ],
@@ -348,7 +372,8 @@
             "finance": true
           }
         },
-        "The customer signature date must match the handover date."
+        "The customer signature date must match the handover date.",
+        "Must be signed by all parties."
       ],
       "checks": [
         {
@@ -392,6 +417,11 @@
         {
           "id": "supi-signature-date",
           "text": "Verify the customer signature date matches the handover date.",
+          "required": true
+        },
+        {
+          "id": "supi-signed",
+          "text": "Verify the document is signed by all parties.",
           "required": true
         }
       ],
@@ -497,7 +527,10 @@
         "Must reflect the customer's final purchasing decision.",
         "Accepted and declined products must be recorded.",
         "Funding method for each product must be recorded.",
-        "The date the customer signs this document is the handover date."
+        "The date the customer signs this document is the handover date.",
+        "Customer details must be correct.",
+        "Vehicle details must be correct.",
+        "Must be signed by all parties."
       ],
       "checks": [
         {
@@ -511,8 +544,18 @@
           "required": true
         },
         {
-          "id": "dn2-signature",
-          "text": "Verify execution is complete.",
+          "id": "dn2-customer",
+          "text": "Verify the correct customer details.",
+          "required": true
+        },
+        {
+          "id": "dn2-vehicle",
+          "text": "Verify the correct vehicle details.",
+          "required": true
+        },
+        {
+          "id": "dn2-signed",
+          "text": "Verify the document is signed by all parties.",
           "required": true
         },
         {
@@ -701,7 +744,12 @@
         "Must be executed before finance submission.",
         "Lender details must be accurate.",
         "Finance product must be accurate.",
-        "Commission information must be accurate."
+        "Commission information must be accurate.",
+        "The document header must be completed correctly.",
+        "The correct commission must be disclosed.",
+        "The correct method of calculation must be disclosed.",
+        "Must be signed by all parties.",
+        "There must be the correct number of signed disclosures for the proposals submitted."
       ],
       "checks": [
         {
@@ -716,7 +764,27 @@
         },
         {
           "id": "com-product",
-          "text": "Verify finance product.",
+          "text": "Verify the document header is completed correctly.",
+          "required": true
+        },
+        {
+          "id": "com-commission",
+          "text": "Verify the correct commission has been disclosed.",
+          "required": true
+        },
+        {
+          "id": "com-method",
+          "text": "Verify the correct method of calculation has been disclosed.",
+          "required": true
+        },
+        {
+          "id": "com-signed",
+          "text": "Verify the document is signed by all parties.",
+          "required": true
+        },
+        {
+          "id": "com-count",
+          "text": "Verify there are the correct number of signed disclosures for the proposals submitted.",
           "required": true
         }
       ],
@@ -794,7 +862,7 @@
         },
         {
           "id": "fpcd-signature",
-          "text": "Verify customer execution is complete where required.",
+          "text": "Verify the document is signed by the customer where applicable.",
           "required": true
         }
       ],
@@ -832,7 +900,7 @@
         "Incorrect lender selected.",
         "Incorrect finance product.",
         "Commission values differ between lender and group disclosures.",
-        "Missing customer execution where required.",
+        "Missing customer signature where applicable.",
         "Outdated disclosure version used."
       ]
     },
@@ -846,12 +914,24 @@
         "finance"
       ],
       "rules": [
-        "Must evidence proposal submission occurred after commission disclosure."
+        "Must evidence proposal submission occurred after commission disclosure.",
+        "Customer details must be accurate.",
+        "The proposal must have occurred after the EWMG CDD was signed."
       ],
       "checks": [
         {
           "id": "pop-timestamp",
           "text": "Verify submission timestamp.",
+          "required": true
+        },
+        {
+          "id": "pop-customer",
+          "text": "Verify customer details.",
+          "required": true
+        },
+        {
+          "id": "pop-after-cdd",
+          "text": "Verify the proposal occurred after the EWMG CDD was signed.",
           "required": true
         }
       ],
@@ -886,9 +966,10 @@
       "rules": [
         "Must reflect the final finance agreement.",
         "Agreement type must match.",
-        "Agreement term must match.",
         "Mileage must match.",
-        "The signature date must match the handover date."
+        "The signature date must match the handover date.",
+        "Customer details must be correct.",
+        "Must be signed by all parties."
       ],
       "checks": [
         {
@@ -897,8 +978,8 @@
           "required": true
         },
         {
-          "id": "ae-term",
-          "text": "Verify agreement term.",
+          "id": "ae-customer",
+          "text": "Verify customer details.",
           "required": true
         },
         {
@@ -909,6 +990,11 @@
         {
           "id": "ae-date",
           "text": "Verify the signature date matches the handover date.",
+          "required": true
+        },
+        {
+          "id": "ae-signed",
+          "text": "Verify the document is signed by all parties.",
           "required": true
         }
       ],
@@ -939,7 +1025,6 @@
       "bestPractice": "",
       "commonErrors": [
         "Mileage mismatch.",
-        "Agreement term mismatch.",
         "Agreement type mismatch.",
         "Signature date does not match the handover date."
       ]
@@ -1042,12 +1127,6 @@
       ],
       "rules": [
         "The file on iStoreDocs must be created within 24 hours of the order being confirmed.",
-        "The handover date is the date the customer signs Demands & Needs 2.",
-        "The iStoreDocs delivery date is set from the handover diary and must match that handover date.",
-        "The customer signature date on the Sales Invoice must match the handover date.",
-        "Where finance is taken, the Adequate Explanations signature date must match the handover date.",
-        "Where a supplementary invoice is required, the customer signature date must match the handover date.",
-        "Where insurance is taken, policy inception dates must match the handover date, except a policy agreed or sold after handover, once the car has left.",
         "The file must be closed within 7 days of handover.",
         "A file allowed to go overdue is a record-keeping error.",
         "A file still open 21 days after handover is a TCF issue.",
@@ -1063,40 +1142,6 @@
           "id": "ft-created",
           "text": "Verify the iStoreDocs file was created within 24 hours of the order being confirmed.",
           "required": true
-        },
-        {
-          "id": "ft-delivery",
-          "text": "Verify the iStoreDocs delivery date was set from the handover diary and matches the date the customer signed Demands & Needs 2.",
-          "required": true
-        },
-        {
-          "id": "ft-si-date",
-          "text": "Verify the customer signature date on the Sales Invoice matches the handover date.",
-          "required": true
-        },
-        {
-          "id": "ft-ae-date",
-          "text": "Verify the Adequate Explanations signature date matches the handover date.",
-          "required": true,
-          "when": {
-            "finance": true
-          }
-        },
-        {
-          "id": "ft-supi-date",
-          "text": "Verify the supplementary invoice signature date matches the handover date.",
-          "required": true,
-          "when": {
-            "supplementaryInvoice": true
-          }
-        },
-        {
-          "id": "ft-ir-date",
-          "text": "Verify policy inception dates match the handover date, except a policy agreed or sold after the car had left.",
-          "required": true,
-          "when": {
-            "insurance": true
-          }
         },
         {
           "id": "ft-ir-notes",
@@ -1129,40 +1174,6 @@
           "where": "Order confirmation"
         },
         {
-          "documentId": "demands-needs-2",
-          "what": "Handover date, taken as the customer's signature date",
-          "where": "Signature"
-        },
-        {
-          "documentId": "sales-invoice",
-          "what": "Customer signature date",
-          "where": "Customer signature"
-        },
-        {
-          "documentId": "adequate-explanations",
-          "what": "Signature date against the handover date",
-          "where": "Customer signature",
-          "when": {
-            "finance": true
-          }
-        },
-        {
-          "documentId": "supplementary-invoice",
-          "what": "Customer signature date against the handover date",
-          "where": "Customer signature",
-          "when": {
-            "supplementaryInvoice": true
-          }
-        },
-        {
-          "documentId": "insurance-registration",
-          "what": "Policy inception date against the handover date, excluding a policy sold after the car had left",
-          "where": "Inception date",
-          "when": {
-            "insurance": true
-          }
-        },
-        {
           "documentId": "supervisor-notes",
           "what": "Clear explanation of a policy agreed or sold after the car had left",
           "where": "Supervisor notes",
@@ -1178,40 +1189,6 @@
           "note": "File creation must be within 24 hours of the order being confirmed."
         },
         {
-          "targetId": "demands-needs-2",
-          "type": "align",
-          "note": "The handover date is the date the customer signs Demands & Needs 2."
-        },
-        {
-          "targetId": "sales-invoice",
-          "type": "align",
-          "note": "The Sales Invoice signature date must match the handover date."
-        },
-        {
-          "targetId": "adequate-explanations",
-          "type": "align",
-          "note": "The Adequate Explanations signature date must match the handover date.",
-          "when": {
-            "finance": true
-          }
-        },
-        {
-          "targetId": "supplementary-invoice",
-          "type": "align",
-          "note": "The supplementary invoice signature date must match the handover date.",
-          "when": {
-            "supplementaryInvoice": true
-          }
-        },
-        {
-          "targetId": "insurance-registration",
-          "type": "align",
-          "note": "Inception dates must match the handover date, except a policy sold after the car had left.",
-          "when": {
-            "insurance": true
-          }
-        },
-        {
           "targetId": "supervisor-notes",
           "type": "align",
           "note": "A policy sold after handover needs clear supervisor notes.",
@@ -1223,12 +1200,6 @@
       "bestPractice": "",
       "commonErrors": [
         "File created more than 24 hours after the order was confirmed.",
-        "iStoreDocs delivery date was not set from the handover diary.",
-        "iStoreDocs delivery date does not match the Demands & Needs 2 signature.",
-        "Sales Invoice signature date does not match the handover date.",
-        "Adequate Explanations signature date does not match the handover date.",
-        "Supplementary invoice signature date does not match the handover date.",
-        "Policy inception date does not match the handover date, and the policy was not sold after the car had left.",
         "File not closed within 7 days of handover.",
         "File allowed to go overdue. Record-keeping error.",
         "File still open 21 days after handover. TCF issue.",
@@ -1261,7 +1232,8 @@
           "when": {
             "insurance": true
           }
-        }
+        },
+        "Ad-hoc or ancillary supporting evidence must be uploaded or recorded."
       ],
       "checks": [
         {
@@ -1281,6 +1253,11 @@
           "when": {
             "insurance": true
           }
+        },
+        {
+          "id": "sn-evidence",
+          "text": "Verify all ad-hoc or ancillary supporting evidence has been uploaded or recorded.",
+          "required": true
         }
       ],
       "crossReference": [
@@ -1328,12 +1305,6 @@
       "from": "finance-agreement",
       "to": "adequate-explanations",
       "check": "Agreement type",
-      "severity": "critical"
-    },
-    {
-      "from": "finance-agreement",
-      "to": "adequate-explanations",
-      "check": "Agreement term",
       "severity": "critical"
     },
     {
@@ -1406,12 +1377,6 @@
       "from": "file-timeline",
       "to": "order-form",
       "check": "iStoreDocs file created within 24 hours of the order being confirmed",
-      "severity": "critical"
-    },
-    {
-      "from": "file-timeline",
-      "to": "demands-needs-2",
-      "check": "iStoreDocs delivery date matches the Demands & Needs 2 signature",
       "severity": "critical"
     },
     {

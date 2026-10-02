@@ -37,17 +37,17 @@
       "checks": [
         {
           "id": "of-customer-details",
-          "text": "Verify customer details are complete and accurate.",
+          "text": "Verify customer details.",
           "required": true
         },
         {
           "id": "of-vehicle-details",
-          "text": "Verify vehicle details match the transaction.",
+          "text": "Verify vehicle details.",
           "required": true
         },
         {
           "id": "of-price",
-          "text": "Verify vehicle price is correct.",
+          "text": "Verify vehicle price.",
           "required": true
         },
         {
@@ -203,7 +203,7 @@
             "finance": true
           }
         },
-        "The customer signature date must match the handover date.",
+        "The signature date must match the handover date.",
         "Must be signed by all parties."
       ],
       "checks": [
@@ -245,7 +245,7 @@
         },
         {
           "id": "si-signature-date",
-          "text": "Verify the customer signature date matches the handover date on Demands & Needs 2.",
+          "text": "Verify the signature date matches the handover date.",
           "required": true
         },
         {
@@ -283,7 +283,7 @@
         },
         {
           "documentId": "demands-needs-2",
-          "what": "Customer signature date against the handover date",
+          "what": "Signature date against the handover date",
           "where": "Customer signature"
         }
       ],
@@ -337,7 +337,7 @@
           }
         },
         "Deliver to is not the customer.",
-        "Customer signature date does not match the handover date."
+        "Signature date does not match the handover date."
       ]
     },
     {
@@ -355,18 +355,18 @@
         "Values must reconcile to supporting documentation.",
         "Any regulated product additions must be supported by the appropriate documentation.",
         "Invoice to and Deliver to must both be the customer.",
-        "The customer signature date must match the handover date.",
+        "The signature date must match the handover date.",
         "Must be signed by all parties."
       ],
       "checks": [
         {
           "id": "supi-customer",
-          "text": "Verify customer details match the core file.",
+          "text": "Verify customer details.",
           "required": true
         },
         {
           "id": "supi-vehicle",
-          "text": "Verify vehicle details match the core file.",
+          "text": "Verify vehicle details.",
           "required": true
         },
         {
@@ -391,7 +391,7 @@
         },
         {
           "id": "supi-signature-date",
-          "text": "Verify the customer signature date matches the handover date.",
+          "text": "Verify the signature date matches the handover date.",
           "required": true
         },
         {
@@ -418,7 +418,7 @@
         },
         {
           "documentId": "demands-needs-2",
-          "what": "Customer signature date against the handover date",
+          "what": "Signature date against the handover date",
           "where": "Customer signature"
         }
       ],
@@ -452,7 +452,7 @@
         "Vehicle details inconsistent with original invoice.",
         "Invoice to is not the customer.",
         "Deliver to is not the customer.",
-        "Customer signature date does not match the handover date."
+        "Signature date does not match the handover date."
       ]
     },
     {
@@ -478,12 +478,12 @@
       "checks": [
         {
           "id": "dn2-customer",
-          "text": "Verify the correct customer details.",
+          "text": "Verify customer details.",
           "required": true
         },
         {
           "id": "dn2-vehicle",
-          "text": "Verify the correct vehicle details.",
+          "text": "Verify vehicle details.",
           "required": true
         },
         {
@@ -710,7 +710,7 @@
         "Commission information must be accurate.",
         "The document header must be completed correctly.",
         "The correct commission must be disclosed.",
-        "The correct method of calculation must be disclosed.",
+        "The method of calculation must be correct.",
         "Must be signed by all parties.",
         "There must be the correct number of signed disclosures for the proposals submitted."
       ],
@@ -737,7 +737,7 @@
         },
         {
           "id": "com-method",
-          "text": "Verify the correct method of calculation has been disclosed.",
+          "text": "Verify the method of calculation is correct.",
           "required": true
         },
         {
@@ -1324,7 +1324,7 @@
     {
       "from": "sales-invoice",
       "to": "demands-needs-2",
-      "check": "Customer signature date matches the handover date",
+      "check": "Signature date matches the handover date",
       "severity": "critical"
     },
     {
@@ -1339,7 +1339,7 @@
     {
       "from": "supplementary-invoice",
       "to": "demands-needs-2",
-      "check": "Customer signature date matches the handover date",
+      "check": "Signature date matches the handover date",
       "severity": "critical",
       "when": {
         "supplementaryInvoice": true

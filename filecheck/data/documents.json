@@ -74,7 +74,7 @@
         },
         {
           "documentId": "sales-invoice",
-          "what": "Vehicle details, vehicle price, deposit",
+          "what": "Vehicle details, vehicle price",
           "where": "Commercial summary"
         }
       ],
@@ -111,7 +111,6 @@
         "All qualification questions must be completed.",
         "Customer needs and objectives must be documented.",
         "Funding intentions should support the final outcome.",
-        "Eligibility responses must be completed.",
         "Expected annual mileage and term must be recorded.",
         "Must be signed by the customer."
       ],
@@ -129,11 +128,6 @@
         {
           "id": "cd-needs",
           "text": "Verify declared needs support the outcome.",
-          "required": true
-        },
-        {
-          "id": "cd-eligibility",
-          "text": "Verify eligibility questions are completed.",
           "required": true
         },
         {
@@ -155,7 +149,7 @@
         },
         {
           "documentId": "finance-agreement",
-          "what": "Funding method, agreement type, agreement term",
+          "what": "Funding method, agreement type, agreement term, agreement mileage",
           "where": "Funding requirements and suitability sections"
         }
       ],
@@ -180,7 +174,8 @@
       "commonErrors": [
         "Funding method differs from final outcome.",
         "Agreement term differs from finance agreement.",
-        "Incomplete customer responses."
+        "Incomplete customer responses.",
+        "Agreement mileage differs from the finance agreement."
       ]
     },
     {
@@ -215,11 +210,6 @@
         {
           "id": "si-price",
           "text": "Verify vehicle price.",
-          "required": true
-        },
-        {
-          "id": "si-deposit",
-          "text": "Verify deposit value.",
           "required": true
         },
         {
@@ -267,7 +257,7 @@
       "crossReference": [
         {
           "documentId": "order-form",
-          "what": "Vehicle details, vehicle price, deposit",
+          "what": "Vehicle details, vehicle price",
           "where": "Vehicle and commercial sections"
         },
         {
@@ -333,7 +323,6 @@
       "bestPractice": "",
       "commonErrors": [
         "Balance mismatch.",
-        "Incorrect deposit.",
         "Incorrect vehicle price.",
         {
           "text": "Cash or self-funded purchase invoiced to a finance company.",
@@ -366,12 +355,6 @@
         "Values must reconcile to supporting documentation.",
         "Any regulated product additions must be supported by the appropriate documentation.",
         "Invoice to and Deliver to must both be the customer.",
-        {
-          "text": "Ancillary items must not be invoiced to the finance company.",
-          "when": {
-            "finance": true
-          }
-        },
         "The customer signature date must match the handover date.",
         "Must be signed by all parties."
       ],
@@ -407,14 +390,6 @@
           "required": true
         },
         {
-          "id": "supi-not-finance-company",
-          "text": "Verify ancillary items are not invoiced to the finance company.",
-          "required": true,
-          "when": {
-            "finance": true
-          }
-        },
-        {
           "id": "supi-signature-date",
           "text": "Verify the customer signature date matches the handover date.",
           "required": true
@@ -437,25 +412,9 @@
           "where": "Product decision section"
         },
         {
-          "documentId": "finance-agreement",
-          "what": "Funded product values",
-          "where": "Additional advances and financed products",
-          "when": {
-            "finance": true
-          }
-        },
-        {
           "documentId": "sales-invoice",
           "what": "Supplementary invoice stays customer and customer, even when the sales invoice is invoiced to the finance company",
           "where": "Invoice header"
-        },
-        {
-          "documentId": "finance-agreement",
-          "what": "Ancillary items are invoiced to the customer, not the finance company",
-          "where": "Invoice header",
-          "when": {
-            "finance": true
-          }
         },
         {
           "documentId": "demands-needs-2",
@@ -475,25 +434,9 @@
           "note": "Products and funding method should reflect the customer's decision."
         },
         {
-          "targetId": "finance-agreement",
-          "type": "align",
-          "note": "Funded products must reconcile where included in finance.",
-          "when": {
-            "finance": true
-          }
-        },
-        {
           "targetId": "demands-needs-2",
           "type": "co-required",
           "note": "Evidence of customer acceptance should exist for regulated products."
-        },
-        {
-          "targetId": "finance-agreement",
-          "type": "align",
-          "note": "Ancillary items must be invoiced to the customer, not the finance company.",
-          "when": {
-            "finance": true
-          }
         },
         {
           "targetId": "demands-needs-2",
@@ -505,12 +448,10 @@
       "commonErrors": [
         "Product added but not reflected on D&N2.",
         "Product funded incorrectly.",
-        "Supplementary amount not reflected in finance documentation.",
         "Customer details inconsistent with original invoice.",
         "Vehicle details inconsistent with original invoice.",
         "Invoice to is not the customer.",
         "Deliver to is not the customer.",
-        "Ancillary items invoiced to a finance company.",
         "Customer signature date does not match the handover date."
       ]
     },
@@ -530,7 +471,9 @@
         "The date the customer signs this document is the handover date.",
         "Customer details must be correct.",
         "Vehicle details must be correct.",
-        "Must be signed by all parties."
+        "Must be signed by all parties.",
+        "The final decision on method of funding must match the sales invoice.",
+        "Ineligible products must be marked accordingly."
       ],
       "checks": [
         {
@@ -539,8 +482,18 @@
           "required": true
         },
         {
+          "id": "dn2-ineligible",
+          "text": "Verify any ineligible products are marked accordingly.",
+          "required": true
+        },
+        {
           "id": "dn2-funding",
           "text": "Verify funding method for each product.",
+          "required": true
+        },
+        {
+          "id": "dn2-funding-decision",
+          "text": "Verify final decision on method of funding.",
           "required": true
         },
         {
@@ -606,6 +559,16 @@
           "targetId": "file-timeline",
           "type": "align",
           "note": "The signature date is the handover date and must match the file delivery date."
+        },
+        {
+          "targetId": "sales-invoice",
+          "type": "align",
+          "note": "The final funding decision must match the sales invoice."
+        },
+        {
+          "targetId": "customer-declaration",
+          "type": "align",
+          "note": "Ineligible products must be marked in line with the customer declaration."
         }
       ],
       "bestPractice": "",
@@ -672,12 +635,12 @@
       "crossReference": [
         {
           "documentId": "customer-declaration",
-          "what": "Funding method, agreement type, agreement term",
+          "what": "Funding method, agreement type, agreement term, agreement mileage",
           "where": "Suitability and funding intentions"
         },
         {
           "documentId": "sales-invoice",
-          "what": "Balance to finance, vehicle price, deposit",
+          "what": "Balance to finance, vehicle price",
           "where": "Financial summary"
         },
         {
@@ -692,7 +655,7 @@
         },
         {
           "documentId": "finance-provider-commission-disclosure",
-          "what": "Finance provider and finance product",
+          "what": "Finance provider",
           "where": "Finance summary"
         }
       ],
@@ -801,7 +764,7 @@
         },
         {
           "documentId": "finance-provider-commission-disclosure",
-          "what": "Commission basis, commission amount, lender and finance product",
+          "what": "Commission basis, commission amount and lender",
           "where": "Commission disclosure section"
         }
       ],
@@ -842,7 +805,8 @@
         "Must be completed where required by the lender.",
         "Commission details must be accurate.",
         "Finance provider details must be accurate.",
-        "Must reflect the finance agreement entered into."
+        "Must reflect the finance agreement entered into.",
+        "The method of calculation must be correct."
       ],
       "checks": [
         {
@@ -851,13 +815,13 @@
           "required": true
         },
         {
-          "id": "fpcd-product",
-          "text": "Verify finance product is correct.",
+          "id": "fpcd-commission",
+          "text": "Verify commission values are accurate.",
           "required": true
         },
         {
-          "id": "fpcd-commission",
-          "text": "Verify commission values are accurate.",
+          "id": "fpcd-method",
+          "text": "Verify the method of calculation is correct.",
           "required": true
         },
         {
@@ -869,7 +833,7 @@
       "crossReference": [
         {
           "documentId": "finance-agreement",
-          "what": "Finance provider and finance product",
+          "what": "Finance provider",
           "where": "Agreement summary"
         },
         {
@@ -882,7 +846,7 @@
         {
           "targetId": "finance-agreement",
           "type": "align",
-          "note": "Lender and finance product should match the executed agreement."
+          "note": "Finance provider should match the executed agreement."
         },
         {
           "targetId": "commission-disclosure",
@@ -898,7 +862,6 @@
       "bestPractice": "",
       "commonErrors": [
         "Incorrect lender selected.",
-        "Incorrect finance product.",
         "Commission values differ between lender and group disclosures.",
         "Missing customer signature where applicable.",
         "Outdated disclosure version used."
@@ -1332,12 +1295,6 @@
       "severity": "critical"
     },
     {
-      "from": "finance-agreement",
-      "to": "finance-provider-commission-disclosure",
-      "check": "Finance product",
-      "severity": "critical"
-    },
-    {
       "from": "commission-disclosure",
       "to": "finance-provider-commission-disclosure",
       "check": "Commission values",
@@ -1353,21 +1310,6 @@
       "from": "sales-invoice",
       "to": "finance-agreement",
       "check": "Invoice to is the finance company and Deliver to is the customer",
-      "severity": "critical",
-      "when": {
-        "finance": true
-      }
-    },
-    {
-      "from": "supplementary-invoice",
-      "to": "sales-invoice",
-      "check": "Invoice to and Deliver to are both the customer",
-      "severity": "critical"
-    },
-    {
-      "from": "supplementary-invoice",
-      "to": "finance-agreement",
-      "check": "Ancillary items are not invoiced to the finance company",
       "severity": "critical",
       "when": {
         "finance": true
@@ -1419,6 +1361,36 @@
       "severity": "high",
       "when": {
         "insurance": true
+      }
+    },
+    {
+      "from": "customer-declaration",
+      "to": "finance-agreement",
+      "check": "Agreement mileage",
+      "severity": "critical",
+      "when": {
+        "finance": true
+      }
+    },
+    {
+      "from": "demands-needs-2",
+      "to": "sales-invoice",
+      "check": "Final decision on method of funding",
+      "severity": "critical"
+    },
+    {
+      "from": "demands-needs-2",
+      "to": "customer-declaration",
+      "check": "Ineligible products are marked accordingly",
+      "severity": "high"
+    },
+    {
+      "from": "commission-disclosure",
+      "to": "proof-of-proposal",
+      "check": "Commission disclosure completed before the proposal",
+      "severity": "critical",
+      "when": {
+        "finance": true
       }
     }
   ]

@@ -208,16 +208,6 @@
       ],
       "checks": [
         {
-          "id": "si-price",
-          "text": "Verify vehicle price.",
-          "required": true
-        },
-        {
-          "id": "si-balance",
-          "text": "Verify balance outstanding.",
-          "required": true
-        },
-        {
           "id": "si-customer",
           "text": "Verify customer details.",
           "required": true
@@ -225,6 +215,16 @@
         {
           "id": "si-vehicle",
           "text": "Verify vehicle details.",
+          "required": true
+        },
+        {
+          "id": "si-price",
+          "text": "Verify vehicle price.",
+          "required": true
+        },
+        {
+          "id": "si-balance",
+          "text": "Verify balance outstanding.",
           "required": true
         },
         {
@@ -360,6 +360,16 @@
       ],
       "checks": [
         {
+          "id": "supi-customer",
+          "text": "Verify customer details match the core file.",
+          "required": true
+        },
+        {
+          "id": "supi-vehicle",
+          "text": "Verify vehicle details match the core file.",
+          "required": true
+        },
+        {
           "id": "supi-products",
           "text": "Verify all supplementary products are correctly itemised.",
           "required": true
@@ -372,16 +382,6 @@
         {
           "id": "supi-funding",
           "text": "Verify funding method for each supplementary item.",
-          "required": true
-        },
-        {
-          "id": "supi-customer",
-          "text": "Verify customer details match the core file.",
-          "required": true
-        },
-        {
-          "id": "supi-vehicle",
-          "text": "Verify vehicle details match the core file.",
           "required": true
         },
         {
@@ -477,6 +477,16 @@
       ],
       "checks": [
         {
+          "id": "dn2-customer",
+          "text": "Verify the correct customer details.",
+          "required": true
+        },
+        {
+          "id": "dn2-vehicle",
+          "text": "Verify the correct vehicle details.",
+          "required": true
+        },
+        {
           "id": "dn2-products",
           "text": "Verify accepted and declined products.",
           "required": true
@@ -493,27 +503,17 @@
         },
         {
           "id": "dn2-funding-decision",
-          "text": "Verify final decision on method of funding.",
-          "required": true
-        },
-        {
-          "id": "dn2-customer",
-          "text": "Verify the correct customer details.",
-          "required": true
-        },
-        {
-          "id": "dn2-vehicle",
-          "text": "Verify the correct vehicle details.",
-          "required": true
-        },
-        {
-          "id": "dn2-signed",
-          "text": "Verify the document is signed by all parties.",
+          "text": "Verify final decision on method of funding the vehicle.",
           "required": true
         },
         {
           "id": "dn2-date",
           "text": "Verify the signature date. That date is the handover date and must match the iStoreDocs delivery date.",
+          "required": true
+        },
+        {
+          "id": "dn2-signed",
+          "text": "Verify the document is signed by all parties.",
           "required": true
         }
       ],
@@ -741,13 +741,13 @@
           "required": true
         },
         {
-          "id": "com-signed",
-          "text": "Verify the document is signed by all parties.",
+          "id": "com-count",
+          "text": "Verify there are the correct number of signed disclosures for the proposals submitted.",
           "required": true
         },
         {
-          "id": "com-count",
-          "text": "Verify there are the correct number of signed disclosures for the proposals submitted.",
+          "id": "com-signed",
+          "text": "Verify the document is signed by all parties.",
           "required": true
         }
       ],
@@ -883,13 +883,13 @@
       ],
       "checks": [
         {
-          "id": "pop-timestamp",
-          "text": "Verify submission timestamp.",
+          "id": "pop-customer",
+          "text": "Verify customer details.",
           "required": true
         },
         {
-          "id": "pop-customer",
-          "text": "Verify customer details.",
+          "id": "pop-timestamp",
+          "text": "Verify submission timestamp.",
           "required": true
         },
         {
@@ -936,13 +936,13 @@
       ],
       "checks": [
         {
-          "id": "ae-type",
-          "text": "Verify agreement type.",
+          "id": "ae-customer",
+          "text": "Verify customer details.",
           "required": true
         },
         {
-          "id": "ae-customer",
-          "text": "Verify customer details.",
+          "id": "ae-type",
+          "text": "Verify agreement type.",
           "required": true
         },
         {

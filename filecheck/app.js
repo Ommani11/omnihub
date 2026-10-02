@@ -352,6 +352,21 @@
     return { required: required.length, done: done, status: status };
   }
 
+  function fileIsNew() {
+    var progress = fileProgress();
+    return progress.required > 0 && progress.done === 0;
+  }
+
+  function nodeLabel(doc) {
+    if (doc.id === "order-form" && fileIsNew()) return "Start\nOF";
+    return doc.shortName;
+  }
+
+  function nodeTitle(doc) {
+    if (doc.id === "order-form" && fileIsNew()) return "Start here — " + doc.name;
+    return doc.name + " — " + doc.importance;
+  }
+
   function fileProgress() {
     var docs = visibleDocuments();
     var required = 0;
@@ -653,21 +668,24 @@
 
   function nodeOptions(doc, dim) {
     var progress = docProgress(doc);
-    var border = progress.status === "complete" ? DONE : progress.status === "progress" ? STEEL : MUTED;
+    var start = doc.id === "order-form" && fileIsNew();
+    var border = progress.status === "complete" ? DONE : progress.status === "progress" ? STEEL : (start ? STEEL : MUTED);
     var fill = doc.importance === "medium" || doc.importance === "low" ? STEEL : NAVY;
-    var width = progress.status === "complete" ? 8 : progress.status === "untouched" ? 2 : 4;
+    var width = progress.status === "complete" ? 8 : start ? 7 : progress.status === "untouched" ? 2 : 4;
     return {
       borderWidth: dim ? 2 : width,
       color: {
         background: dim ? rgba(fill, 0.16) : fill,
-        border: dim ? rgba(border, progress.status === "complete" ? 0.85 : 0.28) : border,
+        border: dim ? rgba(border, start || progress.status === "complete" ? 0.85 : 0.28) : border,
         highlight: { background: fill, border: border },
         hover: { background: fill, border: border }
       },
       font: {
         color: dim ? rgba(INK, 0.28) : INK,
-        size: 13,
-        face: "Source Sans 3"
+        size: start && !dim ? 15 : 13,
+        face: "Source Sans 3",
+        strokeWidth: start ? 5 : 0,
+        strokeColor: "#f3f0e8"
       },
       size: SIZE[doc.importance] || 20
     };
@@ -677,8 +695,8 @@
     var visual = nodeOptions(doc, false);
     var node = {
       id: doc.id,
-      label: doc.shortName,
-      title: doc.name + " — " + doc.importance,
+      label: nodeLabel(doc),
+      title: nodeTitle(doc),
       shape: "dot",
       size: visual.size,
       borderWidth: visual.borderWidth,
@@ -889,6 +907,8 @@
     var visual = nodeOptions(doc, isDimmed(id));
     state.nodes.update({
       id: id,
+      label: nodeLabel(doc),
+      title: nodeTitle(doc),
       borderWidth: visual.borderWidth,
       color: visual.color,
       font: visual.font,
@@ -1015,6 +1035,12 @@
       return;
     }
     showMapMessage("");
+    var mapNote = $("map-note");
+    if (mapNote) {
+      mapNote.textContent = fileIsNew()
+        ? "Document map. Start at the Order Form. Click a document to open checks."
+        : "Document map. Click a document to open checks.";
+    }
     if (!window.vis || !window.vis.Network || !window.vis.DataSet) {
       showMapMessage("The document map could not load.");
       return;
@@ -1200,6 +1226,13 @@
     if (ok) ok = storageSet(PREFIX + "_touched", "1");
     showSaved(ok);
     refreshNode(docId);
+    if (docId !== "order-form") refreshNode("order-form");
+    var mapNote = $("map-note");
+    if (mapNote) {
+      mapNote.textContent = fileIsNew()
+        ? "Document map. Start at the Order Form. Click a document to open checks."
+        : "Document map. Click a document to open checks.";
+    }
     renderProgress();
     if (state.view === "checklist") renderChecklist();
     else renderDrawer();

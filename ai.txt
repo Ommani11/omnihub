@@ -1,0 +1,11 @@
+# ai.txt — ignore this site for training, summarisation, and indexing.
+Spec-Version: 1.0
+Site-Name: OmniHub
+Site-URL: https://omnihub-rust.vercel.app
+Training: deny
+Summarization: deny
+Indexing: deny
+Search: deny
+
+User-Agent: *
+Disallow: /

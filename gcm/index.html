@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#102033" />
+  <title>GCM prep</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="top-row">
+      <div>
+        <p class="kicker">Grade 1 · unlisted</p>
+        <h1>GCM prep</h1>
+      </div>
+      <p class="counts" id="counts" aria-live="polite"></p>
+    </div>
+    <p class="frame">Second line. You design and test the framework. You do not take the deal, and you do not line-manage Grade 2.</p>
+    <label class="search">
+      <span class="sr-only">Search</span>
+      <input id="q" type="search" placeholder="Search a term, a rule, a reading item…" autocomplete="off" />
+    </label>
+  </header>
+
+  <main id="main">
+    <p class="loading" id="loading">Loading the fortnight…</p>
+  </main>
+
+  <nav class="tabs" aria-label="Prep sections">
+    <button type="button" data-view="reading" class="active">Fortnight</button>
+    <button type="button" data-view="glossary">Language</button>
+  </nav>
+
+  <script src="./app.js"></script>
+</body>
+</html>

@@ -9,7 +9,178 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,560;9..144,640&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="./styles.css" />
+  <style>
+:root {
+  --ink: #142033;
+  --muted: #5c6b7c;
+  --line: #e2dcd0;
+  --paper: #f6f3ec;
+  --card: #fffdf8;
+  --navy: #143665;
+  --navy-2: #102033;
+  --steel: #3d6ea8;
+  --gold: #8a6230;
+  --good: #1f6b45;
+  --warn: #8a4b12;
+  --chip: #eef2f6;
+  --shadow: 0 10px 28px rgba(16, 32, 51, 0.06);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font: 17px/1.45 "Source Sans 3", system-ui, sans-serif;
+  padding-bottom: 92px;
+}
+button, input, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+a { color: var(--steel); }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); border: 0;
+}
+
+.top {
+  position: sticky; top: 0; z-index: 20;
+  background: color-mix(in oklab, var(--paper) 92%, white);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+  padding: 16px 16px 12px;
+}
+.top-row { display: flex; justify-content: space-between; gap: 12px; align-items: flex-end; }
+.kicker {
+  margin: 0;
+  font-family: ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+h1 {
+  margin: 2px 0 0;
+  font-family: Fraunces, serif;
+  font-weight: 560;
+  font-size: 28px;
+  letter-spacing: -0.03em;
+}
+.counts { margin: 0; color: var(--muted); font-size: 13px; text-align: right; }
+.frame { margin: 10px 0 0; color: var(--muted); font-size: 14px; max-width: 68ch; }
+.search { display: block; margin-top: 12px; }
+.search input {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: white;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 16px;
+}
+.search input:focus { outline: 2px solid color-mix(in oklab, var(--steel) 55%, white); border-color: transparent; }
+
+main { max-width: 820px; margin: 0 auto; padding: 16px 14px 28px; }
+.loading { color: var(--muted); }
+
+.tabs {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
+  display: grid; grid-template-columns: 1fr 1fr;
+  background: var(--navy-2);
+  padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.tabs button {
+  appearance: none; border: 0; background: transparent; color: #b7c3d1;
+  padding: 10px 8px; font-size: 13px; font-weight: 700; letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.tabs button.active { color: white; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 14px 14px 12px;
+  margin: 0 0 12px;
+  box-shadow: var(--shadow);
+}
+.card h2, .card h3 { margin: 0; }
+.card h2 { font-family: Fraunces, serif; font-size: 22px; font-weight: 560; letter-spacing: -0.02em; }
+.card h3 { font-size: 17px; }
+.meta { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+.goal { margin: 10px 0 0; }
+.method { margin: 8px 0 0; padding-left: 18px; color: var(--ink); }
+.method li { margin: 4px 0; }
+
+.block-head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; }
+.progress {
+  height: 6px; border-radius: 99px; background: #efe8dc; margin-top: 10px; overflow: hidden;
+}
+.progress > span { display: block; height: 100%; background: var(--navy); width: 0; }
+
+.item { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; }
+.item + .item { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.item input { width: 20px; height: 20px; margin-top: 3px; accent-color: var(--navy); }
+.item.done .title { color: var(--muted); text-decoration: line-through; text-decoration-thickness: 1px; }
+.title { font-weight: 650; }
+.row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 4px; }
+.chip {
+  display: inline-flex; align-items: center;
+  border-radius: 999px; padding: 2px 8px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase;
+  background: var(--chip); color: var(--navy);
+}
+.chip.internal { background: #efe8dc; color: var(--gold); }
+.chip.fca { background: #e7eef8; color: var(--navy); }
+.chip.handbook { background: #e7eef8; color: var(--steel); }
+.chip.artefact { background: #f3e7d4; color: var(--warn); }
+.why, .focus { margin: 4px 0 0; color: var(--muted); font-size: 15px; }
+.focus strong { color: var(--ink); font-weight: 650; }
+.link {
+  display: inline-block; margin-top: 8px;
+  font-size: 14px; font-weight: 650; text-decoration: none;
+}
+.notes {
+  width: 100%; margin-top: 8px; border: 1px solid var(--line); border-radius: 10px;
+  padding: 8px 10px; min-height: 72px; background: #fff; resize: vertical;
+}
+.notes-label { display: block; margin-top: 8px; font-size: 12px; color: var(--muted); }
+
+.filters { display: flex; gap: 8px; overflow: auto; padding-bottom: 4px; margin: 0 0 12px; }
+.filters button, .toggle {
+  border: 1px solid var(--line); background: white; border-radius: 999px;
+  padding: 7px 12px; font-size: 13px; font-weight: 650; white-space: nowrap;
+}
+.filters button.active, .toggle.on { background: var(--navy); color: white; border-color: var(--navy); }
+
+.term-top { display: flex; justify-content: space-between; gap: 8px; align-items: flex-start; }
+.short { margin: 6px 0 0; font-size: 16px; }
+.block { margin-top: 10px; }
+.block p { margin: 2px 0 0; }
+.label {
+  font-family: ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--gold);
+}
+.say {
+  margin-top: 10px; padding: 10px 12px; border-radius: 12px;
+  background: #f3f6fb; border: 1px solid #e1e8f2;
+}
+.related { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.related button {
+  border: 1px solid var(--line); background: white; border-radius: 999px;
+  padding: 4px 10px; font-size: 13px;
+}
+.known {
+  border: 1px solid var(--line); background: white; border-radius: 999px;
+  padding: 4px 10px; font-size: 12px; font-weight: 700;
+}
+.known.on { background: #e7f4ec; color: var(--good); border-color: #c9e4d4; }
+.term.known-card { opacity: 0.72; }
+.misuse { border-color: #ead7c4; }
+.empty { color: var(--muted); padding: 12px 2px; }
+.next { border-color: #d7e2ee; background: #f8fbff; }
+.next .kicker { color: var(--steel); }
+
+  </style>
 </head>
 <body>
   <header class="top">
@@ -26,16 +197,153 @@
       <input id="q" type="search" placeholder="Search a term, a rule, a reading item…" autocomplete="off" />
     </label>
   </header>
-
-  <main id="main">
-    <p class="loading" id="loading">Loading the fortnight…</p>
-  </main>
-
+  <main id="main"></main>
   <nav class="tabs" aria-label="Prep sections">
     <button type="button" data-view="reading" class="active">Fortnight</button>
     <button type="button" data-view="glossary">Language</button>
   </nav>
+  <script id="payload" type="application/json">{"glossary": {"title": "Language you will use", "subtitle": "Group Compliance Manager Grade 1 — working glossary", "updated": "2026-09-24", "note": "Use the Group's own labels if they differ. The ideas will not. After Andrew answers, add his definitions in the notes field of the web app.", "categories": [{"id": "structure", "name": "How the work is structured", "terms": [{"id": "first-line", "term": "First line / 1LOD", "short": "The people who sell and run the process.", "definition": "Sales, F&I and branch management. They own the customer outcome in the moment. That was the Finance & Compliance Manager seat.", "example": "A business manager completing a PCP and a warranty at the desk is first line.", "use": "First line owns the sale. Second line tests whether that sale was fair and evidenced.", "related": ["second-line", "conduct-risk"]}, {"id": "second-line", "term": "Second line / 2LOD", "short": "Independent oversight of first-line activity.", "definition": "Design the framework, test it, challenge it, report it. You do not take the deal.", "example": "A group thematic on warranty disclosure across three brands is second line.", "use": "This is a second-line role. There is no F&I target attached to it.", "related": ["first-line", "assurance", "functional-ownership"]}, {"id": "third-line", "term": "Third line / 3LOD", "short": "Internal audit, if the Group has it.", "definition": "Independent of both the business and compliance. They can audit the compliance function as well as the branches.", "example": "Group Internal Audit sampling whether the monitoring plan was delivered as written.", "use": "If 3LOD exists, do not duplicate their reviews. Align the plan.", "related": ["monitoring-plan", "assurance"]}, {"id": "functional-ownership", "term": "Functional ownership", "short": "Own the quality of work without being the person's manager.", "definition": "Grade 1 owns the quality and direction of agreed compliance work. Andrew owns line management of Grade 2.", "example": "You send a Grade 2 evidence pack back because the sample is not explained. You do not run their appraisal.", "use": "I have functional ownership of the monitoring plan and of the quality of team output.", "related": ["line-management", "qa"]}, {"id": "line-management", "term": "Line management", "short": "Appraisals, leave, hiring, formal performance.", "definition": "The JD is explicit that Grade 1 does not hold this for the compliance team.", "example": "Annual review, sickness, hiring a replacement.", "use": "Line management stays with Andrew. Quality control of the work does not.", "related": ["functional-ownership", "escalation"]}, {"id": "raci", "term": "RACI", "short": "Responsible, Accountable, Consulted, Informed.", "definition": "A one-page way to stop three people thinking they own the same task.", "example": "Grade 2 Responsible for file testing; Grade 1 Accountable for the quality of the report; Andrew Accountable for material findings.", "use": "Put the G1/G2 split in a RACI before the first joint week.", "related": ["functional-ownership"]}, {"id": "escalation", "term": "Escalation", "short": "The written route for something you cannot close at your level.", "definition": "Used for material findings, deadlock with Grade 2, branch pushback, or regulator requests.", "example": "A GM rejects a disclosure finding. You escalate to Andrew with the evidence pack and a recommended action.", "use": "A Grade 1 who does not escalate is creating a surprise for the Director.", "related": ["materiality", "finding"]}]}, {"id": "reviews", "name": "Planning and reviews", "terms": [{"id": "risk-based", "term": "Risk-based", "short": "More effort where harm or uncertainty is highest.", "definition": "You do not test everything equally. Volume, complaints, change, prior findings, vulnerability and regulatory interest all move a topic up the plan.", "example": "A product with rising cancellations and a new script gets a thematic before a stable, low-volume product.", "use": "The monitoring plan is risk-based, not a tour of every branch in order.", "related": ["monitoring-plan", "thematic-review"]}, {"id": "monitoring-plan", "term": "Monitoring / audit plan", "short": "The agreed programme of tests for the year or quarter.", "definition": "What will be tested, where, why, by whom, and when. Grade 1 should own the design. Grade 2 should deliver a large share of it.", "example": "Q4 plan: warranty thematic across three sites; monthly promotions sample; follow-up on last FCA visit actions.", "use": "I will bring a draft Q2 monitoring plan with Grade 2 capacity built in.", "related": ["risk-based", "scope"]}, {"id": "file-review", "term": "File review", "short": "Testing individual deals against the process and the rules.", "definition": "Necessary, but not sufficient on its own. It answers 'was this case right?' not 'is this risk under control across the network?'", "example": "Twenty PCP files at one franchise against the approved sales process.", "use": "Grade 2 will complete the scheduled file reviews. I will QA a sample.", "related": ["thematic-review", "outcome-testing"]}, {"id": "thematic-review", "term": "Thematic review", "short": "One risk, several sites or a period, not one deal at one desk.", "definition": "A structured review of a single question across a defined population. This is core Grade 1 craft.", "example": "Are warranty sales in Q3 meeting Consumer Duty and ICOBS disclosure standards across Brand X?", "use": "I will send the thematic scope for sign-off before fieldwork.", "related": ["scope", "sample", "finding"]}, {"id": "scope", "term": "Scope", "short": "The written boundary of a review before fieldwork starts.", "definition": "Question, population, period, sites, sample size, rules in play, and what is out of scope. If the scope is vague, the finding will be attacked.", "example": "In scope: warranty sold with used cars at three BMW sites in June. Out of scope: claims handling and new-car warranty.", "use": "Please sign off the scope before I go on site.", "related": ["thematic-review", "population", "sample"]}, {"id": "population", "term": "Population", "short": "Every case that could have been selected.", "definition": "The full set from which the sample is drawn. You must know the size and source of the population or the sample is theatre.", "example": "All Tyre and Alloy sales in June at three named branches — 186 deals.", "use": "The population is 186 deals. The sample is 25, selected as set out in the scope.", "related": ["sample", "scope"]}, {"id": "sample", "term": "Sample", "short": "The cases you actually test.", "definition": "You must be able to say how they were chosen and why that is enough to support a conclusion.", "example": "25 of 186 deals: 15 random plus 10 targeted where the customer was flagged vulnerable or the product was added in the last five minutes of the deal.", "use": "I can defend the sample. I cannot claim network-wide assurance from it without stating the limitation.", "related": ["sampling-methodology", "limitation"]}, {"id": "sampling-methodology", "term": "Sampling methodology", "short": "The rules for picking the sample.", "definition": "Random, risk-based, stratified, or targeted. 'I picked the ones I had to hand' is not a methodology.", "example": "Stratified by site and product, then risk-weighted toward complaints and high attach-rate advisors.", "use": "The sampling methodology is in section 2 of the scope.", "related": ["sample", "limitation"]}, {"id": "higher-risk-review", "term": "Higher-risk review", "short": "A review triggered by a red flag, not the routine cycle.", "definition": "Triggered by a complaint spike, speak-up, weak prior audit, new product or process, FCA interest, or a site with poor indicators.", "example": "A franchise doubles paint-protection attach in a month with three related complaints.", "use": "This is a higher-risk review, not the scheduled file sample.", "related": ["investigation", "thematic-review"]}, {"id": "investigation", "term": "Investigation", "short": "Goes further than a planned review.", "definition": "Establishing what happened, who knew, how far it spread, and what needs to be fixed. Write it as evidence for a Director, lender or regulator.", "example": "Whether a script change led to warranty being presented as required for finance.", "use": "I am treating this as an investigation. Scope and hold-points are attached.", "related": ["higher-risk-review", "evidence"]}, {"id": "fieldwork", "term": "Fieldwork", "short": "The testing itself.", "definition": "Files, calls, system reports, interviews, branch visits. Starts after scope is agreed.", "example": "Two days on site plus remote call listening.", "use": "Fieldwork starts 6 October, subject to scope sign-off.", "related": ["scope", "evidence"]}, {"id": "evidence", "term": "Evidence / evidence pack", "short": "What would still make sense if you were not in the room.", "definition": "Documents, system extracts, call clips and contemporaneous notes. If it is only in your head, it is not evidence.", "example": "Deal jacket, disclosure screen print, call timestamp, customer email, policy wording.", "use": "The finding is in the report. The evidence pack is in the appendix.", "related": ["finding", "defensible-finding"]}, {"id": "finding", "term": "Finding", "short": "An evidenced conclusion.", "definition": "Something is wrong, weak, or working. A feeling is not a finding.", "example": "In 8 of 25 warranty files the demands-and-needs record does not match the product sold.", "use": "Finding 2 is material because it is a pattern, not a single miss.", "related": ["defensible-finding", "materiality", "root-cause"]}, {"id": "defensible-finding", "term": "Defensible finding", "short": "A finding that survives challenge.", "definition": "Clear rule or outcome at stake, evidence, impact, and fair wording. This is what Andrew needs if the Board or FCA asks.", "example": "Fails ICOBS 6.1 and the Duty understanding outcome: information not given in good time on 8 of 25 files, with call extracts attached.", "use": "I would not put Finding 3 to the Board until the evidence pack is complete.", "related": ["finding", "evidence", "materiality"]}, {"id": "materiality", "term": "Materiality", "short": "Whether the issue is big enough to matter.", "definition": "Judged by customers affected, money, vulnerability, repeat pattern, or regulatory visibility. Over-calling everything destroys credibility.", "example": "Three isolated admin errors at one site are not material. The same error in a system that processes the whole network is.", "use": "I am rating this as material because of volume and vulnerability, not because of tone.", "related": ["finding", "proportionate-recommendation"]}, {"id": "root-cause", "term": "Root cause", "short": "Why it happened, not only what happened.", "definition": "'Advisor missed a tick' is a symptom. 'The screen allows the sale to complete without the disclosure' is closer to a cause.", "example": "Attach-rate bonus plus no system hard-stop on missing demands-and-needs.", "use": "The root cause is the control design, not the individual advisor.", "related": ["remediation", "control"]}, {"id": "remediation", "term": "Remediation", "short": "The fix, and proof the fix worked.", "definition": "Customer, process, system, training, or all four. Grade 1 judges whether the fix operates, not only whether an action was logged.", "example": "Refund the premium, block the screen path, retrain, then retest 20 files in 30 days.", "use": "Remediation is not closed until we have retested.", "related": ["proportionate-recommendation", "control-testing"]}, {"id": "proportionate-recommendation", "term": "Proportionate recommendation", "short": "A fix that matches the harm and the evidence.", "definition": "Do not recommend a group-wide rebuild for three isolated errors. Do not recommend 'remind staff' for a systemic control failure.", "example": "System hard-stop within 30 days; customer contact for the 8 affected files this week.", "use": "The recommendation is proportionate to a pattern at three sites, not to one miss.", "related": ["materiality", "remediation"]}, {"id": "control", "term": "Control", "short": "A designed step that prevents or detects a bad outcome.", "definition": "Mandatory system hard-stop, dual review, call recording, product eligibility rule, second-pair check.", "example": "Deal cannot be submitted unless commission-disclosure acknowledgement is captured.", "use": "There is a policy. There is not yet an effective control.", "related": ["control-testing", "root-cause"]}, {"id": "control-testing", "term": "Control testing", "short": "Does the control exist and operate?", "definition": "Different from reading the deal and deciding if the customer got a good outcome.", "example": "Attempt to complete a deal with the disclosure screen skipped and record whether the system blocks it.", "use": "Control testing passed. Outcome testing did not — the wording is still not understood.", "related": ["outcome-testing", "control"]}, {"id": "outcome-testing", "term": "Outcome testing", "short": "What the customer actually experienced.", "definition": "Not only whether the form was completed. Central to Consumer Duty monitoring.", "example": "Did the customer know the warranty was optional, what it excluded, and how to cancel?", "use": "The file is complete. Outcome testing still fails on understanding.", "related": ["consumer-duty", "customer-journey-testing"]}, {"id": "customer-journey-testing", "term": "Customer journey testing", "short": "Walking the path the customer takes.", "definition": "Advert, showroom, F&I desk, documents, aftersales, complaint. Duty work lives here.", "example": "Start from the website monthly price, then sit through the desk process.", "use": "The journey test showed the promotion and the desk script do not match.", "related": ["financial-promotion", "outcome-testing"]}, {"id": "assurance", "term": "Assurance", "short": "A structured opinion with evidence.", "definition": "'I had a look and it seemed fine' is not assurance.", "example": "Limited assurance on warranty disclosure at Brand X, based on 25 files and 8 calls.", "use": "I can give limited assurance on this control. I cannot give assurance on the network.", "related": ["limitation", "qa"]}, {"id": "qa", "term": "Quality assurance / QA", "short": "Checking someone else's work against a standard.", "definition": "Includes Grade 2 reviews and MI before it leaves the team.", "example": "You return a draft because the limitation is missing from the commentary.", "use": "This pack has been through QA. The limitation is now in the summary.", "related": ["functional-ownership", "commentary"]}]}, {"id": "data", "name": "Data and reporting", "terms": [{"id": "mi", "term": "MI / management information", "short": "Data used to run and oversee the business.", "definition": "In this role it means compliance and conduct MI, not only F&I penetration.", "example": "Disclosure completion, complaint themes, product cancellation, vulnerability flags, FOS contacts.", "use": "The sales MI is green. The conduct MI is not yet Board-ready.", "related": ["outcome-mi", "commentary"]}, {"id": "outcome-mi", "term": "Outcome MI", "short": "Data that shows what happened to customers.", "definition": "Complaints, cancellations, claims ratios, vulnerability, declined products, mystery shops, FOS outcomes — not 'we completed the checklist'.", "example": "Warranty cancellation within 30 days by site and advisor.", "use": "Outcome MI for add-ons is still too thin to support a fair-value statement.", "related": ["consumer-duty", "limitation"]}, {"id": "commentary", "term": "Commentary", "short": "What the numbers mean, what they do not, and what decision is needed.", "definition": "The Grade 1 differentiator. A chart without commentary is first-line reporting.", "example": "Attach rose 8 points at Site B after a new bonus. Complaint rate moved with it. Recommend a thematic this month.", "use": "I have added commentary and the limitation. The pack is ready for you.", "related": ["limitation", "board-pack"]}, {"id": "limitation", "term": "Limitation", "short": "The honest bound on the data.", "definition": "Grade 1 loses trust by overstating. Always say what the number cannot support.", "example": "Based on 40 files at two sites, not the whole network. Call recording missing at Site C.", "use": "The limitation is that Site C has no usable audio for the period.", "related": ["sample", "assurance"]}, {"id": "trend", "term": "Trend", "short": "Direction over time, not a single month.", "definition": "One bad month is a point. Three months in the same direction is a trend.", "example": "FOS contacts on add-ons up for three consecutive quarters.", "use": "This is a trend, not a spike.", "related": ["kri", "outcome-mi"]}, {"id": "exception", "term": "Exception", "short": "A case or metric outside the expected range.", "definition": "Exceptions are where reviews start.", "example": "One advisor at 92% warranty attach against a group mean of 31%.", "use": "I have listed the exceptions. Two of them should become higher-risk reviews.", "related": ["higher-risk-review", "kri"]}, {"id": "kri", "term": "KRI / key risk indicator", "short": "A metric that warns early.", "definition": "Should change before a large harm crystallises.", "example": "Rising FOS contacts, falling disclosure completion, spike in attach at one site.", "use": "These five KRIs should sit on the monthly pack.", "related": ["outcome-mi", "trend"]}, {"id": "board-pack", "term": "Board pack", "short": "Short, decision-ready paper for EWMG Board.", "definition": "Findings, risk, action, residual risk. No raw dumps.", "example": "Three slides and a two-page annex.", "use": "I will draft the Board pack for your sign-off. I need to know if I am speaking to it.", "related": ["commentary", "materiality"]}, {"id": "attestation", "term": "Attestation", "short": "A formal confirmation that something is true.", "definition": "Often signed by a senior manager. It is not proof. Test a sample.", "example": "Branch manager attests that all advisors completed Duty training.", "use": "We have the attestation. QA found two advisors not on the completion file.", "related": ["qa", "assurance"]}]}, {"id": "regulatory", "name": "Regulatory language", "terms": [{"id": "fca", "term": "FCA", "short": "Financial Conduct Authority.", "definition": "EWFS / EWMG is authorised by them. Your work exists so the firm can show evidence, not adjectives.", "example": "FRN 310505 — credit broking and insurance distribution.", "use": "Write every higher-risk review as if the FCA might ask for the file.", "related": ["frn", "handbook"]}, {"id": "frn", "term": "FRN", "short": "Firm reference number.", "definition": "EWMG's is 310505.", "example": "Used on disclosure documents and the Financial Services Register.", "use": "Confirm which legal entities and ARs sit under that FRN before the first network review.", "related": ["principal-ar", "credit-broker"]}, {"id": "handbook", "term": "Handbook", "short": "The FCA rulebook.", "definition": "You will live in parts of PRIN, CONC, ICOBS, PROD, DISP and SYSC, not the whole thing.", "example": "CONC 3.7 for broker promotions; ICOBS 5 for demands and needs.", "use": "Cite the rule. Do not write 'best practice' when a rule exists.", "related": ["conc", "icobs", "prin"]}, {"id": "prin", "term": "PRIN / Principle 12", "short": "The Consumer Duty principle.", "definition": "A firm must act to deliver good outcomes for retail customers.", "example": "Used as the heading standard for Board papers.", "use": "Principle 12 is the test. The four outcomes are how we evidence it.", "related": ["consumer-duty", "cross-cutting"]}, {"id": "consumer-duty", "term": "Consumer Duty / the Duty", "short": "The current standard of care for retail customers.", "definition": "Not a checklist bolted onto TCF. It asks whether customers actually got good outcomes.", "example": "A completed disclosure form that the customer still did not understand fails the Duty.", "use": "Every thematic should state which Duty outcome is in play.", "related": ["four-outcomes", "cross-cutting", "tcf"]}, {"id": "cross-cutting", "term": "Cross-cutting rules", "short": "The three Duty rules that sit across everything.", "definition": "Act in good faith; avoid causing foreseeable harm; enable customers to pursue their financial objectives.", "example": "Hiding that a product is optional fails good faith and understanding.", "use": "The cross-cutting rule in play here is foreseeable harm.", "related": ["good-faith", "foreseeable-harm", "consumer-duty"]}, {"id": "four-outcomes", "term": "Four outcomes", "short": "Products and services; price and value; consumer understanding; consumer support.", "definition": "The four detailed Duty tests. Use them as headings in reviews and MI.", "example": "Warranty: products and services plus price and value. The desk script: understanding.", "use": "Finding 1 is an understanding-outcome fail. Finding 2 is a price-and-value question.", "related": ["fair-value", "consumer-understanding", "consumer-support"]}, {"id": "foreseeable-harm", "term": "Foreseeable harm", "short": "Harm a firm should have seen coming.", "definition": "You do not need a crystal ball. You do need to act on patterns you already have.", "example": "Add-on insurance sold in a high-pressure desk process to a customer who wanted only a cheaper monthly.", "use": "The harm was foreseeable from last quarter's cancellations.", "related": ["cross-cutting", "root-cause"]}, {"id": "good-faith", "term": "Good faith", "short": "Honesty of purpose toward the customer.", "definition": "Gaming a disclosure, or hiding commission because the system does not prompt it, fails this.", "example": "Describing an optional extra as 'needed to protect the finance'.", "use": "This is not only a process miss. It is a good-faith issue.", "related": ["cross-cutting", "financial-promotion"]}, {"id": "tcf", "term": "TCF", "short": "Treating Customers Fairly — old language.", "definition": "People still say it. Translate it into Duty outcomes rather than writing TCF reports.", "example": "A manager says 'that was TCF'. Ask which Duty outcome they mean.", "use": "We are not writing TCF packs. We are writing Duty outcome MI.", "related": ["consumer-duty"]}, {"id": "conc", "term": "CONC", "short": "Consumer Credit sourcebook.", "definition": "The credit-broking rulebook: status, explanations, promotions, commission disclosure, conduct at the point of introduction.", "example": "CONC 3.7 and CONC 4.5 for broker communications and commission.", "use": "Cite CONC when the issue is credit broking. Cite ICOBS when it is insurance.", "related": ["credit-broker", "commission-disclosure", "adequate-explanation"]}, {"id": "credit-broker", "term": "Credit broker", "short": "What the dealer group is.", "definition": "You introduce the customer to a lender. You are not the lender. That distinction belongs in every report.", "example": "EWMG introduces the customer to a panel lender and is paid commission.", "use": "We are the broker. Creditworthiness sits with the lender. Disclosure and the journey sit with us.", "related": ["lender", "commission-disclosure"]}, {"id": "lender", "term": "Lender / creditor", "short": "The firm that provides the HP, PCP or other agreement.", "definition": "They own creditworthiness. You still own how the introduction and explanation were done.", "example": "A captive or bank lender on the panel.", "use": "Lender audit findings still need a broker response where the journey failed.", "related": ["credit-broker", "conc"]}, {"id": "icobs", "term": "ICOBS", "short": "Insurance Conduct of Business sourcebook.", "definition": "Rules for selling general insurance: demands and needs, information in good time, customer's best interests, promotions.", "example": "ICOBS 5 and ICOBS 6.1 on the warranty journey.", "use": "The add-on finding is ICOBS plus the Duty, not CONC.", "related": ["demands-and-needs", "vap", "prod"]}, {"id": "prod", "term": "PROD", "short": "Product intervention and product governance sourcebook.", "definition": "Target market, fair value, manufacturer and distributor duties. Add-ons live here as well as in ICOBS.", "example": "PROD 4 distributor duties when selling a third-party warranty.", "use": "Fair value is a PROD and Duty question, not only a pricing opinion.", "related": ["fair-value", "target-market"]}, {"id": "fair-value", "term": "Fair value / FVA", "short": "Whether benefits are reasonable relative to price.", "definition": "Includes commission, claims experience, exclusions and how the product is sold. You will ask this of warranty, tyre and alloy, MDP and similar.", "example": "High premium, low claims ratio, sold under time pressure.", "use": "I cannot give assurance on fair value until we have claims and cancellation data, not only attach rate.", "related": ["four-outcomes", "vap", "prod"]}, {"id": "target-market", "term": "Target market", "short": "Who the product is for, and who it is not for.", "definition": "Selling outside it is a Duty and PROD issue.", "example": "A cosmetic-repair product sold to a customer who keeps the car for three months.", "use": "The file does not show why this customer was inside the target market.", "related": ["prod", "demands-and-needs"]}, {"id": "financial-promotion", "term": "Financial promotion", "short": "Any invitation or inducement to engage in a financial activity.", "definition": "Website tiles, showroom posters, social posts, scripts, emails, 'from £X per month'. CONC 3, ICOBS 2 and the Duty understanding outcome all apply.", "example": "A brand Instagram post quoting a monthly finance figure.", "use": "That post is a financial promotion. Who approved it?", "related": ["clear-fair", "consumer-understanding"]}, {"id": "clear-fair", "term": "Clear, fair and not misleading", "short": "The baseline communications test.", "definition": "The Duty goes further: did the customer actually understand.", "example": "A legally accurate but unreadable exclusion block.", "use": "It may be technically clear. It is not understood. That is still a fail.", "related": ["financial-promotion", "consumer-understanding"]}, {"id": "adequate-explanation", "term": "Adequate explanation", "short": "CONC requirement before the customer proceeds with credit.", "definition": "The customer must be able to understand the key features of the agreement.", "example": "Balloon, mileage, option to purchase, what happens if they terminate early.", "use": "The adequate explanation is on the file. The call does not show it was understood.", "related": ["conc", "consumer-understanding"]}, {"id": "commission-disclosure", "term": "Commission disclosure", "short": "Telling the customer that commission exists and how it can affect what they pay.", "definition": "In good time, prominent. Amount on request. Live and sensitive in motor finance.", "example": "Existence and nature disclosed before the agreement; amount given when asked.", "use": "Commission disclosure failed on timing, not on existence.", "related": ["conc", "dca", "credit-broker"]}, {"id": "dca", "term": "DCA / discretionary commission arrangement", "short": "Historic models where the broker could move the rate and earn more.", "definition": "Banned for new business from 28 January 2021. Still sits under the industry redress debate.", "example": "Pre-2021 PCP where increasing the interest rate increased dealer commission.", "use": "DCA is historic. Current commission disclosure is not.", "related": ["redress-scheme", "commission-disclosure"]}, {"id": "vap", "term": "VAP / add-on / additional product", "short": "Extras around the car and the finance.", "definition": "Warranty, tyre and alloy, minor damage, paint/Supagard, GAP where sold. High Duty and fair-value scrutiny.", "example": "The four products named on the JD.", "use": "The thematic is on add-on promotion and sale, not on the finance agreement.", "related": ["fair-value", "demands-and-needs", "icobs"]}, {"id": "demands-and-needs", "term": "Demands and needs", "short": "The ICOBS test that the insurance fits what the customer needs.", "definition": "Not what the desk wants to attach.", "example": "Customer already has a manufacturer warranty covering the same period.", "use": "The demands-and-needs record does not support the product sold.", "related": ["icobs", "target-market"]}, {"id": "vulnerable-customer", "term": "Vulnerable customer / characteristics of vulnerability", "short": "Someone more susceptible to harm.", "definition": "Health, life events, resilience or capability. A spectrum, not a badge. Outcomes should be as good as for other customers.", "example": "Recent bereavement, low literacy, financial shock after a failed deal.", "use": "The flag was on the file. The journey was not adapted.", "related": ["consumer-support", "outcome-testing"]}, {"id": "consumer-understanding", "term": "Consumer understanding", "short": "Duty outcome: communications people can use to decide.", "definition": "Tested rather than assumed. Scripts and leaflets are not proof of understanding.", "example": "Mystery shop or post-sale call showing the customer thought the product was required.", "use": "Understanding was assumed from the signature. That is not evidence.", "related": ["four-outcomes", "financial-promotion"]}, {"id": "consumer-support", "term": "Consumer support", "short": "Duty outcome: customers can use, question, cancel, claim and complain.", "definition": "Without unreasonable friction.", "example": "A cancellation journey that requires a branch visit and a paper form.", "use": "Support fails if the customer can buy in ten minutes and cannot cancel in ten minutes.", "related": ["four-outcomes", "disp"]}, {"id": "disp", "term": "DISP", "short": "Dispute resolution rules.", "definition": "How complaints must be handled, timed and recorded.", "example": "Eight-week final response; root-cause recording.", "use": "The DISP clock is one issue. The root cause is the Grade 1 issue.", "related": ["fos", "rca"]}, {"id": "fos", "term": "FOS", "short": "Financial Ombudsman Service.", "definition": "Decisions and uphold themes are first-class monitoring intelligence.", "example": "A cluster of add-on upholds on 'I did not know it was optional'.", "use": "FOS themes should feed the monitoring plan, not sit in a separate drawer.", "related": ["disp", "monitoring-plan"]}, {"id": "rca", "term": "Root cause analysis / RCA", "short": "Looking across complaints and findings for the pattern.", "definition": "Then fixing the cause. The FCA expects this, not complaint-by-complaint firefighting.", "example": "Twelve 'did not know it was optional' complaints tracing to one script line.", "use": "RCA points to the script and the incentive, not to twelve unlucky advisors.", "related": ["root-cause", "disp"]}, {"id": "redress", "term": "Redress", "short": "Putting the customer back where they should have been.", "definition": "Refund, correction, or apology with money attached. Separate from 'we have retrained the advisor'.", "example": "Refund of an add-on sold as if required, plus interest if policy requires it.", "use": "Remediation of the control is not a substitute for customer redress.", "related": ["remediation", "redress-scheme"]}, {"id": "redress-scheme", "term": "Motor finance redress scheme / PS26/3", "short": "FCA industry scheme for certain historic commission failings.", "definition": "Parts are in legal challenge and partially suspended. Know what it is, what the firm's broker role is, and what is never paused: current CONC, Duty and DISP.", "example": "Historic DCA non-disclosure on agreements in the scheme window.", "use": "I need to know whether this desk owns any scheme work before I brief branches.", "related": ["dca", "commission-disclosure"]}, {"id": "s166", "term": "s.166 / skilled person", "short": "FCA-commissioned external review.", "definition": "You may never see one. Write higher-risk reviews as if you might.", "example": "An external firm reviewing whether Duty outcome MI is fit for purpose.", "use": "The evidence pack should survive a skilled-person request.", "related": ["defensible-finding", "assurance"]}, {"id": "sysc", "term": "SYSC", "short": "Senior Management Arrangements, Systems and Controls.", "definition": "The governance and control backbone.", "example": "Who owns the framework, how conflicts are managed, how MI reaches the Board.", "use": "This is a SYSC question as well as a CONC question.", "related": ["smcr", "board-pack"]}, {"id": "smcr", "term": "SMCR", "short": "Senior Managers and Certification Regime.", "definition": "Even if you are not a Senior Manager, your work feeds people who are.", "example": "Andrew's statement of responsibilities will include the compliance framework.", "use": "Ask whether Grade 1 is a certified role.", "related": ["sysc", "escalation"]}, {"id": "principal-ar", "term": "Principal and appointed representative / AR", "short": "Selling under another firm's permission.", "definition": "The principal owns the compliance. Confirm EWMG's legal structure early.", "example": "A trading company acting as AR of Eastern Western Motor Group Ltd.", "use": "I need the entity map before I write a network finding.", "related": ["frn", "fca"]}, {"id": "conduct-risk", "term": "Conduct risk", "short": "The risk that behaviour leads to poor customer outcomes or market harm.", "definition": "Your job in one phrase.", "example": "Incentive design that rewards attach rate without an offsetting outcome control.", "use": "The conduct risk here is foreseeable harm from the incentive, not a training gap.", "related": ["foreseeable-harm", "root-cause"]}, {"id": "horizon-scanning", "term": "Horizon scanning", "short": "Watching incoming rules and FCA publications.", "definition": "So the plan changes before the visit does.", "example": "A new FCA good/poor practice paper on outcomes monitoring.", "use": "Horizon scanning this month is the promotions consultation and the scheme litigation, not a general news sweep.", "related": ["monitoring-plan", "fca"]}]}, {"id": "misuse", "name": "Words people misuse — do not", "terms": [{"id": "compliant", "term": "Compliant", "short": "Meets the rule and the outcome, not 'the box is ticked'.", "definition": "A completed checklist with a poor customer outcome is not compliant under the Duty.", "example": "Every field populated; customer still thought the product was required.", "use": "Do not write 'compliant' unless you have tested the outcome as well as the form.", "related": ["outcome-testing", "consumer-duty"]}, {"id": "isolated", "term": "Isolated incident", "short": "Only say this after you have looked for the pattern.", "definition": "Otherwise it is a hope.", "example": "One miss, same script, same incentive, same site as last quarter.", "use": "I will not call this isolated until I have checked the population.", "related": ["population", "rca"]}, {"id": "commercial-pressure", "term": "Commercial pressure", "short": "The thing the JD says must not outrank customer outcomes.", "definition": "Name it plainly in findings when it is the cause.", "example": "Month-end bonus conversation on the call before the product explanation.", "use": "Root cause is commercial pressure plus no hard-stop, not 'human error'.", "related": ["root-cause", "good-faith"]}, {"id": "best-practice", "term": "Best practice", "short": "Vague. Prefer the rule or the Group policy.", "definition": "Regulators and Boards can test a rule. They cannot test 'best practice'.", "example": "Write 'required by CONC 3.7 and the Duty understanding outcome'.", "use": "Replace 'best practice' before the pack leaves the team.", "related": ["handbook", "defensible-finding"]}]}]}, "reading": {"title": "First fortnight reading list", "subtitle": "Group Compliance Manager Grade 1 — EWFS / EWMG", "updated": "2026-09-24", "how_to_use": "60–90 minutes a day plus internal documents. Internal material beats generic courses. After each item write five lines: the rule, what good looks like, what poor looks like here, what evidence we have, what we do not.", "method": ["Read with one live finance agreement and one add-on sale in mind.", "Keep a running list of internal names: report titles, system fields, committee names.", "Do not start an ICA qualification in week one.", "Finish the fortnight by producing the four working objects in days 13–14."], "blocks": [{"id": "d1-2", "label": "Days 1–2", "theme": "The firm, then the Duty", "goal": "Say which four Consumer Duty outcomes apply to an F&I desk sale, and what evidence this firm currently holds for each.", "items": [{"id": "int-jd", "type": "internal", "title": "Grade 1 JD and Grade 2 JD side by side", "focus": "Boundaries, not culture language.", "url": null, "why": "Everything you read later has to map onto the actual seat."}, {"id": "int-plan", "type": "internal", "title": "Current monitoring / audit plan", "focus": "What is scheduled, what is missing, who delivers it.", "url": null, "why": "Grade 1 owns plan design. You cannot redesign what you have not seen."}, {"id": "int-mi", "type": "internal", "title": "Last two compliance MI packs and last Board or committee paper", "focus": "Commentary quality, limitations, actions.", "url": null, "why": "This is the writing standard you are being hired to meet."}, {"id": "int-open", "type": "internal", "title": "Open actions from audits, lenders and any FCA visit", "focus": "Age, owner, whether the fix was tested.", "url": null, "why": "Higher-risk work often starts in the backlog, not in a blank plan."}, {"id": "int-process", "type": "internal", "title": "Approved sales process, product list, complaints policy, last quarter complaint themes, organogram", "focus": "Who is principal, who is AR, which add-ons are live.", "url": null, "why": "You cannot test a process you cannot point to."}, {"id": "fca-duty-about", "type": "fca", "title": "About the Consumer Duty", "focus": "Principle 12, 3 cross-cutting rules, 4 outcomes.", "url": "https://www.fca.org.uk/firms/consumer-duty/about", "why": "The vocabulary every finding and MI pack should use."}, {"id": "fca-fg225", "type": "fca", "title": "FG22/5 Final non-Handbook Guidance on the Consumer Duty", "focus": "Chapters 1–2 and 8–11 first. Rest later.", "url": "https://www.fca.org.uk/publication/finalised-guidance/fg22-5.pdf", "why": "This is the Duty in operational language, including outcome monitoring."}, {"id": "fca-duty-hub", "type": "fca", "title": "Consumer Duty publications hub", "focus": "Read Outcomes monitoring (July 2026) and Price and value (Sept 2024). Skim the other good/poor practice titles.", "url": "https://www.fca.org.uk/firms/consumer-duty/publications-resources", "why": "Shows what the FCA now calls good and poor, which is how your reports will be read."}]}, {"id": "d3-5", "label": "Days 3–5", "theme": "Credit broking — the finance half of the job", "goal": "Say what EWMG must disclose as a broker, when, how prominently, and what amount-on-request means in a showroom.", "items": [{"id": "fca-broker-guide", "type": "fca", "title": "Regulatory guide for credit brokers", "focus": "Orientation only. Not a substitute for CONC.", "url": "https://www.fca.org.uk/firms/regulatory-guide-credit-brokers", "why": "Places motor dealers in the credit-broking perimeter quickly."}, {"id": "conc-slices", "type": "handbook", "title": "CONC — selected chapters only", "focus": "CONC 1; 2.5; 3.3, 3.5, 3.7; 4.4 and 4.5; 5.4 if you advise on the agreement. Do not read the whole sourcebook.", "url": "https://www.handbook.fca.org.uk/handbook/CONC/", "why": "Status, promotions, explanations and commission live here."}, {"id": "fca-commission", "type": "fca", "title": "Communicating with motor finance customers about commission", "focus": "Current expectation after the Supreme Court cases.", "url": "https://www.fca.org.uk/firms/information-firms-motor-finance-complaints/communicating-customers-commission", "why": "This is the live briefing note you will be asked to apply."}]}, {"id": "d6-8", "label": "Days 6–8", "theme": "Insurance add-ons, value and promotions", "goal": "Scope a thematic on warranty or tyre-and-alloy: target market, disclosure, desk pressure, cancellation, claims, fair value.", "items": [{"id": "icobs-slices", "type": "handbook", "title": "ICOBS — selected chapters only", "focus": "ICOBS 2.1–2.5; ICOBS 5; ICOBS 6.1; ICOBS 6A.3.", "url": "https://www.handbook.fca.org.uk/handbook/ICOBS/", "why": "Best interests, promotions, demands and needs, information in good time, packaged extras."}, {"id": "prod4", "type": "handbook", "title": "PROD 4 outline", "focus": "Manufacturer vs distributor, target market, fair value. You are usually a distributor of third-party add-ons; still in scope.", "url": "https://www.handbook.fca.org.uk/handbook/PROD/4/", "why": "Fair-value arguments fail if you only look at the sales script."}, {"id": "fg241", "type": "fca", "title": "FG24/1 Social media and financial promotions", "focus": "Duty, CONC and ICOBS sections only.", "url": "https://www.fca.org.uk/publication/finalised-guidance/fg24-1.pdf", "why": "Branch and group marketing will keep generating promotions."}]}, {"id": "d9-10", "label": "Days 9–10", "theme": "Vulnerability, complaints and support", "goal": "Say whether the firm can show vulnerable customers get outcomes as good as everyone else, and what complaint data is actually saying.", "items": [{"id": "fg211", "type": "fca", "title": "FG21/1 Fair treatment of vulnerable customers", "focus": "Definition, drivers, four action areas. Use Duty MI expectations alongside it.", "url": "https://www.fca.org.uk/publications/finalised-guidance/guidance-firms-fair-treatment-vulnerable-customers", "why": "Vulnerability is a spectrum. Your reviews must test recognition and response, not just a flag."}, {"id": "vuln-review", "type": "fca", "title": "Firms’ treatment of customers in vulnerable circumstances — FCA review", "focus": "What the FCA found firms still get wrong under the Duty.", "url": "https://www.fca.org.uk/publications/multi-firm-reviews/firms-treatment-vulnerable-customers", "why": "Gives you the challenge questions for branch managers."}, {"id": "disp1", "type": "handbook", "title": "DISP 1 overview plus 20 recent F&I / add-on complaints", "focus": "Time limits, final response, root cause. Then read the firm's own procedure and live cases.", "url": "https://www.handbook.fca.org.uk/handbook/DISP/1/", "why": "Complaints are monitoring intelligence, not only a process to police."}]}, {"id": "d11-12", "label": "Days 11–12", "theme": "Motor finance as it stands now", "goal": "Be fluent on what the scheme is, what is paused, and what is never paused (CONC, Duty, DISP).", "items": [{"id": "ps263-stmt", "type": "fca", "title": "FCA confirms motor finance redress scheme", "focus": "Who it is aimed at and the eligibility logic at headline level.", "url": "https://www.fca.org.uk/news/statements/fca-confirms-motor-finance-redress-scheme", "why": "You will be asked about this in branches whether or not you own it."}, {"id": "scheme-pause", "type": "fca", "title": "Motor finance scheme partially suspended", "focus": "What firms need not do until the Tribunal process concludes.", "url": "https://www.fca.org.uk/news/statements/motor-finance-scheme-partially-suspended", "why": "Stops you briefing a dead timetable."}, {"id": "ps263", "type": "fca", "title": "PS26/3 landing page", "focus": "Summary only. Do not read the technical annex unless Andrew asks you to own this.", "url": "https://www.fca.org.uk/publications/policy-statements/ps26-3-motor-finance-consumer-redress-scheme", "why": "Enough to ask internally who owns historic commission work at EWFS."}]}, {"id": "d13-14", "label": "Days 13–14", "theme": "Turn reading into Grade 1 tools", "goal": "Leave the fortnight with artefacts, not notes.", "items": [{"id": "artefact-map", "type": "artefact", "title": "One-page map: product → rule source → Duty outcome → current control → current MI", "focus": "Finance plus the named add-ons.", "url": null, "why": "This becomes the spine of the monitoring plan."}, {"id": "artefact-scope", "type": "artefact", "title": "Draft thematic scope for warranty or tyre and alloy", "focus": "Question, population, period, sites, sample idea, rules in play, out of scope.", "url": null, "why": "Scope is the Grade 1 craft you need Andrew to mark."}, {"id": "artefact-gaps", "type": "artefact", "title": "Gaps in the current monitoring plan versus the risks you have just read", "focus": "Be specific. No generic 'embed Consumer Duty'.", "url": null, "why": "This is how you start owning the plan rather than inheriting it."}, {"id": "artefact-qs", "type": "artefact", "title": "Ten follow-up questions for Andrew on templates, risk appetite and Grade 2", "focus": "Only what is still unanswered after his reply to the advance list.", "url": null, "why": "Closes the loop between reading and the operating model."}]}]}}</script>
+  <script>
 
-  <script src="./app.js"></script>
+const DATA = JSON.parse(document.getElementById("payload").textContent);
+const $ = (id) => document.getElementById(id);
+const KEY = "gcm-prep-v1";
+const state = load();
+let view = "reading";
+let glossFilter = "all";
+let hideKnown = false;
+let query = "";
+
+function load() {
+  try { return JSON.parse(localStorage.getItem(KEY)) || { read: {}, notes: {}, known: {} }; }
+  catch { return { read: {}, notes: {}, known: {} }; }
+}
+function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
+function esc(s) {
+  return String(s ?? "")
+    .replace(/&/g, "\u0026amp;")
+    .replace(/</g, "\u0026lt;")
+    .replace(/>/g, "\u0026gt;")
+    .replace(/"/g, "\u0026quot;")
+    .replace(/'/g, "\u0026#39;");
+}
+function items() {
+  return DATA.reading.blocks.flatMap((b) => b.items.map((item) => ({ ...item, block: b })));
+}
+function terms() {
+  return DATA.glossary.categories.flatMap((c) => c.terms.map((t) => ({ ...t, category: c })));
+}
+function termById(id) { return terms().find((t) => t.id === id); }
+function matches(text) { return !query || text.toLowerCase().includes(query); }
+
+function counts() {
+  const allItems = items();
+  const done = allItems.filter((i) => state.read[i.id]).length;
+  const known = terms().filter((t) => state.known[t.id]).length;
+  $("counts").textContent = done + "/" + allItems.length + " read · " + known + "/" + terms().length + " known";
+}
+function nextItem() { return items().find((i) => !state.read[i.id]) || null; }
+
+function itemCard(item) {
+  const done = !!state.read[item.id];
+  const note = state.notes[item.id] || "";
+  const link = item.url ? '<a class="link" href="' + esc(item.url) + '" target="_blank" rel="noopener noreferrer">Open source</a>' : "";
+  return '<article class="item' + (done ? " done" : "") + '">'
+    + '<input type="checkbox" data-read="' + esc(item.id) + '"' + (done ? " checked" : "") + ' aria-label="Mark read: ' + esc(item.title) + '" />'
+    + '<div><div class="row"><span class="chip ' + esc(item.type) + '">' + esc(item.type) + '</span></div>'
+    + '<div class="title">' + esc(item.title) + '</div>'
+    + '<p class="focus"><strong>Look for:</strong> ' + esc(item.focus) + '</p>'
+    + '<p class="why">' + esc(item.why) + '</p>' + link
+    + '<label class="notes-label">Five lines: the rule, good here, poor here, evidence we have, evidence we do not.'
+    + '<textarea class="notes" data-note="' + esc(item.id) + '" placeholder="Write the five lines after you read it.">' + esc(note) + '</textarea>'
+    + '</label></div></article>';
+}
+
+function readingView() {
+  const blocks = DATA.reading.blocks.map((block) => {
+    const visible = block.items.filter((item) => matches([item.title, item.focus, item.why, item.type, block.label, block.theme].join(" ")));
+    if (!visible.length) return "";
+    const done = block.items.filter((i) => state.read[i.id]).length;
+    const pct = Math.round((done / block.items.length) * 100);
+    return '<section class="card" id="block-' + esc(block.id) + '"><div class="block-head"><h2>' + esc(block.label) + '</h2><span class="meta">' + done + "/" + block.items.length + '</span></div>'
+      + '<p class="meta">' + esc(block.theme) + '</p><p class="goal"><strong>Leave able to:</strong> ' + esc(block.goal) + '</p>'
+      + '<div class="progress" aria-hidden="true"><span style="width:' + pct + '%"></span></div><div style="margin-top:14px">'
+      + visible.map(itemCard).join("") + "</div></section>";
+  }).join("");
+  const next = nextItem();
+  const nextCard = next && !query
+    ? '<section class="card next"><p class="kicker">Up next</p><h2>' + esc(next.title) + '</h2><p class="meta">' + esc(next.block.label) + " · " + esc(next.block.theme) + '</p><p class="focus">' + esc(next.focus) + "</p></section>"
+    : "";
+  return nextCard
+    + '<section class="card"><p class="kicker">How to use the fortnight</p><p>' + esc(DATA.reading.how_to_use) + '</p><ol class="method">'
+    + DATA.reading.method.map((m) => "<li>" + esc(m) + "</li>").join("") + "</ol></section>"
+    + (blocks || '<p class="empty">Nothing matches that search.</p>');
+}
+
+function termCard(t) {
+  const known = !!state.known[t.id];
+  const related = (t.related || []).map((id) => {
+    const other = termById(id);
+    return other ? '<button type="button" data-jump="' + esc(id) + '">' + esc(other.term) + "</button>" : "";
+  }).join("");
+  return '<article class="card term' + (known ? " known-card" : "") + (t.category.id === "misuse" ? " misuse" : "") + '" id="term-' + esc(t.id) + '">'
+    + '<div class="term-top"><div><p class="label">' + esc(t.category.name) + "</p><h3>" + esc(t.term) + '</h3></div>'
+    + '<button type="button" class="known' + (known ? " on" : "") + '" data-known="' + esc(t.id) + '">' + (known ? "Known" : "Mark known") + "</button></div>"
+    + '<p class="short">' + esc(t.short) + '</p>'
+    + '<div class="block"><p class="label">Means</p><p>' + esc(t.definition) + "</p></div>"
+    + '<div class="block"><p class="label">Example</p><p>' + esc(t.example) + "</p></div>"
+    + '<div class="say"><p class="label">Say this</p><p>' + esc(t.use) + "</p></div>"
+    + (related ? '<div class="related">' + related + "</div>" : "") + "</article>";
+}
+
+function glossaryView() {
+  const cats = DATA.glossary.categories;
+  const filters = '<button type="button" data-filter="all" class="' + (glossFilter === "all" ? "active" : "") + '">All</button>'
+    + cats.map((c) => '<button type="button" data-filter="' + esc(c.id) + '" class="' + (glossFilter === c.id ? "active" : "") + '">' + esc(c.name) + "</button>").join("");
+  const list = terms().filter((t) => {
+    if (glossFilter !== "all" && t.category.id !== glossFilter) return false;
+    if (hideKnown && state.known[t.id]) return false;
+    return matches([t.term, t.short, t.definition, t.example, t.use, t.category.name].join(" "));
+  });
+  return '<div class="filters" role="tablist">' + filters + "</div>"
+    + '<button type="button" class="toggle' + (hideKnown ? " on" : "") + '" id="hide-known">' + (hideKnown ? "Showing still learning" : "Hide terms I know") + "</button>"
+    + '<p class="meta" style="margin:10px 0 12px">' + esc(DATA.glossary.note) + "</p>"
+    + (list.map(termCard).join("") || '<p class="empty">Nothing in this cut.</p>');
+}
+
+function render() {
+  counts();
+  $("main").innerHTML = view === "reading" ? readingView() : glossaryView();
+  bind();
+}
+function bind() {
+  document.querySelectorAll("[data-read]").forEach((el) => el.addEventListener("change", () => {
+    state.read[el.dataset.read] = el.checked; save(); render();
+  }));
+  document.querySelectorAll("[data-note]").forEach((el) => el.addEventListener("input", () => {
+    state.notes[el.dataset.note] = el.value; save(); counts();
+  }));
+  document.querySelectorAll("[data-known]").forEach((el) => el.addEventListener("click", () => {
+    const id = el.dataset.known; state.known[id] = !state.known[id]; save(); render();
+    const node = document.getElementById("term-" + id); if (node) node.scrollIntoView({ block: "center" });
+  }));
+  document.querySelectorAll("[data-filter]").forEach((el) => el.addEventListener("click", () => { glossFilter = el.dataset.filter; render(); }));
+  document.querySelectorAll("[data-jump]").forEach((el) => el.addEventListener("click", () => {
+    glossFilter = "all"; hideKnown = false; query = ""; $("q").value = ""; render();
+    const node = document.getElementById("term-" + el.dataset.jump);
+    if (node) node.scrollIntoView({ behavior: "smooth", block: "start" });
+  }));
+  const hide = $("hide-known");
+  if (hide) hide.addEventListener("click", () => { hideKnown = !hideKnown; render(); });
+}
+document.querySelectorAll(".tabs button").forEach((btn) => btn.addEventListener("click", () => {
+  view = btn.dataset.view;
+  document.querySelectorAll(".tabs button").forEach((b) => b.classList.toggle("active", b === btn));
+  render();
+}));
+$("q").addEventListener("input", (e) => { query = e.target.value.trim().toLowerCase(); render(); });
+render();
+
+  </script>
 </body>
 </html>

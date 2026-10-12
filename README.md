@@ -9,6 +9,7 @@ Each tool lives in its own directory and is reachable at `/{slug}`.
 | SDD made simple | [`/sddms`](./sddms/) |
 | EWL Document Hub | [`/ewldochub`](./ewldochub/) |
 | File Check | [`/filecheck`](./filecheck/) |
+| Vulnerable Customer | [`/vulnerablecustomer`](./vulnerablecustomer/) |
 
 Convention: add `toolslug/index.html` (and any assets for that tool). The hub card on the root page links to that path.
 
@@ -17,3 +18,5 @@ SDD Made Simple is an internal training and reference tool for presenting the St
 EWL Document Hub is the onboarding declaration, broker customer order form, and customer order form.
 
 File Check is an internal work aid for ticking required checks on a document pack. It is not an official file record.
+
+Vulnerable Customer Explainer hosts a guidance video on identifying and supporting vulnerable customers.

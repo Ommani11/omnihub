@@ -10,6 +10,7 @@ Each tool lives in its own directory and is reachable at `/{slug}`.
 | EWL Document Hub | [`/ewldochub`](./ewldochub/) |
 | File Check | [`/filecheck`](./filecheck/) |
 | Vulnerable Customer | [`/vulnerablecustomer`](./vulnerablecustomer/) |
+| Automotive Finance Foundation | [external](https://autofinancecompliancetraining.vercel.app/) |
 
 Convention: add `toolslug/index.html` (and any assets for that tool). The hub card on the root page links to that path.
 
@@ -20,3 +21,5 @@ EWL Document Hub is the onboarding declaration, broker customer order form, and 
 File Check is an internal work aid for ticking required checks on a document pack. It is not an official file record.
 
 Vulnerable Customer Explainer hosts a guidance video on identifying and supporting vulnerable customers.
+
+Automotive Finance Foundation is an external compliance training site.

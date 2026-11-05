@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Finance Reflection &amp; Clarity Guide</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            900: '#0d2444',
+                            800: '#143665', // Primary specified color
+                            700: '#1b4680',
+                            600: '#23599f',
+                            100: '#e7eef7',
+                            50: '#f2f6fb',
+                        },
+                        mono: {
+                            dark: '#1e293b',
+                            mid: '#64748b',
+                            light: '#f1f5f9',
+                            stripe: '#cbd5e1'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+                        dyslexic: ['Lexend', 'Comic Sans MS', 'Verdana', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts for Accessibility (Lexend for Dyslexia/Clarity) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Lexend:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Translate Script (Native Select Layout to Prevent Iframe Bleed) -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <style>
+        /* Base Dynamic Scaling Variables for Text Zoom */
+        :root {
+            --font-scale: 1rem;
+            --h1-scale: 1.75rem;
+            --h2-scale: 1.35rem;
+            --h3-scale: 1.15rem;
+            --small-scale: 0.875rem;
+        }
+
+        body {
+            font-size: var(--font-scale);
+            transition: background-color 0.25s ease, font-size 0.2s ease;
+        }
+
+        .dynamic-h1 {
+            font-size: var(--h1-scale) !important;
+            line-height: 1.25;
+        }
+        .dynamic-h2 {
+            font-size: var(--h2-scale) !important;
+            line-height: 1.3;
+        }
+        .dynamic-h3 {
+            font-size: var(--h3-scale) !important;
+            line-height: 1.35;
+        }
+        .dynamic-sm {
+            font-size: var(--small-scale) !important;
+            line-height: 1.5;
+        }
+
+        /* Dyslexia-Friendly Font Mode */
+        body.font-dyslexic-mode,
+        body.font-dyslexic-mode * {
+            font-family: 'Lexend', 'Verdana', sans-serif !important;
+            letter-spacing: 0.025em;
+            line-height: 1.6;
+        }
+
+        /* Visual Stress / Paper Tint Palettes */
+        body.theme-default {
+            background-color: #f1f5f9;
+        }
+        body.theme-default .accessible-card {
+            background-color: #ffffff !important;
+        }
+
+        body.theme-cream {
+            background-color: #f6f1df !important;
+        }
+        body.theme-cream .accessible-card,
+        body.theme-cream .bg-white {
+            background-color: #fbf8ee !important;
+        }
+        body.theme-cream .bg-slate-50 {
+            background-color: #f3edd7 !important;
+        }
+
+        body.theme-softblue {
+            background-color: #dbe7f3 !important;
+        }
+        body.theme-softblue .accessible-card,
+        body.theme-softblue .bg-white {
+            background-color: #edf4fa !important;
+        }
+        body.theme-softblue .bg-slate-50 {
+            background-color: #dceaf5 !important;
+        }
+
+        /* Visual Structure Diagram components */
+        .diagram-container {
+            border: 2px solid #334155;
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+        }
+        .diagram-bar-wrap {
+            height: 2.75rem;
+            display: flex;
+            width: 100%;
+            border: 2px solid #0f172a;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+
+        /* High-Contrast Black & White Accessible Texture Patterns */
+        .pattern-solid {
+            background-color: #143665 !important;
+            color: #ffffff !important;
+        }
+
+        .pattern-hatch-diagonal {
+            background-color: #f1f5f9 !important;
+            background-image: repeating-linear-gradient(
+                45deg,
+                #1e293b,
+                #1e293b 10px,
+                #ffffff 10px,
+                #ffffff 20px
+            ) !important;
+            color: #000000 !important;
+        }
+
+        .pattern-dots {
+            background-color: #ffffff !important;
+            background-image: radial-gradient(#1e293b 2.5px, transparent 2.5px) !important;
+            background-size: 10px 10px !important;
+            color: #000000 !important;
+        }
+
+        /* Google Translate Styling - Rock-Solid Native Dropdown (No Iframe Overflow) */
+        #google_translate_element {
+            display: inline-flex;
+            align-items: center;
+        }
+        .goog-te-gadget {
+            font-family: inherit !important;
+            font-size: 0px !important; /* Hide Google branding text for clean UI */
+            color: transparent !important;
+            display: inline-flex !important;
+            align-items: center !important;
+        }
+        .goog-te-gadget select.goog-te-combo {
+            font-family: inherit !important;
+            font-size: 12px !important;
+            font-weight: 700 !important;
+            color: #0f172a !important;
+            background-color: #ffffff !important;
+            border: 2px solid #000000 !important;
+            border-radius: 0.375rem !important;
+            padding: 4px 8px !important;
+            margin: 0 !important;
+            cursor: pointer !important;
+            outline: none !important;
+            max-width: 160px !important;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1) !important;
+        }
+        .goog-te-gadget select.goog-te-combo:focus {
+            border-color: #143665 !important;
+            box-shadow: 0 0 0 2px rgba(20,54,101,0.3) !important;
+        }
+        .goog-te-banner-frame.skiptranslate,
+        .goog-te-banner-frame {
+            display: none !important;
+            visibility: hidden !important;
+            height: 0 !important;
+        }
+        /* Fallback safeguard against any injected pop-over iframes */
+        iframe.goog-te-menu-frame {
+            display: none !important;
+        }
+        body {
+            top: 0px !important;
+        }
+    </style>
+</head>
+<body class="theme-default text-slate-900 antialiased min-h-screen flex flex-col selection:bg-brand-800 selection:text-white">
+
+    <!-- TOP TOOLBAR & ACCESSIBILITY CONTROLS (Hidden on Print) -->
+    <aside class="no-print bg-[#143665] border-b-2 border-slate-900 text-white sticky top-0 z-50 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex flex-wrap items-center justify-between gap-3">
+            
+            <!-- Left Header & Status -->
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded border-2 border-white flex items-center justify-center font-black bg-black text-white text-sm">
+                    <i data-lucide="eye" class="w-4 h-4"></i>
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-black tracking-tight text-white dynamic-sm">FCA Consumer Duty Reflection Guide</span>
+                        <span class="bg-white text-[#143665] px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider">High-Contrast & B&amp;W Ready</span>
+                    </div>
+                    <p class="text-[11px] text-blue-200">Additional Needs &amp; 24–48hr Take-Home Support</p>
+                </div>
+            </div>
+
+            <!-- Accessibility Toolbar Controls -->
+            <div class="flex flex-wrap items-center gap-2">
+                
+                <!-- Google Translate Dropdown: Native High-Contrast Select Box -->
+                <div class="flex items-center gap-1.5 bg-[#0d2444] px-2.5 py-1 rounded border border-white/40 text-xs shadow-inner">
+                    <i data-lucide="languages" class="w-4 h-4 text-amber-300 shrink-0"></i>
+                    <div id="google_translate_element" title="Select display language"></div>
+                </div>
+
+                <!-- Layout selector -->
+                <div class="bg-slate-900/80 p-0.5 rounded border border-white/30 flex text-xs font-semibold">
+                    <button id="btnViewSingle" onclick="setViewMode('single')" class="px-2.5 py-1 rounded text-slate-900 bg-white font-bold transition">Single Product</button>
+                    <button id="btnViewCompare" onclick="setViewMode('compare')" class="px-2.5 py-1 rounded text-white hover:bg-slate-800 transition">Side-by-Side</button>
+                </div>
+
+                <!-- Text Size (Zoom) -->
+                <div class="bg-slate-900/80 px-2 py-0.5 rounded border border-white/30 flex items-center gap-1 text-xs">
+                    <span class="text-blue-100 flex items-center gap-1 font-bold">
+                        <i data-lucide="type" class="w-3.5 h-3.5"></i> Size:
+                    </span>
+                    <button onclick="setZoom('normal')" id="zoomNormal" class="px-2 py-0.5 rounded font-black bg-white text-slate-900">Standard</button>
+                    <button onclick="setZoom('large')" id="zoomLarge" class="px-2 py-0.5 rounded font-bold text-white hover:bg-slate-800">Large (16pt)</button>
+                    <button onclick="setZoom('xlarge')" id="zoomXLarge" class="px-2 py-0.5 rounded font-bold text-white hover:bg-slate-800">XL (20pt)</button>
+                </div>
+
+                <!-- Visual Stress / Tint Switcher -->
+                <div class="bg-slate-900/80 px-2 py-0.5 rounded border border-white/30 flex items-center gap-1 text-xs">
+                    <span class="text-blue-100 font-bold">Paper Tint:</span>
+                    <button onclick="setTint('default')" title="Default Clear White" class="w-5 h-5 rounded border border-white bg-white text-slate-900 font-black text-[10px] flex items-center justify-center">W</button>
+                    <button onclick="setTint('cream')" title="Cream / Yellow tint for Dyslexia and Visual Stress" class="w-5 h-5 rounded border border-black bg-[#fbf8ee] text-black font-black text-[10px] flex items-center justify-center">C</button>
+                    <button onclick="setTint('softblue')" title="Soft Blue tint to reduce glare" class="w-5 h-5 rounded border border-black bg-[#e2ecf5] text-black font-black text-[10px] flex items-center justify-center">B</button>
+                </div>
+
+                <!-- Dyslexia Font Toggle -->
+                <button onclick="toggleDyslexicFont()" id="btnDyslexia" class="bg-slate-900 hover:bg-slate-800 border border-white/30 text-white px-2.5 py-1 rounded text-xs font-bold flex items-center gap-1 transition">
+                    <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                    <span>Dyslexia Font</span>
+                </button>
+
+                <!-- Text-to-Speech Audio Read-Aloud -->
+                <button onclick="toggleReadAloud()" id="btnReadAloud" class="bg-slate-900 hover:bg-slate-800 border border-white/30 text-white px-2.5 py-1 rounded text-xs font-bold flex items-center gap-1 transition">
+                    <i data-lucide="volume-2" class="w-3.5 h-3.5"></i>
+                    <span id="readAloudLabel">Listen Aloud</span>
+                </button>
+
+                <!-- Edit Quote Setup Drawer -->
+                <button onclick="toggleSetupModal()" class="bg-slate-900 hover:bg-slate-800 border border-white/30 text-white px-2.5 py-1 rounded text-xs font-bold flex items-center gap-1 transition">
+                    <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                    <span>Edit Quote</span>
+                </button>
+
+                <!-- Print Action -->
+                <button onclick="window.print()" class="bg-white hover:bg-slate-200 text-[#143665] font-black px-3.5 py-1 rounded text-xs flex items-center gap-1.5 transition border-2 border-black">
+                    <i data-lucide="printer" class="w-4 h-4"></i>
+                    <span>Print / PDF</span>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- SETUP DRAWER / MODAL FOR DEALERSHIP CONSULTANT -->
+    <div id="setupModal" class="no-print hidden bg-white border-b-4 border-[#143665] px-6 py-5 shadow-2xl transition">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex justify-between items-center mb-4 pb-2 border-b-2 border-slate-200">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="file-input" class="w-5 h-5 text-[#143665]"></i>
+                    <h3 class="font-black text-[#143665] dynamic-sm tracking-wide uppercase">Populate Figures from SECCI / Official Finance Quote</h3>
+                </div>
+                <button onclick="toggleSetupModal()" class="text-slate-600 hover:text-black text-sm font-black flex items-center gap-1">
+                    <i data-lucide="x" class="w-5 h-5"></i> Close Editor
+                </button>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3 dynamic-sm">
+                <div>
+                    <label class="block text-slate-800 font-bold text-xs mb-1">Customer Name</label>
+                    <input type="text" id="inCustomer" value="Valued Customer" class="w-full border-2 border-slate-400 rounded px-2.5 py-1.5 font-bold text-slate-900">
+                </div>
+                <div>
+                    <label class="block text-slate-800 font-bold text-xs mb-1">Vehicle Description</label>
+                    <input type="text" id="inVehicle" value="2025 Volkswagen Polo Match 1.0L TSI" class="w-full border-2 border-slate-400 rounded px-2.5 py-1.5 font-bold text-slate-900">
+                </div>
+                <div>
+                    <label class="block text-slate-800 font-bold text-xs mb-1">Quote Reference #</label>
+                    <input type="text" id="inQuoteRef" value="QT-98421-EWMG" class="w-full border-2 border-slate-400 rounded px-2.5 py-1.5 font-bold text-slate-900">
+                </div>
+                <div>
+                    <label class="block text-slate-800 font-bold text-xs mb-1">Cash Vehicle Price (£)</label>
+                    <input type="text" id="inCashPrice" value="21,500.00" class="w-full border-2 border-slate-400 rounded px-2.5 py-1.5 font-bold text-slate-900">
+                </div>
+                <div>
+                    <label class="block text-slate-800 font-bold text-xs mb-1">Customer Deposit (£)</label>
+                    <input type="text" id="inDeposit" value="2,000.00" class="w-full border-2 border-slate-400 rounded px-2.5 py-1.5 font-bold text-slate-900">
+                </div>
+                <div>
+                    <label class="block text-slate-800 font-bold text-xs mb-1">Term (Months)</label>
+                    <input type="text" id="inTerm" value="48" class="w-full border-2 border-slate-400 rounded px-2.5 py-1.5 font-bold text-slate-900">
+                </div>
+
+                <div>
+                    <label class="block text-slate-800 font-bold text-xs mb-1">PCP Monthly (£)</label>
+                    <input type="text" id="inPcpMonthly" value="278.45" class="w-full border-2 border-[#143665] rounded px-2.5 py-1.5 font-black text-[#143665]">
+                </div>
+                <div>
+                    <label class="block text-slate-800 font-bold text-xs mb-1">PCP Final Balloon (£)</label>
+                    <input type="text" id="inPcpBalloon" value="9,350.00" class="w-full border-2 border-[#143665] rounded px-2.5 py-1.5 font-black text-[#143665]">
+                </div>
+                <div>
+                    <label class="block text-slate-800 font-bold text-xs mb-1">Agreed Annual Miles</label>
+                    <input type="text" id="inPcpMiles" value="10,000" class="w-full border-2 border-slate-400 rounded px-2.5 py-1.5 font-bold text-slate-900">
+                </div>
+                <div>
+                    <label class="block text-slate-800 font-bold text-xs mb-1">HP Monthly (£)</label>
+                    <input type="text" id="inHpMonthly" value="465.12" class="w-full border-2 border-[#143665] rounded px-2.5 py-1.5 font-black text-[#143665]">
+                </div>
+                <div>
+                    <label class="block text-slate-800 font-bold text-xs mb-1">PCH Initial Rental (£)</label>
+                    <input type="text" id="inPchInitial" value="950.00" class="w-full border-2 border-slate-400 rounded px-2.5 py-1.5 font-bold text-slate-900">
+                </div>
+                <div>
+                    <label class="block text-slate-800 font-bold text-xs mb-1">PCH Monthly Rental (£)</label>
+                    <input type="text" id="inPchMonthly" value="315.00" class="w-full border-2 border-slate-400 rounded px-2.5 py-1.5 font-bold text-slate-900">
+                </div>
+            </div>
+
+            <div class="mt-4 pt-3 border-t border-slate-200 flex justify-between items-center text-xs">
+                <span class="text-slate-600 font-medium">All inputs immediately recalculate throughout the diagrams, progress bars, and reflection checklists.</span>
+                <button onclick="applyQuoteData()" class="bg-[#143665] hover:bg-slate-900 text-white px-5 py-2 rounded font-black border-2 border-black flex items-center gap-1.5">
+                    <i data-lucide="check" class="w-4 h-4"></i> Apply to Document
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN PRINTABLE DOCUMENT CONTAINER -->
+    <main id="readableDocument" class="max-w-5xl mx-auto w-full p-4 sm:p-8 flex-grow space-y-6">
+
+        <!-- DOCUMENT HEADER CARD (HIGH CONTRAST B&W BORDERS) -->
+        <header class="accessible-card bg-white rounded-xl border-2 border-slate-900 shadow-sm overflow-hidden print-border">
+            
+            <!-- High-Contrast Top Bar -->
+            <div class="h-3 bg-[#143665] border-b-2 border-black"></div>
+            
+            <div class="p-6 sm:p-8">
+                <div class="flex flex-col md:flex-row md:items-start justify-between gap-6 border-b-2 border-slate-300 pb-6">
+                    <div class="space-y-2">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded border-2 border-black bg-slate-100 text-black text-xs font-black">
+                            <i data-lucide="shield-check" class="w-4 h-4 text-black"></i>
+                            FCA Consumer Duty • Take-Home Reflection &amp; Clarity Guide
+                        </div>
+                        <h1 class="font-black text-slate-950 dynamic-h1 tracking-tight">Understanding Your Vehicle Finance Options</h1>
+                        <p class="text-slate-800 dynamic-sm max-w-2xl font-medium">
+                            This plain-language guide explains how each finance option works, how your money is divided, and what happens at the end. Take this home to review at your own speed with family, carers, or friends.
+                        </p>
+                    </div>
+
+                    <!-- Quote Metadata Box (High-Contrast B&W) -->
+                    <div class="bg-white border-2 border-black rounded-lg p-4 min-w-[270px] dynamic-sm space-y-1.5 print-border-thin">
+                        <div class="text-xs font-black uppercase tracking-wider text-black flex items-center justify-between border-b-2 border-black pb-1.5">
+                            <span>Your Quote Summary</span>
+                            <span class="font-mono text-black font-black" id="outQuoteRef">QT-98421-EWMG</span>
+                        </div>
+                        <div class="text-slate-800"><strong>Customer:</strong> <span id="outCustomer" class="text-black font-bold">Valued Customer</span></div>
+                <div class="text-slate-800"><strong>Vehicle:</strong> <span id="outVehicle" class="text-black font-bold">2025 VW Polo Match</span></div>
+                <div class="text-slate-800"><strong>Vehicle Cash Price:</strong> <span class="text-black font-black">£<span id="outCashPrice">21,500.00</span></span></div>
+                <div class="text-slate-800"><strong>Deposit / Upfront:</strong> <span class="text-black font-black">£<span id="outDeposit">2,000.00</span></span></div>
+            </div>
+        </div>
+
+        <!-- TRANSLATION & LANGUAGE ACCURACY CAVEAT NOTICE -->
+        <div class="mt-4 bg-amber-50 border-2 border-amber-800 rounded-lg p-3 text-amber-950 text-xs flex items-start gap-2.5 print-border-thin">
+            <i data-lucide="alert-circle" class="w-4 h-4 text-amber-900 shrink-0 mt-0.5"></i>
+            <div class="space-y-0.5">
+                <span class="font-black uppercase tracking-wider text-[11px] block text-amber-950">Important Notice Regarding Automated Translations:</span>
+                <p class="font-medium text-amber-900 leading-relaxed">
+                    Translations away from English on this tool are provided solely as an informal reading aid via Google Translate. All official credit agreements, quotations, SECCI pre-contract disclosures, and regulatory notices are authored definitively in English. Neither Google nor the quote provider, dealership, or credit broker can be held liable or legally responsible for any discrepancies, mistranslations, or inaccuracies resulting from automated machine translation.
+                </p>
+            </div>
+        </div>
+
+        <!-- 24-48 HOUR PAUSE / FCA CONSUMER DUTY NOTICE -->
+        <div class="mt-4 bg-slate-50 border-2 border-black p-4 rounded-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div class="flex items-start gap-3">
+                        <div class="w-8 h-8 rounded border-2 border-black bg-white flex items-center justify-center shrink-0 mt-0.5">
+                            <i data-lucide="clock" class="w-5 h-5 text-black"></i>
+                        </div>
+                        <div>
+                            <div class="font-black text-black dynamic-h3">Recommended 24 to 48 Hour Reflection Period</div>
+                            <p class="text-slate-800 dynamic-sm mt-0.5 font-medium">
+                                Motor finance is an important financial agreement. You are encouraged to take this sheet home, pause, and talk it over in comfort. There is no pressure to make any decision today.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="shrink-0 bg-white px-3.5 py-2 rounded border-2 border-black text-center">
+                        <span class="block text-[11px] uppercase font-black text-slate-700">Zero Showroom Pressure</span>
+                        <span class="text-xs font-black text-black">Your Quote Is Saved</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- SINGLE PRODUCT VIEW MODE -->
+        <div id="singleProductView" class="space-y-6">
+            
+            <!-- Selector Tabs (Only on Screen) -->
+            <div class="no-print flex flex-wrap gap-2">
+                <button onclick="selectProductTab('pcp')" id="tabBtnPcp" class="tab-transition px-4 py-2.5 rounded-lg font-black text-xs flex items-center gap-2 bg-[#143665] text-white border-2 border-black shadow">
+                    <i data-lucide="pie-chart" class="w-4 h-4"></i>
+                    <span>Personal Contract Purchase (PCP)</span>
+                </button>
+                <button onclick="selectProductTab('hp')" id="tabBtnHp" class="tab-transition px-4 py-2.5 rounded-lg font-black text-xs flex items-center gap-2 bg-white text-black border-2 border-slate-400 hover:border-black">
+                    <i data-lucide="shield" class="w-4 h-4"></i>
+                    <span>Hire Purchase (HP)</span>
+                </button>
+                <button onclick="selectProductTab('pch')" id="tabBtnPch" class="tab-transition px-4 py-2.5 rounded-lg font-black text-xs flex items-center gap-2 bg-white text-black border-2 border-slate-400 hover:border-black">
+                    <i data-lucide="repeat" class="w-4 h-4"></i>
+                    <span>Personal Contract Hire (PCH Leasing)</span>
+                </button>
+            </div>
+
+            <!-- PRODUCT 1: PCP CARD -->
+            <div id="contentPcp" class="accessible-card product-content bg-white rounded-xl border-2 border-slate-900 p-6 sm:p-8 space-y-6 print-border">
+                
+                <!-- Title & Highlights -->
+                <div class="flex flex-col sm:flex-row justify-between items-start gap-4 border-b-2 border-slate-200 pb-5">
+                    <div>
+                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-black bg-slate-100 text-black border border-black mb-2">
+                            <i data-lucide="help-circle" class="w-3.5 h-3.5"></i> Lower Monthly Payments with End Flexibility
+                        </div>
+                        <h2 class="font-black text-slate-950 dynamic-h2">Personal Contract Purchase (PCP)</h2>
+                        <p class="text-slate-800 dynamic-sm mt-1 max-w-2xl font-medium">
+                            PCP gives you lower monthly payments by delaying a large portion of the vehicle's cost (the "Balloon Payment") until the very end of the agreement.
+                        </p>
+                    </div>
+
+                    <!-- Monthly Figure Box (High-Contrast Black & White) -->
+                    <div class="bg-white border-4 border-[#143665] rounded-xl px-5 py-3 text-right shrink-0 print-border">
+                        <span class="text-xs uppercase font-black text-slate-700 tracking-wider block">Estimated Monthly</span>
+                        <div class="font-black text-black text-2xl sm:text-3xl tracking-tight">£<span id="dispPcpMonthly">278.45</span></div>
+                        <span class="text-xs text-slate-800 font-bold"><span id="dispPcpTerm">48</span> fixed payments</span>
+                    </div>
+                </div>
+
+                <!-- PLAIN-ENGLISH 30-SECOND EXPLANATION BOX (Accessible for cognitive fatigue / comprehension) -->
+                <div class="bg-slate-50 border-2 border-black rounded-lg p-4 space-y-1">
+                    <div class="flex items-center gap-2 font-black text-xs uppercase tracking-wider text-black">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-black"></i>
+                        <span>30-Second Summary of PCP</span>
+                    </div>
+                    <p class="text-slate-900 dynamic-sm font-medium">
+                        You do not pay for the whole car during the <span class="diagTerm">48</span> months. You only pay for what the car is expected to lose in value (depreciation), plus interest. At the end, you decide whether to pay the remaining balloon to keep it, trade it in, or simply hand it back.
+                    </p>
+                </div>
+
+                <!-- STANDARDIZED B&W STRUCTURE DIAGRAM: PCP -->
+                <div class="diagram-container bg-white border-2 border-black">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4 border-b-2 border-slate-300 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="p-1 rounded bg-black text-white"><i data-lucide="layers" class="w-4 h-4"></i></span>
+                            <h3 class="font-black text-black text-xs uppercase tracking-wider">
+                                How the Vehicle Cost is Divided: Personal Contract Purchase (PCP)
+                            </h3>
+                        </div>
+                        <span class="text-[11px] font-black text-black bg-slate-100 px-2.5 py-1 rounded border border-black">
+                            Cash Financed: £<span class="diagVehiclePrice">21,500.00</span>
+                        </span>
+                    </div>
+
+                    <!-- B&W Accessible Pattern Breakdown Bar -->
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center text-[11px] text-black font-bold mb-1.5">
+                            <span>Visual Split (Pattern Legend below):</span>
+                            <span>Total Vehicle Price = 100%</span>
+                        </div>
+
+                        <!-- Bar with Patterns: Solid Black / Diagonal Stripe / Stippled Dots -->
+                        <div class="diagram-bar-wrap">
+                            <!-- Deposit -->
+                            <div style="width: 10%;" class="pattern-solid flex items-center justify-center p-1 text-center border-r-2 border-white" title="Customer Deposit">
+                                <span class="truncate">Deposit (10%)</span>
+                            </div>
+                            <!-- Monthly Installments (Hatched Stripe) -->
+                            <div style="width: 48%;" class="pattern-hatch-diagonal flex items-center justify-center p-1 text-center border-r-2 border-black font-black" title="Monthly Payments">
+                                <span class="bg-black/90 text-white px-2 py-0.5 rounded truncate font-black">Monthly Installments (48%)</span>
+                            </div>
+                            <!-- Final Balloon (Stippled Dots Pattern) -->
+                            <div style="width: 42%;" class="pattern-dots flex items-center justify-center p-1 text-center font-black" title="Deferred Optional Balloon">
+                                <span class="bg-white px-2 py-0.5 rounded border border-black text-black font-black truncate">Optional Balloon (42%)</span>
+                            </div>
+                        </div>
+
+                        <!-- High-Contrast Caption Legend below diagram -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-black mt-2 font-bold">
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-3.5 h-3.5 pattern-solid border border-black inline-block"></span>
+                                <span><strong>Deposit Upfront:</strong> £<span class="diagDeposit">2,000.00</span></span>
+                            </div>
+                            <div class="flex items-center gap-1.5 justify-start sm:justify-center">
+                                <span class="w-3.5 h-3.5 pattern-hatch-diagonal border border-black inline-block"></span>
+                                <span><strong>48 Monthly Payments:</strong> £<span id="diagPcpSum">13,365.60</span></span>
+                            </div>
+                            <div class="flex items-center gap-1.5 justify-start sm:justify-end">
+                                <span class="w-3.5 h-3.5 pattern-dots border border-black inline-block"></span>
+                                <span><strong>Deferred Balloon:</strong> £<span class="diagBalloon">9,350.00</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3-Phase Progression Standard (B&W Cards) -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <!-- Phase 1 -->
+                        <div class="bg-white p-3.5 rounded-lg border-2 border-black space-y-1.5">
+                            <div class="flex items-center justify-between text-xs font-black border-b-2 border-slate-200 pb-1.5">
+                                <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-black text-white text-[11px] flex items-center justify-center font-bold">1</span> Stage 1: Upfront</span>
+                                <span class="text-slate-700">Initial Outlay</span>
+                            </div>
+                            <div class="text-xl font-black text-black font-mono">£<span class="diagDeposit">2,000.00</span></div>
+                            <p class="text-xs text-slate-800 font-medium">Paid by cash, card, or part-exchange equity. Reduces the borrowing balance on Day 1.</p>
+                            <div class="mt-2 pt-2 border-t border-slate-200 text-[11px] text-slate-800 font-bold">
+                                <strong>Vehicle Ownership:</strong> Lender holds title.
+                            </div>
+                        </div>
+
+                        <!-- Phase 2 -->
+                        <div class="bg-white p-3.5 rounded-lg border-4 border-[#143665] space-y-1.5">
+                            <div class="flex items-center justify-between text-xs font-black border-b-2 border-slate-200 pb-1.5">
+                                <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-[#143665] text-white text-[11px] flex items-center justify-center font-bold">2</span> Stage 2: Monthly</span>
+                                <span class="text-black font-bold"><span class="diagTerm">48</span> Payments</span>
+                            </div>
+                            <div class="text-xl font-black text-black font-mono">£<span class="diagPcpMonthly">278.45</span> <span class="text-xs font-bold text-slate-600">/month</span></div>
+                            <p class="text-xs text-slate-800 font-medium">You pay off the predicted depreciation plus interest on the whole balance.</p>
+                            <div class="mt-2 pt-2 border-t border-slate-200 text-[11px] bg-slate-100 p-1.5 rounded border border-black font-bold text-black">
+                                <strong>Agreed Limits:</strong> <span class="diagMiles">10,000</span> miles/year &amp; fair wear &amp; tear rules.
+                            </div>
+                        </div>
+
+                        <!-- Phase 3 -->
+                        <div class="bg-white p-3.5 rounded-lg border-2 border-black space-y-1.5">
+                            <div class="flex items-center justify-between text-xs font-black border-b-2 border-slate-200 pb-1.5">
+                                <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-slate-200 border border-black text-black text-[11px] flex items-center justify-center font-black">3</span> Stage 3: End Choice</span>
+                                <span class="text-black font-black">3 Options</span>
+                            </div>
+                            <div class="text-xl font-black text-black font-mono">£<span class="diagBalloon">9,350.00</span> <span class="text-xs font-bold text-slate-600">(Optional)</span></div>
+                            <p class="text-xs text-slate-800 font-medium">Pay balloon to own the car, trade it in for a newer model, or hand the keys back with £0 more to pay.</p>
+                            <div class="mt-2 pt-2 border-t border-slate-200 text-[11px] bg-slate-100 p-1.5 rounded border border-black font-bold text-black">
+                                <strong>Ownership Outcome:</strong> Optional (You own it only if balloon is paid).
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- END OF AGREEMENT OPTIONS (3 CLEAR PILLARS) -->
+                <div>
+                    <h3 class="font-black text-black dynamic-h3 mb-3">Your 3 Clear Options at the End of PCP:</h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 dynamic-sm">
+                        
+                        <div class="border-2 border-black rounded-lg p-4 bg-white space-y-2">
+                            <div class="flex items-center gap-2 font-black text-black border-b border-slate-200 pb-1.5">
+                                <span class="w-6 h-6 rounded bg-black text-white flex items-center justify-center text-xs font-bold">A</span>
+                                Option 1: Keep the Car
+                            </div>
+                            <p class="text-slate-800 font-medium">
+                                Pay the final optional balloon payment (£<span id="dispPcpBalloon2">9,350.00</span>) plus any option fee, and you become the 100% legal owner. You can also refinance this balloon amount if preferred.
+                            </p>
+                        </div>
+
+                        <div class="border-2 border-black rounded-lg p-4 bg-white space-y-2">
+                            <div class="flex items-center gap-2 font-black text-black border-b border-slate-200 pb-1.5">
+                                <span class="w-6 h-6 rounded bg-black text-white flex items-center justify-center text-xs font-bold">B</span>
+                                Option 2: Part-Exchange
+                            </div>
+                            <p class="text-slate-800 font-medium">
+                                Trade the car in for another car. If the trade-in valuation is higher than the balloon payment, the remaining equity acts as your deposit towards your next vehicle.
+                            </p>
+                        </div>
+
+                        <div class="border-2 border-black rounded-lg p-4 bg-white space-y-2">
+                            <div class="flex items-center gap-2 font-black text-black border-b border-slate-200 pb-1.5">
+                                <span class="w-6 h-6 rounded bg-black text-white flex items-center justify-center text-xs font-bold">C</span>
+                                Option 3: Return the Car
+                            </div>
+                            <p class="text-slate-800 font-medium">
+                                Return the car to the finance company with nothing more to pay, provided you have stayed within your <span id="dispPcpMiles">10,000</span> annual miles and good condition standards.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- IMPORTANT COMMITMENTS & REFERENCES -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <div class="bg-white border-2 border-black rounded-lg p-4 text-xs text-black space-y-1">
+                        <strong class="font-black flex items-center gap-1.5">
+                            <i data-lucide="alert-triangle" class="w-4 h-4"></i> Mileage &amp; Condition Obligations:
+                        </strong>
+                        <p class="font-medium text-slate-800">
+                            Your agreed limit is <strong id="dispPcpMiles2">10,000</strong> miles per year. Exceeding this incurs a charge per mile if you return the car. BVRLA Fair Wear &amp; Tear standards apply on vehicle return.
+                        </p>
+                    </div>
+
+                    <div class="bg-white border-2 border-black rounded-lg p-4 text-xs text-black space-y-1">
+                        <strong class="font-black flex items-center gap-1.5">
+                            <i data-lucide="file-check" class="w-4 h-4"></i> Full Document Cross-Reference:
+                        </strong>
+                        <p class="font-medium text-slate-800">
+                            Please refer to <strong>Section 3 (Key Contract Terms)</strong> in your full SECCI Quotation pack for exact APR, total amount payable, and early settlement rights.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUCT 2: HP CARD -->
+            <div id="contentHp" class="accessible-card product-content hidden bg-white rounded-xl border-2 border-slate-900 p-6 sm:p-8 space-y-6 print-border">
+                
+                <div class="flex flex-col sm:flex-row justify-between items-start gap-4 border-b-2 border-slate-200 pb-5">
+                    <div>
+                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-black bg-slate-100 text-black border border-black mb-2">
+                            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Direct Path to 100% Outright Ownership
+                        </div>
+                        <h2 class="font-black text-slate-950 dynamic-h2">Hire Purchase (HP)</h2>
+                        <p class="text-slate-800 dynamic-sm mt-1 max-w-2xl font-medium">
+                            HP is simple and straightforward. You pay equal monthly installments that spread the total cost of the vehicle. When the final payment is made, you own the vehicle outright.
+                        </p>
+                    </div>
+
+                    <div class="bg-white border-4 border-[#143665] rounded-xl px-5 py-3 text-right shrink-0 print-border">
+                        <span class="text-xs uppercase font-black text-slate-700 tracking-wider block">Fixed Monthly</span>
+                        <div class="font-black text-black text-2xl sm:text-3xl tracking-tight">£<span id="dispHpMonthly">465.12</span></div>
+                        <span class="text-xs text-slate-800 font-bold"><span id="dispHpTerm">48</span> equal installments</span>
+                    </div>
+                </div>
+
+                <!-- 30-Second Summary -->
+                <div class="bg-slate-50 border-2 border-black rounded-lg p-4 space-y-1">
+                    <div class="flex items-center gap-2 font-black text-xs uppercase tracking-wider text-black">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-black"></i>
+                        <span>30-Second Summary of HP</span>
+                    </div>
+                    <p class="text-slate-900 dynamic-sm font-medium">
+                        You pay off the full price of the vehicle across equal monthly installments. There is no large final balloon payment and there are no mileage penalties. Once the last payment clears, the car is 100% yours.
+                    </p>
+                </div>
+
+                <!-- STANDARDIZED B&W STRUCTURE DIAGRAM: HP -->
+                <div class="diagram-container bg-white border-2 border-black">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4 border-b-2 border-slate-300 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="p-1 rounded bg-black text-white"><i data-lucide="layers" class="w-4 h-4"></i></span>
+                            <h3 class="font-black text-black text-xs uppercase tracking-wider">
+                                How the Vehicle Cost is Divided: Hire Purchase (HP)
+                            </h3>
+                        </div>
+                        <span class="text-[11px] font-black text-black bg-slate-100 px-2.5 py-1 rounded border border-black">
+                            Cash Financed: £<span class="diagVehiclePrice">21,500.00</span>
+                        </span>
+                    </div>
+
+                    <!-- B&W Accessible Pattern Breakdown Bar -->
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center text-[11px] text-black font-bold mb-1.5">
+                            <span>Visual Split (Pattern Legend below):</span>
+                            <span>Total Vehicle Price = 100%</span>
+                        </div>
+                        <div class="diagram-bar-wrap">
+                            <div style="width: 10%;" class="pattern-solid flex items-center justify-center p-1 text-center border-r-2 border-white" title="Customer Deposit">
+                                <span class="truncate">Deposit (10%)</span>
+                            </div>
+                            <div style="width: 90%;" class="pattern-hatch-diagonal flex items-center justify-center p-1 text-center font-black" title="Installments Paying 100%">
+                                <span class="bg-black/90 text-white px-2 py-0.5 rounded font-black truncate">Equal Monthly Installments Paying Off 100% of the Vehicle (90%)</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-black mt-2 font-bold">
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-3.5 h-3.5 pattern-solid border border-black inline-block"></span>
+                                <span><strong>Deposit Upfront:</strong> £<span class="diagDeposit">2,000.00</span></span>
+                            </div>
+                            <div class="flex items-center gap-1.5 justify-start sm:justify-end">
+                                <span class="w-3.5 h-3.5 pattern-hatch-diagonal border border-black inline-block"></span>
+                                <span><strong>48 Monthly Payments:</strong> £<span id="diagHpSum">22,325.76</span> (Covers 100% of vehicle)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3-Phase Progression Standard -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="bg-white p-3.5 rounded-lg border-2 border-black space-y-1.5">
+                            <div class="flex items-center justify-between text-xs font-black border-b-2 border-slate-200 pb-1.5">
+                                <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-black text-white text-[11px] flex items-center justify-center font-bold">1</span> Stage 1: Upfront</span>
+                                <span class="text-slate-700">Initial Outlay</span>
+                            </div>
+                            <div class="text-xl font-black text-black font-mono">£<span class="diagDeposit">2,000.00</span></div>
+                            <p class="text-xs text-slate-800 font-medium">Paid by cash or part-exchange. Directly reduces the total amount of money borrowed.</p>
+                            <div class="mt-2 pt-2 border-t border-slate-200 text-[11px] text-slate-800 font-bold">
+                                <strong>Vehicle Ownership:</strong> Lender holds title until last payment.
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-3.5 rounded-lg border-4 border-[#143665] space-y-1.5">
+                            <div class="flex items-center justify-between text-xs font-black border-b-2 border-slate-200 pb-1.5">
+                                <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-[#143665] text-white text-[11px] flex items-center justify-center font-bold">2</span> Stage 2: Monthly</span>
+                                <span class="text-black font-bold"><span class="diagTerm">48</span> Payments</span>
+                            </div>
+                            <div class="text-xl font-black text-black font-mono">£<span class="diagHpMonthly">465.12</span> <span class="text-xs font-bold text-slate-600">/month</span></div>
+                            <p class="text-xs text-slate-800 font-medium">Higher monthly cost than PCP because you are paying off the whole vehicle.</p>
+                            <div class="mt-2 pt-2 border-t border-slate-200 text-[11px] bg-slate-100 p-1.5 rounded border border-black font-bold text-black">
+                                <strong>Mileage Rules:</strong> Unlimited (No excess mileage penalty fees).
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-3.5 rounded-lg border-2 border-black space-y-1.5">
+                            <div class="flex items-center justify-between text-xs font-black border-b-2 border-slate-200 pb-1.5">
+                                <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-slate-200 border border-black text-black text-[11px] flex items-center justify-center font-black">3</span> Stage 3: End Choice</span>
+                                <span class="text-black font-black">Automatic</span>
+                            </div>
+                            <div class="text-xl font-black text-black font-mono">£0.00 <span class="text-xs font-bold text-slate-600">(No Balloon)</span></div>
+                            <p class="text-xs text-slate-800 font-medium">Once the final installment clears, you automatically become the 100% legal owner of the vehicle.</p>
+                            <div class="mt-2 pt-2 border-t border-slate-200 text-[11px] bg-slate-100 p-1.5 rounded border border-black font-bold text-black">
+                                <strong>Ownership Outcome:</strong> 100% Guaranteed outright ownership.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white border-2 border-black rounded-lg p-4 text-xs text-black space-y-1">
+                        <strong class="font-black flex items-center gap-1.5">
+                            <i data-lucide="check-circle" class="w-4 h-4"></i> No Mileage Restrictions:
+                        </strong>
+                        <p class="font-medium text-slate-800">
+                            Because you are buying the entire car, there are no penalties if you drive 5,000 or 25,000 miles a year. You have complete freedom over your journeys.
+                        </p>
+                    </div>
+
+                    <div class="bg-white border-2 border-black rounded-lg p-4 text-xs text-black space-y-1">
+                        <strong class="font-black flex items-center gap-1.5">
+                            <i data-lucide="file-check" class="w-4 h-4"></i> Document Cross-Reference:
+                        </strong>
+                        <p class="font-medium text-slate-800">
+                            Review <strong>Section 2 of your Credit Agreement</strong> for the total amount payable, APR interest rate, and early repayment settlement rights.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUCT 3: PCH LEASING CARD -->
+            <div id="contentPch" class="accessible-card product-content hidden bg-white rounded-xl border-2 border-slate-900 p-6 sm:p-8 space-y-6 print-border">
+                
+                <div class="flex flex-col sm:flex-row justify-between items-start gap-4 border-b-2 border-slate-200 pb-5">
+                    <div>
+                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-black bg-slate-100 text-black border border-black mb-2">
+                            <i data-lucide="key-round" class="w-3.5 h-3.5"></i> Pure Long-Term Rental / Lease
+                        </div>
+                        <h2 class="font-black text-slate-950 dynamic-h2">Personal Contract Hire (PCH)</h2>
+                        <p class="text-slate-800 dynamic-sm mt-1 max-w-2xl font-medium">
+                            PCH is like a long-term car rental. You pay fixed monthly rentals to use the car, and return it at the end. You never own the car and have no option to buy it.
+                        </p>
+                    </div>
+
+                    <div class="bg-white border-4 border-[#143665] rounded-xl px-5 py-3 text-right shrink-0 print-border">
+                        <span class="text-xs uppercase font-black text-slate-700 tracking-wider block">Monthly Rental</span>
+                        <div class="font-black text-black text-2xl sm:text-3xl tracking-tight">£<span id="dispPchMonthly">315.00</span></div>
+                        <span class="text-xs text-slate-800 font-bold">VAT inclusive rental</span>
+                    </div>
+                </div>
+
+                <!-- 30-Second Summary -->
+                <div class="bg-slate-50 border-2 border-black rounded-lg p-4 space-y-1">
+                    <div class="flex items-center gap-2 font-black text-xs uppercase tracking-wider text-black">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-black"></i>
+                        <span>30-Second Summary of PCH</span>
+                    </div>
+                    <p class="text-slate-900 dynamic-sm font-medium">
+                        You pay to use the vehicle for a set time (e.g. <span class="diagTerm">48</span> months). You never build equity and cannot purchase the vehicle at the end. You return the vehicle and can take out a brand new lease.
+                    </p>
+                </div>
+
+                <!-- STANDARDIZED B&W STRUCTURE DIAGRAM: PCH -->
+                <div class="diagram-container bg-white border-2 border-black">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 mb-4 border-b-2 border-slate-300 pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="p-1 rounded bg-black text-white"><i data-lucide="layers" class="w-4 h-4"></i></span>
+                            <h3 class="font-black text-black text-xs uppercase tracking-wider">
+                                How Contract Hire Costs are Divided: Personal Contract Hire (PCH)
+                            </h3>
+                        </div>
+                        <span class="text-[11px] font-black text-black bg-slate-100 px-2.5 py-1 rounded border border-black">
+                            Usage Agreement: <span class="diagTerm">48</span> Months
+                        </span>
+                    </div>
+
+                    <!-- B&W Accessible Pattern Breakdown Bar -->
+                    <div class="mb-4">
+                        <div class="flex justify-between items-center text-[11px] text-black font-bold mb-1.5">
+                            <span>Visual Split (Pattern Legend below):</span>
+                            <span>Total Rental Cost (Pure Usage Only)</span>
+                        </div>
+                        <div class="diagram-bar-wrap">
+                            <div style="width: 7%;" class="pattern-solid flex items-center justify-center p-1 text-center border-r-2 border-white" title="Initial Rental">
+                                <span class="truncate">Advance</span>
+                            </div>
+                            <div style="width: 93%;" class="pattern-hatch-diagonal flex items-center justify-center p-1 text-center font-black" title="Monthly Usage Rentals">
+                                <span class="bg-black/90 text-white px-2 py-0.5 rounded font-black truncate">Fixed Monthly Usage Rentals Only (No Asset Ownership or Equity)</span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-black mt-2 font-bold">
+                            <div class="flex items-center gap-1.5">
+                                <span class="w-3.5 h-3.5 pattern-solid border border-black inline-block"></span>
+                                <span><strong>Advance Rental Upfront:</strong> £<span class="diagPchInitial">950.00</span></span>
+                            </div>
+                            <div class="flex items-center gap-1.5 justify-start sm:justify-end">
+                                <span class="w-3.5 h-3.5 pattern-hatch-diagonal border border-black inline-block"></span>
+                                <span><strong>48 Monthly Rentals:</strong> £<span id="diagPchSum">15,120.00</span> (Pure rental usage)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3-Phase Progression Standard -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        <div class="bg-white p-3.5 rounded-lg border-2 border-black space-y-1.5">
+                            <div class="flex items-center justify-between text-xs font-black border-b-2 border-slate-200 pb-1.5">
+                                <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-black text-white text-[11px] flex items-center justify-center font-bold">1</span> Stage 1: Upfront</span>
+                                <span class="text-slate-700">Advance Rental</span>
+                            </div>
+                            <div class="text-xl font-black text-black font-mono">£<span class="diagPchInitial">950.00</span></div>
+                            <p class="text-xs text-slate-800 font-medium">Paid in advance (typically 3, 6, or 9 rentals). This does not build any equity or vehicle ownership.</p>
+                            <div class="mt-2 pt-2 border-t border-slate-200 text-[11px] text-slate-800 font-bold">
+                                <strong>Vehicle Ownership:</strong> Owned entirely by leasing funder.
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-3.5 rounded-lg border-4 border-[#143665] space-y-1.5">
+                            <div class="flex items-center justify-between text-xs font-black border-b-2 border-slate-200 pb-1.5">
+                                <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-[#143665] text-white text-[11px] flex items-center justify-center font-bold">2</span> Stage 2: Monthly</span>
+                                <span class="text-black font-bold"><span class="diagTerm">48</span> Rentals</span>
+                            </div>
+                            <div class="text-xl font-black text-black font-mono">£<span class="diagPchMonthly">315.00</span> <span class="text-xs font-bold text-slate-600">/month</span></div>
+                            <p class="text-xs text-slate-800 font-medium">Fixed monthly rental fee. Servicing and maintenance packages can be optionally included.</p>
+                            <div class="mt-2 pt-2 border-t border-slate-200 text-[11px] bg-slate-100 p-1.5 rounded border border-black font-bold text-black">
+                                <strong>Strict Limits:</strong> Agreed <span class="diagMiles">10,000</span> miles/yr &amp; BVRLA return inspection.
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-3.5 rounded-lg border-2 border-black space-y-1.5">
+                            <div class="flex items-center justify-between text-xs font-black border-b-2 border-slate-200 pb-1.5">
+                                <span class="flex items-center gap-1.5"><span class="w-5 h-5 rounded-full bg-slate-200 border border-black text-black text-[11px] flex items-center justify-center font-black">3</span> Stage 3: End Choice</span>
+                                <span class="text-black font-black">Hand Back</span>
+                            </div>
+                            <div class="text-xl font-black text-black font-mono">Return Car <span class="text-xs font-bold text-slate-600">(No Balloon)</span></div>
+                            <p class="text-xs text-slate-800 font-medium">You return the car to the leasing company and can start a brand-new lease on another car.</p>
+                            <div class="mt-2 pt-2 border-t border-slate-200 text-[11px] bg-slate-100 p-1.5 rounded border border-black font-bold text-black">
+                                <strong>Ownership Outcome:</strong> No option to purchase or keep the car.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-white border-2 border-black rounded-lg p-4 text-xs text-black space-y-1">
+                        <strong class="font-black flex items-center gap-1.5">
+                            <i data-lucide="alert-circle" class="w-4 h-4"></i> No Ownership Option:
+                        </strong>
+                        <p class="font-medium text-slate-800">
+                            You cannot purchase the vehicle at any point. Strict BVRLA Fair Wear &amp; Tear inspection conditions apply when returning the vehicle.
+                        </p>
+                    </div>
+
+                    <div class="bg-white border-2 border-black rounded-lg p-4 text-xs text-black space-y-1">
+                        <strong class="font-black flex items-center gap-1.5">
+                            <i data-lucide="file-check" class="w-4 h-4"></i> Document Cross-Reference:
+                        </strong>
+                        <p class="font-medium text-slate-800">
+                            See your <strong>Master Lease Schedule</strong> for return inspection criteria, excess mileage penalty rates, and early termination costs.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIDE-BY-SIDE COMPARISON VIEW MODE -->
+        <div id="compareProductView" class="hidden space-y-6">
+            
+            <div class="bg-white border-2 border-black rounded-lg p-4 flex items-center justify-between text-xs text-black">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="columns-3" class="w-4 h-4 text-black"></i>
+                    <span><strong>Direct Side-by-Side Comparison:</strong> Reviewing all three choices based on your personal quote figures.</span>
+                </div>
+                <span class="font-mono font-bold" id="outQuoteRef2">Ref: QT-98421-EWMG</span>
+            </div>
+
+            <!-- UNIFIED B&W STRUCTURE COMPARISON BARS -->
+            <div class="diagram-container bg-white border-2 border-black">
+                <h4 class="font-black text-black text-xs uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                    <i data-lucide="bar-chart" class="w-4 h-4 text-black"></i> Compare Financial Structures At A Glance
+                </h4>
+                <div class="space-y-4 dynamic-sm">
+                    <!-- PCP Structure Row -->
+                    <div>
+                        <div class="flex justify-between text-xs font-bold text-black mb-1">
+                            <span class="flex items-center gap-1.5"><strong>PCP:</strong> Personal Contract Purchase</span>
+                            <span>Deposit (Solid) + Monthly Payments (Stripe) + Optional Balloon (Dots)</span>
+                        </div>
+                        <div class="diagram-bar-wrap">
+                            <div style="width: 10%;" class="pattern-solid flex items-center justify-center text-[10px] border-r border-white">Deposit</div>
+                            <div style="width: 48%;" class="pattern-hatch-diagonal flex items-center justify-center text-[11px] border-r-2 border-black font-black"><span class="bg-black/90 text-white px-1.5 rounded">Monthly Payments (48%)</span></div>
+                            <div style="width: 42%;" class="pattern-dots text-black font-black flex items-center justify-center text-[11px]"><span class="bg-white px-1.5 rounded border border-black">Optional Balloon (42%)</span></div>
+                        </div>
+                    </div>
+
+                    <!-- HP Structure Row -->
+                    <div>
+                        <div class="flex justify-between text-xs font-bold text-black mb-1">
+                            <span class="flex items-center gap-1.5"><strong>HP:</strong> Hire Purchase</span>
+                            <span>Deposit (Solid) + Full Value Spread Equally (Stripe) • £0 Balloon</span>
+                        </div>
+                        <div class="diagram-bar-wrap">
+                            <div style="width: 10%;" class="pattern-solid flex items-center justify-center text-[10px] border-r border-white">Deposit</div>
+                            <div style="width: 90%;" class="pattern-hatch-diagonal flex items-center justify-center text-[11px] font-black"><span class="bg-black/90 text-white px-2 py-0.5 rounded">Equal Monthly Payments Spread Over Full Vehicle (90% to 100% Ownership)</span></div>
+                        </div>
+                    </div>
+
+                    <!-- PCH Structure Row -->
+                    <div>
+                        <div class="flex justify-between text-xs font-bold text-black mb-1">
+                            <span class="flex items-center gap-1.5"><strong>PCH:</strong> Contract Hire Lease</span>
+                            <span>Advance Rental + Pure Monthly Usage Rentals (No Asset Ownership)</span>
+                        </div>
+                        <div class="diagram-bar-wrap">
+                            <div style="width: 7%;" class="pattern-solid flex items-center justify-center text-[10px] border-r border-white">Advance</div>
+                            <div style="width: 93%;" class="pattern-hatch-diagonal flex items-center justify-center text-[11px] font-black"><span class="bg-black/90 text-white px-2 py-0.5 rounded">100% Fixed Rental Usage Fees (Vehicle Returned At End)</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3 Column Grid (High Contrast B&W Borders) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                
+                <!-- PCP Compare Column -->
+                <div class="accessible-card bg-white rounded-xl border-4 border-[#143665] p-5 flex flex-col justify-between print-border">
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b-2 border-slate-200 pb-2">
+                            <span class="text-xs font-black uppercase tracking-wider text-black bg-slate-100 px-2 py-0.5 rounded border border-black">PCP</span>
+                            <span class="text-xs text-black font-black"><span id="cmpPcpTerm">48</span> Months</span>
+                        </div>
+                        <div>
+                            <h3 class="font-black text-black dynamic-h3">Personal Contract Purchase</h3>
+                            <p class="text-slate-800 dynamic-sm mt-1 font-medium">Lower monthly payments with 3 choices at the end.</p>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg p-3 text-center border-2 border-black">
+                            <span class="text-[11px] uppercase font-black text-slate-700">Monthly Payment</span>
+                            <div class="text-2xl font-black text-black">£<span id="cmpPcpMonthly">278.45</span></div>
+                        </div>
+
+                        <div class="space-y-2 dynamic-sm border-t-2 border-slate-200 pt-3 text-black font-medium">
+                            <div class="flex justify-between">
+                                <span class="text-slate-700 font-bold">Deposit:</span>
+                                <span class="font-black">£<span id="cmpPcpDeposit">2,000.00</span></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-700 font-bold">Final Balloon:</span>
+                                <span class="font-black">£<span id="cmpPcpBalloon">9,350.00</span></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-700 font-bold">Ownership:</span>
+                                <span class="font-black">Optional (Pay Balloon)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-700 font-bold">Mileage Limit:</span>
+                                <span class="font-black"><span id="cmpPcpMiles">10,000</span> /yr</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 pt-3 border-t-2 border-slate-200">
+                        <div class="text-xs text-black bg-slate-50 p-3 rounded border border-black font-medium">
+                            <strong class="block mb-0.5 font-black">Best Suited For:</strong>
+                            Drivers who like changing cars every 3–4 years and want lower monthly payments with end flexibility.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HP Compare Column -->
+                <div class="accessible-card bg-white rounded-xl border-2 border-black p-5 flex flex-col justify-between print-border">
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b-2 border-slate-200 pb-2">
+                            <span class="text-xs font-black uppercase tracking-wider text-black bg-slate-100 px-2 py-0.5 rounded border border-black">HP</span>
+                            <span class="text-xs text-black font-black"><span id="cmpHpTerm">48</span> Months</span>
+                        </div>
+                        <div>
+                            <h3 class="font-black text-black dynamic-h3">Hire Purchase</h3>
+                            <p class="text-slate-800 dynamic-sm mt-1 font-medium">Equal payments directly towards 100% outright ownership.</p>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg p-3 text-center border-2 border-black">
+                            <span class="text-[11px] uppercase font-black text-slate-700">Monthly Payment</span>
+                            <div class="text-2xl font-black text-black">£<span id="cmpHpMonthly">465.12</span></div>
+                        </div>
+
+                        <div class="space-y-2 dynamic-sm border-t-2 border-slate-200 pt-3 text-black font-medium">
+                            <div class="flex justify-between">
+                                <span class="text-slate-700 font-bold">Deposit:</span>
+                                <span class="font-black">£<span id="cmpHpDeposit">2,000.00</span></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-700 font-bold">Final Balloon:</span>
+                                <span class="font-black">£0 (None)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-700 font-bold">Ownership:</span>
+                                <span class="font-black">100% Guaranteed</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-700 font-bold">Mileage Limit:</span>
+                                <span class="font-black">Unlimited</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 pt-3 border-t-2 border-slate-200">
+                        <div class="text-xs text-black bg-slate-50 p-3 rounded border border-black font-medium">
+                            <strong class="block mb-0.5 font-black">Best Suited For:</strong>
+                            Drivers who plan to keep their vehicle long term and do not want mileage restrictions or balloon payments.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PCH Compare Column -->
+                <div class="accessible-card bg-white rounded-xl border-2 border-black p-5 flex flex-col justify-between print-border">
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center border-b-2 border-slate-200 pb-2">
+                            <span class="text-xs font-black uppercase tracking-wider text-black bg-slate-100 px-2 py-0.5 rounded border border-black">PCH</span>
+                            <span class="text-xs text-black font-black"><span id="cmpPchTerm">48</span> Months</span>
+                        </div>
+                        <div>
+                            <h3 class="font-black text-black dynamic-h3">Personal Contract Hire</h3>
+                            <p class="text-slate-800 dynamic-sm mt-1 font-medium">Simple long-term rental without ownership or resale concerns.</p>
+                        </div>
+                        
+                        <div class="bg-white rounded-lg p-3 text-center border-2 border-black">
+                            <span class="text-[11px] uppercase font-black text-slate-700">Monthly Rental</span>
+                            <div class="text-2xl font-black text-black">£<span id="cmpPchMonthly">315.00</span></div>
+                        </div>
+
+                        <div class="space-y-2 dynamic-sm border-t-2 border-slate-200 pt-3 text-black font-medium">
+                            <div class="flex justify-between">
+                                <span class="text-slate-700 font-bold">Initial Rental:</span>
+                                <span class="font-black">£<span id="cmpPchInitial">950.00</span></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-700 font-bold">Final Balloon:</span>
+                                <span class="font-black">N/A (Rental)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-700 font-bold">Ownership:</span>
+                                <span class="font-black">None (Return Car)</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-slate-700 font-bold">Mileage Limit:</span>
+                                <span class="font-black"><span id="cmpPchMiles">10,000</span> /yr</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-5 pt-3 border-t-2 border-slate-200">
+                        <div class="text-xs text-black bg-slate-50 p-3 rounded border border-black font-medium">
+                            <strong class="block mb-0.5 font-black">Best Suited For:</strong>
+                            Drivers who never want to own the vehicle and prefer routine upgrades every 3–4 years without selling hassles.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ACCESSIBLE TEACH-BACK & 24-48 HOUR HOME REFLECTION CHECKLIST -->
+        <section class="accessible-card bg-white rounded-xl border-2 border-slate-900 shadow-sm p-6 sm:p-8 space-y-6 print-border">
+            
+            <div class="border-b-2 border-slate-300 pb-4">
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs font-black bg-slate-100 text-black border border-black mb-1.5">
+                    <i data-lucide="check-square" class="w-3.5 h-3.5"></i> FCA Consumer Duty • Self-Check &amp; Teach-Back
+                </div>
+                <h3 class="font-black text-black dynamic-h2">Your Take-Home Reflection &amp; Discussion Checklist</h3>
+                <p class="text-slate-800 dynamic-sm mt-0.5 font-medium">
+                    Before making a final choice, review these 4 key questions at home with someone you trust.
+                </p>
+            </div>
+
+            <!-- 4 Reflection Pillars -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <div class="flex items-start gap-3 p-4 rounded-lg border-2 border-black bg-slate-50">
+                    <div class="w-7 h-7 rounded border border-black bg-white text-black font-black flex items-center justify-center shrink-0 mt-0.5">
+                        1
+                    </div>
+                    <div class="space-y-1">
+                        <h4 class="font-black text-black dynamic-sm">1. Realistic Monthly Affordability</h4>
+                        <p class="text-slate-800 dynamic-sm font-medium">
+                            Can you comfortably afford the monthly payment alongside household utility bills, council tax, groceries, and insurance, with extra room for unexpected expenses?
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3 p-4 rounded-lg border-2 border-black bg-slate-50">
+                    <div class="w-7 h-7 rounded border border-black bg-white text-black font-black flex items-center justify-center shrink-0 mt-0.5">
+                        2
+                    </div>
+                    <div class="space-y-1">
+                        <h4 class="font-black text-black dynamic-sm">2. Realistic Mileage Forecast</h4>
+                        <p class="text-slate-800 dynamic-sm font-medium">
+                            Does your agreed annual limit (<span class="font-black" id="chkMiles">10,000</span> miles) match your daily commute, holidays, and family visits? Excess mileage incurs fees if the car is returned.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3 p-4 rounded-lg border-2 border-black bg-slate-50">
+                    <div class="w-7 h-7 rounded border border-black bg-white text-black font-black flex items-center justify-center shrink-0 mt-0.5">
+                        3
+                    </div>
+                    <div class="space-y-1">
+                        <h4 class="font-black text-black dynamic-sm">3. Involve a Trusted Support Person</h4>
+                        <p class="text-slate-800 dynamic-sm font-medium">
+                            Would you like to discuss this sheet with a friend or family member? You are always welcome to bring a support person or nominated representative back to the dealership with you.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3 p-4 rounded-lg border-2 border-black bg-slate-50">
+                    <div class="w-7 h-7 rounded border border-black bg-white text-black font-black flex items-center justify-center shrink-0 mt-0.5">
+                        4
+                    </div>
+                    <div class="space-y-1">
+                        <h4 class="font-black text-black dynamic-sm">4. Free Independent Advice Access</h4>
+                        <p class="text-slate-800 dynamic-sm font-medium">
+                            Free, confidential, and impartial guidance on borrowing and household budgeting is available from <strong>MoneyHelper.org.uk</strong> (backed by HM Government) or <strong>Citizens Advice</strong>.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NOMINATED PERSON / CARER NOTES AREA (Physical writing space for customer or carer) -->
+            <div class="border-2 border-dashed border-black rounded-lg p-4 bg-white space-y-2">
+                <div class="flex justify-between items-center text-xs font-black uppercase text-black">
+                    <span>Your Notes / Questions to Ask Before Signing:</span>
+                    <span class="text-slate-500 font-normal">Use this space at home</span>
+                </div>
+                <div class="h-16 border-b border-slate-300"></div>
+            </div>
+
+            <!-- CONTACT & RECONNECT FOOTER -->
+            <div class="border-t-2 border-slate-300 pt-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-slate-800 font-medium">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="phone-call" class="w-4 h-4 text-black"></i>
+                    <span>Dealership Direct Line: <strong>0800 123 4567</strong> (Ask for Customer Support / Nominated Person)</span>
+                </div>
+                <div class="text-slate-700 font-bold">
+                    Document valid for 14 days • Plain English &amp; Accessibility Standard
+                </div>
+            </div>
+
+            <!-- LEGAL & TRANSLATION CAVEAT FOOTER NOTICE -->
+            <div class="border-t border-slate-200 pt-3 text-[11px] text-slate-600 leading-normal">
+                <p>
+                    <strong>Language &amp; Translation Legal Caveat:</strong> This reflection document is produced in the English language as its primary and governing text. Automated machine translation (via Google Translate) is offered solely for customer convenience to assist understanding under FCA Consumer Duty guidelines. Neither the issuing dealership, the finance lender, credit broker, nor Google accept any legal liability or contractual responsibility for omissions or inaccuracies resulting from computer-generated translation. In all instances, the formal English credit agreement documents prevail.
+                </p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- INTERACTION, ACCESSIBILITY & AUDIO SCRIPT -->
+    <script>
+        // State Management
+        let currentMode = 'single';
+        let currentProduct = 'pcp';
+        let currentZoom = 'normal';
+        let currentTint = 'default';
+        let isDyslexicFont = false;
+        let isSpeaking = false;
+
+        // Initialize icons on DOM load
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            applyQuoteData();
+        });
+
+        // Switch View Modes (Single vs. Compare)
+        function setViewMode(mode) {
+            currentMode = mode;
+            const singleView = document.getElementById('singleProductView');
+            const compareView = document.getElementById('compareProductView');
+            const btnSingle = document.getElementById('btnViewSingle');
+            const btnCompare = document.getElementById('btnViewCompare');
+
+            if (mode === 'single') {
+                singleView.classList.remove('hidden');
+                compareView.classList.add('hidden');
+                btnSingle.className = "px-2.5 py-1 rounded text-slate-900 bg-white font-bold transition";
+                btnCompare.className = "px-2.5 py-1 rounded text-white hover:bg-slate-800 transition";
+            } else {
+                singleView.classList.add('hidden');
+                compareView.classList.remove('hidden');
+                btnCompare.className = "px-2.5 py-1 rounded text-slate-900 bg-white font-bold transition";
+                btnSingle.className = "px-2.5 py-1 rounded text-white hover:bg-slate-800 transition";
+            }
+            lucide.createIcons();
+        }
+
+        // Switch Tabs in Single Mode
+        function selectProductTab(prod) {
+            currentProduct = prod;
+            const pcp = document.getElementById('contentPcp');
+            const hp = document.getElementById('contentHp');
+            const pch = document.getElementById('contentPch');
+
+            const btnPcp = document.getElementById('tabBtnPcp');
+            const btnHp = document.getElementById('tabBtnHp');
+            const btnPch = document.getElementById('tabBtnPch');
+
+            // Hide all
+            pcp.classList.add('hidden');
+            hp.classList.add('hidden');
+            pch.classList.add('hidden');
+
+            // Reset tab styles
+            const activeClass = "tab-transition px-4 py-2.5 rounded-lg font-black text-xs flex items-center gap-2 bg-[#143665] text-white border-2 border-black shadow";
+            const inactiveClass = "tab-transition px-4 py-2.5 rounded-lg font-black text-xs flex items-center gap-2 bg-white text-black border-2 border-slate-400 hover:border-black";
+
+            btnPcp.className = inactiveClass;
+            btnHp.className = inactiveClass;
+            btnPch.className = inactiveClass;
+
+            if (prod === 'pcp') {
+                pcp.classList.remove('hidden');
+                btnPcp.className = activeClass;
+            } else if (prod === 'hp') {
+                hp.classList.remove('hidden');
+                btnHp.className = activeClass;
+            } else if (prod === 'pch') {
+                pch.classList.remove('hidden');
+                btnPch.className = activeClass;
+            }
+            lucide.createIcons();
+        }
+
+        // Accessibility Zoom Scaling
+        function setZoom(level) {
+            currentZoom = level;
+            const root = document.documentElement;
+            const zNorm = document.getElementById('zoomNormal');
+            const zLrg = document.getElementById('zoomLarge');
+            const zXlrg = document.getElementById('zoomXLarge');
+
+            zNorm.className = "px-2 py-0.5 rounded font-bold text-white hover:bg-slate-800";
+            zLrg.className = "px-2 py-0.5 rounded font-bold text-white hover:bg-slate-800";
+            zXlrg.className = "px-2 py-0.5 rounded font-bold text-white hover:bg-slate-800";
+
+            if (level === 'normal') {
+                root.style.setProperty('--font-scale', '1rem');
+                root.style.setProperty('--h1-scale', '1.75rem');
+                root.style.setProperty('--h2-scale', '1.35rem');
+                root.style.setProperty('--h3-scale', '1.15rem');
+                root.style.setProperty('--small-scale', '0.875rem');
+                zNorm.className = "px-2 py-0.5 rounded font-black bg-white text-slate-900";
+            } else if (level === 'large') {
+                root.style.setProperty('--font-scale', '1.15rem');
+                root.style.setProperty('--h1-scale', '2.1rem');
+                root.style.setProperty('--h2-scale', '1.6rem');
+                root.style.setProperty('--h3-scale', '1.35rem');
+                root.style.setProperty('--small-scale', '1rem');
+                zLrg.className = "px-2 py-0.5 rounded font-black bg-white text-slate-900";
+            } else if (level === 'xlarge') {
+                root.style.setProperty('--font-scale', '1.35rem');
+                root.style.setProperty('--h1-scale', '2.4rem');
+                root.style.setProperty('--h2-scale', '1.9rem');
+                root.style.setProperty('--h3-scale', '1.55rem');
+                root.style.setProperty('--small-scale', '1.15rem');
+                zXlrg.className = "px-2 py-0.5 rounded font-black bg-white text-slate-900";
+            }
+        }
+
+        // Visual Stress Tint Switcher (Default, Cream, Soft Blue)
+        function setTint(tint) {
+            currentTint = tint;
+            document.body.classList.remove('theme-default', 'theme-cream', 'theme-softblue', 'theme-contrast');
+            if (tint === 'cream') {
+                document.body.classList.add('theme-cream');
+            } else if (tint === 'softblue') {
+                document.body.classList.add('theme-softblue');
+            } else {
+                document.body.classList.add('theme-default');
+            }
+        }
+
+        // Dyslexia-Friendly Font Toggle
+        function toggleDyslexicFont() {
+            isDyslexicFont = !isDyslexicFont;
+            const btn = document.getElementById('btnDyslexia');
+            if (isDyslexicFont) {
+                document.body.classList.add('font-dyslexic-mode');
+                btn.className = "bg-white text-slate-900 border border-black px-2.5 py-1 rounded text-xs font-black flex items-center gap-1 transition";
+            } else {
+                document.body.classList.remove('font-dyslexic-mode');
+                btn.className = "bg-slate-900 hover:bg-slate-800 border border-white/30 text-white px-2.5 py-1 rounded text-xs font-bold flex items-center gap-1 transition";
+            }
+        }
+
+        // SpeechSynthesis Audio Read-Aloud (Assistive support for visual or literacy barriers)
+        function toggleReadAloud() {
+            if (!('speechSynthesis' in window)) {
+                return;
+            }
+
+            const btnLabel = document.getElementById('readAloudLabel');
+
+            if (isSpeaking) {
+                window.speechSynthesis.cancel();
+                isSpeaking = false;
+                btnLabel.innerText = "Listen Aloud";
+                return;
+            }
+
+            // Extract plain text from current visible card
+            let textToRead = "";
+            const header = document.querySelector('header').innerText;
+            let activeContent = "";
+
+            if (currentMode === 'single') {
+                if (currentProduct === 'pcp') activeContent = document.getElementById('contentPcp').innerText;
+                else if (currentProduct === 'hp') activeContent = document.getElementById('contentHp').innerText;
+                else activeContent = document.getElementById('contentPch').innerText;
+            } else {
+                activeContent = document.getElementById('compareProductView').innerText;
+            }
+
+            textToRead = header + ". " + activeContent;
+
+            const utterance = new SpeechSynthesisUtterance(textToRead);
+            utterance.rate = 0.95; // Slightly slower, measured cadence
+            utterance.pitch = 1.0;
+
+            utterance.onend = () => {
+                isSpeaking = false;
+                btnLabel.innerText = "Listen Aloud";
+            };
+
+            utterance.onerror = () => {
+                isSpeaking = false;
+                btnLabel.innerText = "Listen Aloud";
+            };
+
+            window.speechSynthesis.speak(utterance);
+            isSpeaking = true;
+            btnLabel.innerText = "Pause / Stop";
+        }
+
+        // Toggle Quick Setup Editor
+        function toggleSetupModal() {
+            const modal = document.getElementById('setupModal');
+            modal.classList.toggle('hidden');
+        }
+
+        // Synchronize quote data across all displays and diagrams
+        function applyQuoteData() {
+            const getVal = id => document.getElementById(id).value;
+            const setTxt = (id, val) => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = val;
+            };
+            const setClassTxt = (className, val) => {
+                const els = document.querySelectorAll('.' + className);
+                els.forEach(el => el.innerText = val);
+            };
+
+            const customer = getVal('inCustomer');
+            const vehicle = getVal('inVehicle');
+            const quoteRef = getVal('inQuoteRef');
+            const cashPrice = getVal('inCashPrice');
+            const deposit = getVal('inDeposit');
+            const term = getVal('inTerm');
+            const pcpMonthly = getVal('inPcpMonthly');
+            const pcpBalloon = getVal('inPcpBalloon');
+            const pcpMiles = getVal('inPcpMiles');
+            const hpMonthly = getVal('inHpMonthly');
+            const pchInitial = getVal('inPchInitial');
+            const pchMonthly = getVal('inPchMonthly');
+
+            // Header metadata
+            setTxt('outCustomer', customer);
+            setTxt('outVehicle', vehicle);
+            setTxt('outQuoteRef', quoteRef);
+            setTxt('outQuoteRef2', 'Ref: ' + quoteRef);
+            setTxt('outCashPrice', cashPrice);
+            setTxt('outDeposit', deposit);
+
+            // Synchronize diagram class fields
+            setClassTxt('diagVehiclePrice', cashPrice);
+            setClassTxt('diagDeposit', deposit);
+            setClassTxt('diagTerm', term);
+            setClassTxt('diagPcpMonthly', pcpMonthly);
+            setClassTxt('diagPcpSum', (parseFloat(pcpMonthly.replace(/,/g, '')) * parseInt(term || 48)).toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+            setClassTxt('diagBalloon', pcpBalloon);
+            setClassTxt('diagMiles', pcpMiles);
+            setClassTxt('diagHpMonthly', hpMonthly);
+            setClassTxt('diagHpSum', (parseFloat(hpMonthly.replace(/,/g, '')) * parseInt(term || 48)).toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+            setClassTxt('diagPchInitial', pchInitial);
+            setClassTxt('diagPchMonthly', pchMonthly);
+            setClassTxt('diagPchSum', (parseFloat(pchMonthly.replace(/,/g, '')) * parseInt(term || 48)).toLocaleString('en-GB', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+
+            // Single PCP
+            setTxt('dispPcpMonthly', pcpMonthly);
+            setTxt('dispPcpTerm', term);
+            setTxt('dispPcpDeposit', deposit);
+            setTxt('dispPcpBalloon', pcpBalloon);
+            setTxt('dispPcpBalloon2', pcpBalloon);
+            setTxt('dispPcpMiles', pcpMiles);
+            setTxt('dispPcpMiles2', pcpMiles);
+
+            // Single HP
+            setTxt('dispHpMonthly', hpMonthly);
+            setTxt('dispHpTerm', term);
+            setTxt('dispHpDeposit', deposit);
+
+            // Single PCH
+            setTxt('dispPchInitial', pchInitial);
+            setTxt('dispPchMonthly', pchMonthly);
+
+            // Comparison
+            setTxt('cmpPcpMonthly', pcpMonthly);
+            setTxt('cmpPcpDeposit', deposit);
+            setTxt('cmpPcpBalloon', pcpBalloon);
+            setTxt('cmpPcpTerm', term);
+            setTxt('cmpPcpMiles', pcpMiles);
+
+            setTxt('cmpHpMonthly', hpMonthly);
+            setTxt('cmpHpDeposit', deposit);
+            setTxt('cmpHpTerm', term);
+
+            setTxt('cmpPchMonthly', pchMonthly);
+            setTxt('cmpPchInitial', pchInitial);
+            setTxt('cmpPchTerm', term);
+            setTxt('cmpPchMiles', pcpMiles);
+
+            // Checklist
+            setTxt('chkMiles', pcpMiles);
+
+            // Close modal after apply
+            document.getElementById('setupModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>

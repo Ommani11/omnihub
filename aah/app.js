@@ -461,19 +461,19 @@
   async function fetchRulesFile() {
     const pill = document.getElementById('header-rule-meta');
     try {
-      const response = await fetch('./documents.json?v=' + Date.now(), { cache: 'no-store' });
+      const response = await fetch('/aah/documents.json?v=' + Date.now(), { cache: 'no-store' });
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
       }
       const json = await response.json();
       applyRulesData(json, 'auto-fetched');
     } catch (err) {
-      console.warn('Auto-fetch of ./documents.json failed:', err);
+      console.warn('Auto-fetch of /aah/documents.json failed:', err);
       pill.textContent = 'Rules not loaded';
       pill.classList.add('is-error');
       const banner = document.getElementById('rules-fallback-banner');
       const reason = document.getElementById('rules-fallback-reason');
-      reason.textContent = `Could not auto-load ./documents.json (${err.message || 'blocked under file://'}). Select your local documents.json file to continue.`;
+      reason.textContent = `Could not auto-load /aah/documents.json (${err.message || 'blocked under file://'}). Select your local documents.json file to continue.`;
       banner.hidden = false;
     }
   }

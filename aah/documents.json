@@ -1,0 +1,1397 @@
+{
+  "meta": {
+    "toolTitle": "File Check",
+    "version": "1.1.0",
+    "scopeQuestions": [
+      {
+        "id": "finance",
+        "label": "Is the customer taking finance?"
+      },
+      {
+        "id": "insurance",
+        "label": "Is the customer taking insurance?"
+      },
+      {
+        "id": "supplementaryInvoice",
+        "label": "Is a supplementary invoice required?"
+      }
+    ]
+  },
+  "documents": [
+    {
+      "id": "order-form",
+      "name": "Order Form",
+      "shortName": "OF",
+      "importance": "critical",
+      "category": "Sales",
+      "scope": [
+        "core"
+      ],
+      "rules": [
+        "Customer details must be accurate.",
+        "Vehicle details must be accurate.",
+        "Vehicle price must be accurate.",
+        "Funding method must be recorded.",
+        "Must be signed by all parties."
+      ],
+      "checks": [
+        {
+          "id": "of-customer-details",
+          "text": "Verify customer details.",
+          "required": true
+        },
+        {
+          "id": "of-vehicle-details",
+          "text": "Verify vehicle details.",
+          "required": true
+        },
+        {
+          "id": "of-price",
+          "text": "Verify vehicle price.",
+          "required": true
+        },
+        {
+          "id": "of-funding-method",
+          "text": "Verify funding method is captured.",
+          "required": true
+        },
+        {
+          "id": "of-products",
+          "text": "Verify selected products are accurately recorded.",
+          "required": true
+        },
+        {
+          "id": "of-signed",
+          "text": "Verify the document is signed by all parties.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "customer-declaration",
+          "what": "Customer details, vehicle details, funding method",
+          "where": "Customer and transaction sections"
+        },
+        {
+          "documentId": "sales-invoice",
+          "what": "Vehicle details, vehicle price",
+          "where": "Commercial summary"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "customer-declaration",
+          "type": "align",
+          "note": "Customer details, vehicle details and funding method should be concurrent."
+        },
+        {
+          "targetId": "sales-invoice",
+          "type": "align",
+          "note": "Commercial values should reconcile."
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "co-required",
+          "note": "Part of the core document set."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": []
+    },
+    {
+      "id": "customer-declaration",
+      "name": "Customer Declaration (Demands & Needs Questionnaire)",
+      "shortName": "CD",
+      "importance": "critical",
+      "category": "Suitability",
+      "scope": [
+        "core"
+      ],
+      "rules": [
+        "All qualification questions must be completed.",
+        "Customer needs and objectives must be documented.",
+        "Funding intentions should support the final outcome.",
+        "Expected annual mileage and term must be recorded.",
+        "Must be signed by the customer."
+      ],
+      "checks": [
+        {
+          "id": "cd-complete",
+          "text": "Verify all questions have been completed.",
+          "required": true
+        },
+        {
+          "id": "cd-funding",
+          "text": "Verify intended funding method is recorded.",
+          "required": true
+        },
+        {
+          "id": "cd-needs",
+          "text": "Verify declared needs support the outcome.",
+          "required": true
+        },
+        {
+          "id": "cd-mileage-term",
+          "text": "Verify the expected annual mileage and term are recorded.",
+          "required": true
+        },
+        {
+          "id": "cd-signed",
+          "text": "Verify the document is signed by the customer.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "order-form",
+          "what": "Customer details, vehicle details, funding method",
+          "where": "Customer profile and transaction details"
+        },
+        {
+          "documentId": "finance-agreement",
+          "what": "Funding method, agreement type, agreement term, agreement mileage",
+          "where": "Funding requirements and suitability sections"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "order-form",
+          "type": "align",
+          "note": "Customer and transaction details should align."
+        },
+        {
+          "targetId": "finance-agreement",
+          "type": "align",
+          "note": "Funding intentions should support the final finance agreement."
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "co-required",
+          "note": "Part of the core document set."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Funding method differs from final outcome.",
+        "Agreement term differs from finance agreement.",
+        "Incomplete customer responses.",
+        "Agreement mileage differs from the finance agreement."
+      ]
+    },
+    {
+      "id": "sales-invoice",
+      "name": "Sales Invoice",
+      "shortName": "SI",
+      "importance": "critical",
+      "category": "Sales",
+      "scope": [
+        "core"
+      ],
+      "rules": [
+        "Vehicle pricing must be accurate.",
+        "Funding balances must be accurate.",
+        "Customer and vehicle details must be accurate.",
+        {
+          "text": "On a cash or self-funded purchase, Invoice to and Deliver to must both be the customer.",
+          "when": {
+            "finance": false
+          }
+        },
+        {
+          "text": "On a financed purchase, Invoice to must be the finance company and Deliver to must be the customer.",
+          "when": {
+            "finance": true
+          }
+        },
+        "The signature date must match the handover date.",
+        "Must be signed by all parties."
+      ],
+      "checks": [
+        {
+          "id": "si-customer",
+          "text": "Verify customer details.",
+          "required": true
+        },
+        {
+          "id": "si-vehicle",
+          "text": "Verify vehicle details.",
+          "required": true
+        },
+        {
+          "id": "si-price",
+          "text": "Verify vehicle price.",
+          "required": true
+        },
+        {
+          "id": "si-balance",
+          "text": "Verify balance outstanding.",
+          "required": true
+        },
+        {
+          "id": "si-parties-cash",
+          "text": "Verify Invoice to and Deliver to are both the customer.",
+          "required": true,
+          "when": {
+            "finance": false
+          }
+        },
+        {
+          "id": "si-parties-finance",
+          "text": "Verify Invoice to is the finance company and Deliver to is the customer.",
+          "required": true,
+          "when": {
+            "finance": true
+          }
+        },
+        {
+          "id": "si-signature-date",
+          "text": "Verify the signature date matches the handover date.",
+          "required": true
+        },
+        {
+          "id": "si-signed",
+          "text": "Verify the document is signed by all parties.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "order-form",
+          "what": "Vehicle details, vehicle price",
+          "where": "Vehicle and commercial sections"
+        },
+        {
+          "documentId": "finance-agreement",
+          "what": "Balance to finance",
+          "where": "Financial summary",
+          "when": {
+            "finance": true
+          }
+        },
+        {
+          "documentId": "demands-needs-2",
+          "what": "Purchased products and funding method",
+          "where": "Additional products"
+        },
+        {
+          "documentId": "finance-agreement",
+          "what": "Invoice to is the finance company and Deliver to is the customer",
+          "where": "Invoice header",
+          "when": {
+            "finance": true
+          }
+        },
+        {
+          "documentId": "demands-needs-2",
+          "what": "Signature date against the handover date",
+          "where": "Customer signature"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "order-form",
+          "type": "align",
+          "note": "Commercial details should reconcile."
+        },
+        {
+          "targetId": "finance-agreement",
+          "type": "align",
+          "note": "Balance to finance must reconcile.",
+          "when": {
+            "finance": true
+          }
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "align",
+          "note": "Purchased products should align."
+        },
+        {
+          "targetId": "finance-agreement",
+          "type": "align",
+          "note": "Invoice to must be the finance company. Deliver to must be the customer.",
+          "when": {
+            "finance": true
+          }
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "align",
+          "note": "The signature date must match the handover date."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Balance mismatch.",
+        "Incorrect vehicle price.",
+        {
+          "text": "Cash or self-funded purchase invoiced to a finance company.",
+          "when": {
+            "finance": false
+          }
+        },
+        {
+          "text": "Financed purchase not invoiced to the finance company.",
+          "when": {
+            "finance": true
+          }
+        },
+        "Deliver to is not the customer.",
+        "Signature date does not match the handover date."
+      ]
+    },
+    {
+      "id": "supplementary-invoice",
+      "name": "Supplementary Invoice",
+      "shortName": "SUPI",
+      "importance": "high",
+      "category": "Sales",
+      "scope": [
+        "supplementary-invoice"
+      ],
+      "rules": [
+        "Must accurately reflect additional products or charges added after the original invoice.",
+        "Funding method must be clearly documented.",
+        "Values must reconcile to supporting documentation.",
+        "Any regulated product additions must be supported by the appropriate documentation.",
+        "Invoice to and Deliver to must both be the customer.",
+        "The signature date must match the handover date.",
+        "Must be signed by all parties."
+      ],
+      "checks": [
+        {
+          "id": "supi-customer",
+          "text": "Verify customer details.",
+          "required": true
+        },
+        {
+          "id": "supi-vehicle",
+          "text": "Verify vehicle details.",
+          "required": true
+        },
+        {
+          "id": "supi-products",
+          "text": "Verify all supplementary products are correctly itemised.",
+          "required": true
+        },
+        {
+          "id": "supi-values",
+          "text": "Verify all product values and charges are correct.",
+          "required": true
+        },
+        {
+          "id": "supi-funding",
+          "text": "Verify funding method for each supplementary item.",
+          "required": true
+        },
+        {
+          "id": "supi-parties",
+          "text": "Verify Invoice to and Deliver to are both the customer.",
+          "required": true
+        },
+        {
+          "id": "supi-signature-date",
+          "text": "Verify the signature date matches the handover date.",
+          "required": true
+        },
+        {
+          "id": "supi-signed",
+          "text": "Verify the document is signed by all parties.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "sales-invoice",
+          "what": "Customer details, vehicle details and total transaction values",
+          "where": "Invoice summary"
+        },
+        {
+          "documentId": "demands-needs-2",
+          "what": "Products purchased and funding method",
+          "where": "Product decision section"
+        },
+        {
+          "documentId": "sales-invoice",
+          "what": "Supplementary invoice stays customer and customer, even when the sales invoice is invoiced to the finance company",
+          "where": "Invoice header"
+        },
+        {
+          "documentId": "demands-needs-2",
+          "what": "Signature date against the handover date",
+          "where": "Customer signature"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "sales-invoice",
+          "type": "align",
+          "note": "Supplementary items should reconcile to the primary invoice."
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "align",
+          "note": "Products and funding method should reflect the customer's decision."
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "co-required",
+          "note": "Evidence of customer acceptance should exist for regulated products."
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "align",
+          "note": "The signature date must match the handover date."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Product added but not reflected on D&N2.",
+        "Product funded incorrectly.",
+        "Customer details inconsistent with original invoice.",
+        "Vehicle details inconsistent with original invoice.",
+        "Invoice to is not the customer.",
+        "Deliver to is not the customer.",
+        "Signature date does not match the handover date."
+      ]
+    },
+    {
+      "id": "demands-needs-2",
+      "name": "Demands & Needs 2",
+      "shortName": "DN2",
+      "importance": "critical",
+      "category": "Suitability",
+      "scope": [
+        "core"
+      ],
+      "rules": [
+        "Must reflect the customer's final purchasing decision.",
+        "Accepted and declined products must be recorded.",
+        "Funding method for each product must be recorded.",
+        "The date the customer signs this document is the handover date.",
+        "Customer details must be correct.",
+        "Vehicle details must be correct.",
+        "Must be signed by all parties.",
+        "The final decision on method of funding must match the sales invoice.",
+        "Ineligible products must be marked accordingly."
+      ],
+      "checks": [
+        {
+          "id": "dn2-customer",
+          "text": "Verify customer details.",
+          "required": true
+        },
+        {
+          "id": "dn2-vehicle",
+          "text": "Verify vehicle details.",
+          "required": true
+        },
+        {
+          "id": "dn2-products",
+          "text": "Verify accepted and declined products.",
+          "required": true
+        },
+        {
+          "id": "dn2-ineligible",
+          "text": "Verify any ineligible products are marked accordingly.",
+          "required": true
+        },
+        {
+          "id": "dn2-funding",
+          "text": "Verify funding method for each product.",
+          "required": true
+        },
+        {
+          "id": "dn2-funding-decision",
+          "text": "Verify final decision on method of funding the vehicle.",
+          "required": true
+        },
+        {
+          "id": "dn2-date",
+          "text": "Verify the signature date. That date is the handover date and must match the iStoreDocs delivery date.",
+          "required": true
+        },
+        {
+          "id": "dn2-signed",
+          "text": "Verify the document is signed by all parties.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "sales-invoice",
+          "what": "Purchased products and values",
+          "where": "Product section"
+        },
+        {
+          "documentId": "insurance-registration",
+          "what": "Purchased products, funding method, customer details, vehicle details",
+          "where": "Product selections"
+        },
+        {
+          "documentId": "supplementary-invoice",
+          "what": "Additional products, values and funding method",
+          "where": "Products accepted section"
+        },
+        {
+          "documentId": "file-timeline",
+          "what": "Handover date against the iStoreDocs delivery date",
+          "where": "Customer signature"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "sales-invoice",
+          "type": "align",
+          "note": "Purchased products must align."
+        },
+        {
+          "targetId": "insurance-registration",
+          "type": "align",
+          "note": "Registrations must reflect the final customer decision."
+        },
+        {
+          "targetId": "supplementary-invoice",
+          "type": "align",
+          "note": "Supplementary products should be supported by the customer's recorded decision."
+        },
+        {
+          "targetId": "file-timeline",
+          "type": "align",
+          "note": "The signature date is the handover date and must match the file delivery date."
+        },
+        {
+          "targetId": "sales-invoice",
+          "type": "align",
+          "note": "The final funding decision must match the sales invoice."
+        },
+        {
+          "targetId": "customer-declaration",
+          "type": "align",
+          "note": "Ineligible products must be marked in line with the customer declaration."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Product selected but not registered.",
+        "Incorrect funding method.",
+        "Date discrepancies.",
+        "Signature date does not match the iStoreDocs delivery date."
+      ]
+    },
+    {
+      "id": "finance-agreement",
+      "name": "Finance Agreement",
+      "shortName": "FA",
+      "importance": "critical",
+      "category": "Finance",
+      "scope": [
+        "finance"
+      ],
+      "rules": [
+        "Customer details must match supporting documents.",
+        "Vehicle details must match supporting documents.",
+        "Balance to finance must match the invoice.",
+        "Agreement type must match Adequate Explanations.",
+        "Annual mileage must match Adequate Explanations."
+      ],
+      "checks": [
+        {
+          "id": "fa-customer",
+          "text": "Verify customer details.",
+          "required": true
+        },
+        {
+          "id": "fa-vehicle",
+          "text": "Verify vehicle details.",
+          "required": true
+        },
+        {
+          "id": "fa-price",
+          "text": "Verify vehicle price.",
+          "required": true
+        },
+        {
+          "id": "fa-balance",
+          "text": "Verify balance to finance.",
+          "required": true
+        },
+        {
+          "id": "fa-type",
+          "text": "Verify agreement type.",
+          "required": true
+        },
+        {
+          "id": "fa-term",
+          "text": "Verify agreement term.",
+          "required": true
+        },
+        {
+          "id": "fa-mileage",
+          "text": "Verify annual mileage.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "customer-declaration",
+          "what": "Funding method, agreement type, agreement term, agreement mileage",
+          "where": "Suitability and funding intentions"
+        },
+        {
+          "documentId": "sales-invoice",
+          "what": "Balance to finance, vehicle price",
+          "where": "Financial summary"
+        },
+        {
+          "documentId": "adequate-explanations",
+          "what": "Agreement type, agreement term, annual mileage",
+          "where": "Agreement details section"
+        },
+        {
+          "documentId": "commission-disclosure",
+          "what": "Finance provider and finance product",
+          "where": "Finance summary"
+        },
+        {
+          "documentId": "finance-provider-commission-disclosure",
+          "what": "Finance provider",
+          "where": "Finance summary"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "customer-declaration",
+          "type": "align",
+          "note": "Funding intentions should support the final agreement."
+        },
+        {
+          "targetId": "sales-invoice",
+          "type": "align",
+          "note": "Balance to finance must reconcile."
+        },
+        {
+          "targetId": "adequate-explanations",
+          "type": "align",
+          "note": "Agreement type, term and mileage must match."
+        },
+        {
+          "targetId": "commission-disclosure",
+          "type": "co-required",
+          "note": "Required on financed transactions."
+        },
+        {
+          "targetId": "finance-provider-commission-disclosure",
+          "type": "co-required",
+          "note": "Required where a lender-specific commission disclosure forms part of the finance journey."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Balance mismatch.",
+        "Agreement term mismatch.",
+        "Mileage mismatch.",
+        "Agreement type mismatch."
+      ]
+    },
+    {
+      "id": "commission-disclosure",
+      "name": "Commission Disclosure",
+      "shortName": "CDIS",
+      "importance": "critical",
+      "category": "Finance",
+      "scope": [
+        "finance"
+      ],
+      "rules": [
+        "Must be executed before finance submission.",
+        "Lender details must be accurate.",
+        "Finance product must be accurate.",
+        "Commission information must be accurate.",
+        "The document header must be completed correctly.",
+        "The correct commission must be disclosed.",
+        "The method of calculation must be correct.",
+        "Must be signed by all parties.",
+        "There must be the correct number of signed disclosures for the proposals submitted."
+      ],
+      "checks": [
+        {
+          "id": "com-date",
+          "text": "Verify commission disclosure timing.",
+          "required": true
+        },
+        {
+          "id": "com-lender",
+          "text": "Verify lender details.",
+          "required": true
+        },
+        {
+          "id": "com-product",
+          "text": "Verify the document header is completed correctly.",
+          "required": true
+        },
+        {
+          "id": "com-commission",
+          "text": "Verify the correct commission has been disclosed.",
+          "required": true
+        },
+        {
+          "id": "com-method",
+          "text": "Verify the method of calculation is correct.",
+          "required": true
+        },
+        {
+          "id": "com-count",
+          "text": "Verify there are the correct number of signed disclosures for the proposals submitted.",
+          "required": true
+        },
+        {
+          "id": "com-signed",
+          "text": "Verify the document is signed by all parties.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "finance-agreement",
+          "what": "Lender and finance product",
+          "where": "Finance summary"
+        },
+        {
+          "documentId": "proof-of-proposal",
+          "what": "Submission timing",
+          "where": "Execution timeline"
+        },
+        {
+          "documentId": "finance-provider-commission-disclosure",
+          "what": "Commission basis, commission amount and lender",
+          "where": "Commission disclosure section"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "finance-agreement",
+          "type": "co-required",
+          "note": "Required on financed transactions."
+        },
+        {
+          "targetId": "proof-of-proposal",
+          "type": "precedes",
+          "note": "Must be completed before proposal submission."
+        },
+        {
+          "targetId": "finance-provider-commission-disclosure",
+          "type": "align",
+          "note": "Commission disclosures should contain concurrent lender and commission information."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Signed after submission.",
+        "Incorrect lender.",
+        "Incorrect finance product."
+      ]
+    },
+    {
+      "id": "finance-provider-commission-disclosure",
+      "name": "Finance Provider Commission Disclosure",
+      "shortName": "FPCD",
+      "importance": "critical",
+      "category": "Finance",
+      "scope": [
+        "finance"
+      ],
+      "rules": [
+        "Must be completed where required by the lender.",
+        "Commission details must be accurate.",
+        "Finance provider details must be accurate.",
+        "Must reflect the finance agreement entered into.",
+        "The method of calculation must be correct."
+      ],
+      "checks": [
+        {
+          "id": "fpcd-lender",
+          "text": "Verify finance provider is correct.",
+          "required": true
+        },
+        {
+          "id": "fpcd-commission",
+          "text": "Verify commission values are accurate.",
+          "required": true
+        },
+        {
+          "id": "fpcd-method",
+          "text": "Verify the method of calculation is correct.",
+          "required": true
+        },
+        {
+          "id": "fpcd-signature",
+          "text": "Verify the document is signed by the customer where applicable.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "finance-agreement",
+          "what": "Finance provider",
+          "where": "Agreement summary"
+        },
+        {
+          "documentId": "commission-disclosure",
+          "what": "Commission methodology and commission values",
+          "where": "Commission section"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "finance-agreement",
+          "type": "align",
+          "note": "Finance provider should match the executed agreement."
+        },
+        {
+          "targetId": "commission-disclosure",
+          "type": "align",
+          "note": "Commission values and methodology should be concurrent."
+        },
+        {
+          "targetId": "adequate-explanations",
+          "type": "co-required",
+          "note": "Expected alongside regulated finance documentation."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Incorrect lender selected.",
+        "Commission values differ between lender and group disclosures.",
+        "Missing customer signature where applicable.",
+        "Outdated disclosure version used."
+      ]
+    },
+    {
+      "id": "proof-of-proposal",
+      "name": "Proof of Proposal",
+      "shortName": "POP",
+      "importance": "high",
+      "category": "Finance",
+      "scope": [
+        "finance"
+      ],
+      "rules": [
+        "Must evidence proposal submission occurred after commission disclosure.",
+        "Customer details must be accurate.",
+        "The proposal must have occurred after the EWMG CDD was signed."
+      ],
+      "checks": [
+        {
+          "id": "pop-customer",
+          "text": "Verify customer details.",
+          "required": true
+        },
+        {
+          "id": "pop-timestamp",
+          "text": "Verify submission timestamp.",
+          "required": true
+        },
+        {
+          "id": "pop-after-cdd",
+          "text": "Verify the proposal occurred after the EWMG CDD was signed.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "commission-disclosure",
+          "what": "Execution timing",
+          "where": "Proposal submission evidence"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "commission-disclosure",
+          "type": "co-required",
+          "note": "Proposal and disclosure timing must be verifiable."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Proposal submitted before disclosure."
+      ]
+    },
+    {
+      "id": "adequate-explanations",
+      "name": "Adequate Explanations",
+      "shortName": "AE",
+      "importance": "critical",
+      "category": "Suitability",
+      "scope": [
+        "finance"
+      ],
+      "rules": [
+        "Must reflect the final finance agreement.",
+        "Agreement type must match.",
+        "Mileage must match.",
+        "The signature date must match the handover date.",
+        "Customer details must be correct.",
+        "Must be signed by all parties."
+      ],
+      "checks": [
+        {
+          "id": "ae-customer",
+          "text": "Verify customer details.",
+          "required": true
+        },
+        {
+          "id": "ae-type",
+          "text": "Verify agreement type.",
+          "required": true
+        },
+        {
+          "id": "ae-mileage",
+          "text": "Verify annual mileage.",
+          "required": true
+        },
+        {
+          "id": "ae-date",
+          "text": "Verify the signature date matches the handover date.",
+          "required": true
+        },
+        {
+          "id": "ae-signed",
+          "text": "Verify the document is signed by all parties.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "finance-agreement",
+          "what": "Agreement type, agreement term, annual mileage",
+          "where": "Agreement details section"
+        },
+        {
+          "documentId": "demands-needs-2",
+          "what": "Signature date against the handover date",
+          "where": "Customer signature"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "finance-agreement",
+          "type": "align",
+          "note": "Must reflect the final agreement entered into."
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "align",
+          "note": "The signature date must match the handover date."
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Mileage mismatch.",
+        "Agreement type mismatch.",
+        "Signature date does not match the handover date."
+      ]
+    },
+    {
+      "id": "insurance-registration",
+      "name": "Insurance Registration",
+      "shortName": "IR",
+      "importance": "high",
+      "category": "Insurance",
+      "scope": [
+        "insurance"
+      ],
+      "rules": [
+        "Policy registration must be accurate.",
+        "Policy inception dates must match the handover date, except a policy agreed or sold after the car had left.",
+        "Customer details must be accurate.",
+        "Vehicle details must be accurate.",
+        "A policy agreed or sold after the car had left is not a handover-date mismatch, but it must have clear supervisor notes."
+      ],
+      "checks": [
+        {
+          "id": "ir-customer",
+          "text": "Verify customer details.",
+          "required": true
+        },
+        {
+          "id": "ir-vehicle",
+          "text": "Verify vehicle details.",
+          "required": true
+        },
+        {
+          "id": "ir-inception",
+          "text": "Verify the inception date matches the handover date, unless the policy was agreed or sold after the car had left.",
+          "required": true
+        },
+        {
+          "id": "ir-registration",
+          "text": "Verify policy registration completed.",
+          "required": true
+        },
+        {
+          "id": "ir-after-handover",
+          "text": "If a policy was agreed or sold after the car had left, verify clear supervisor notes are on the file. This is not a handover-date mismatch.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "demands-needs-2",
+          "what": "Products purchased, funding method, customer details, vehicle details",
+          "where": "Policy registration details"
+        },
+        {
+          "documentId": "demands-needs-2",
+          "what": "Inception date against the handover date, excluding a policy sold after the car had left",
+          "where": "Inception date"
+        },
+        {
+          "documentId": "supervisor-notes",
+          "what": "Clear explanation of a policy agreed or sold after the car had left",
+          "where": "Supervisor notes"
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "demands-needs-2",
+          "type": "align",
+          "note": "Registration must reflect the customer's final decision."
+        },
+        {
+          "targetId": "demands-needs-2",
+          "type": "align",
+          "note": "Inception dates must match the handover date, except a policy sold after the car had left."
+        },
+        {
+          "targetId": "supervisor-notes",
+          "type": "align",
+          "note": "A policy sold after handover needs clear supervisor notes."
+        }
+      ],
+      "bestPractice": "Where a policy was agreed or sold after the car had left, keep supporting evidence, such as an email from the customer.",
+      "commonErrors": [
+        "Incorrect inception date.",
+        "Policy not registered.",
+        "Incorrect customer details.",
+        "Incorrect vehicle details.",
+        "Inception date does not match the handover date, and the policy was not sold after the car had left.",
+        "Policy sold after the car had left with no clear supervisor notes."
+      ]
+    },
+    {
+      "id": "file-timeline",
+      "name": "File Timeline",
+      "shortName": "FT",
+      "importance": "high",
+      "category": "Audit",
+      "scope": [
+        "core"
+      ],
+      "rules": [
+        "The file on iStoreDocs must be created within 24 hours of the order being confirmed.",
+        "The file must be closed within 7 days of handover.",
+        "A file allowed to go overdue is a record-keeping error.",
+        "A file still open 21 days after handover is a TCF issue.",
+        {
+          "text": "A policy agreed or sold after the car had left is not a handover-date mismatch, but it must have clear supervisor notes.",
+          "when": {
+            "insurance": true
+          }
+        }
+      ],
+      "checks": [
+        {
+          "id": "ft-created",
+          "text": "Verify the iStoreDocs file was created within 24 hours of the order being confirmed.",
+          "required": true
+        },
+        {
+          "id": "ft-ir-notes",
+          "text": "If a policy was agreed or sold after the car had left, verify clear supervisor notes are on the file. Supporting evidence, such as an email from the customer, should be kept.",
+          "required": true,
+          "when": {
+            "insurance": true
+          }
+        },
+        {
+          "id": "ft-closed",
+          "text": "Verify the file was closed within 7 days of handover.",
+          "required": true
+        },
+        {
+          "id": "ft-overdue",
+          "text": "Verify the file was not allowed to go overdue. Overdue is a record-keeping error.",
+          "required": true
+        },
+        {
+          "id": "ft-open-21",
+          "text": "Verify the file was not still open 21 days after handover. Still open is a TCF issue.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "order-form",
+          "what": "File creation date against the order confirmed date",
+          "where": "Order confirmation"
+        },
+        {
+          "documentId": "supervisor-notes",
+          "what": "Clear explanation of a policy agreed or sold after the car had left",
+          "where": "Supervisor notes",
+          "when": {
+            "insurance": true
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "order-form",
+          "type": "align",
+          "note": "File creation must be within 24 hours of the order being confirmed."
+        },
+        {
+          "targetId": "supervisor-notes",
+          "type": "align",
+          "note": "A policy sold after handover needs clear supervisor notes.",
+          "when": {
+            "insurance": true
+          }
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "File created more than 24 hours after the order was confirmed.",
+        "File not closed within 7 days of handover.",
+        "File allowed to go overdue. Record-keeping error.",
+        "File still open 21 days after handover. TCF issue.",
+        {
+          "text": "Policy sold after the car had left with no clear supervisor notes.",
+          "when": {
+            "insurance": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "supervisor-notes",
+      "name": "Supervisor Notes",
+      "shortName": "SN",
+      "importance": "medium",
+      "category": "Audit",
+      "scope": [
+        "core",
+        "finance",
+        "insurance",
+        "supplementary-invoice"
+      ],
+      "rules": [
+        "Must explain material variances.",
+        "Must support the audit trail.",
+        "Cannot replace required documentation.",
+        {
+          "text": "A policy agreed or sold after the car had left must be explained clearly.",
+          "when": {
+            "insurance": true
+          }
+        },
+        "Ad-hoc or ancillary supporting evidence must be uploaded or recorded."
+      ],
+      "checks": [
+        {
+          "id": "sn-rationale",
+          "text": "Verify rationale is sufficient.",
+          "required": true
+        },
+        {
+          "id": "sn-impact",
+          "text": "Verify customer impact is addressed.",
+          "required": true
+        },
+        {
+          "id": "sn-after-handover",
+          "text": "Where a policy was agreed or sold after the car had left, verify the note clearly explains it.",
+          "required": true,
+          "when": {
+            "insurance": true
+          }
+        },
+        {
+          "id": "sn-evidence",
+          "text": "Verify all ad-hoc or ancillary supporting evidence has been uploaded or recorded.",
+          "required": true
+        }
+      ],
+      "crossReference": [
+        {
+          "documentId": "insurance-registration",
+          "what": "Policy agreed or sold after the car had left",
+          "where": "Inception date",
+          "when": {
+            "insurance": true
+          }
+        }
+      ],
+      "relationships": [
+        {
+          "targetId": "insurance-registration",
+          "type": "align",
+          "note": "A policy sold after handover must be explained in the notes.",
+          "when": {
+            "insurance": true
+          }
+        }
+      ],
+      "bestPractice": "",
+      "commonErrors": [
+        "Insufficient explanation.",
+        "No note for material discrepancy.",
+        "Attempting to use notes instead of corrected documents.",
+        {
+          "text": "No clear note for a policy sold after the car had left.",
+          "when": {
+            "insurance": true
+          }
+        }
+      ]
+    }
+  ],
+  "reconciliations": [
+    {
+      "from": "finance-agreement",
+      "to": "sales-invoice",
+      "check": "Balance to finance",
+      "severity": "critical"
+    },
+    {
+      "from": "finance-agreement",
+      "to": "adequate-explanations",
+      "check": "Agreement type",
+      "severity": "critical"
+    },
+    {
+      "from": "finance-agreement",
+      "to": "adequate-explanations",
+      "check": "Annual mileage",
+      "severity": "critical"
+    },
+    {
+      "from": "finance-agreement",
+      "to": "customer-declaration",
+      "check": "Agreement term",
+      "severity": "high"
+    },
+    {
+      "from": "finance-agreement",
+      "to": "customer-declaration",
+      "check": "Funding method",
+      "severity": "high"
+    },
+    {
+      "from": "finance-agreement",
+      "to": "finance-provider-commission-disclosure",
+      "check": "Finance provider",
+      "severity": "critical"
+    },
+    {
+      "from": "commission-disclosure",
+      "to": "finance-provider-commission-disclosure",
+      "check": "Commission values",
+      "severity": "critical"
+    },
+    {
+      "from": "commission-disclosure",
+      "to": "finance-provider-commission-disclosure",
+      "check": "Commission methodology",
+      "severity": "critical"
+    },
+    {
+      "from": "sales-invoice",
+      "to": "finance-agreement",
+      "check": "Invoice to is the finance company and Deliver to is the customer",
+      "severity": "critical",
+      "when": {
+        "finance": true
+      }
+    },
+    {
+      "from": "file-timeline",
+      "to": "order-form",
+      "check": "iStoreDocs file created within 24 hours of the order being confirmed",
+      "severity": "critical"
+    },
+    {
+      "from": "sales-invoice",
+      "to": "demands-needs-2",
+      "check": "Signature date matches the handover date",
+      "severity": "critical"
+    },
+    {
+      "from": "adequate-explanations",
+      "to": "demands-needs-2",
+      "check": "Signature date matches the handover date",
+      "severity": "critical",
+      "when": {
+        "finance": true
+      }
+    },
+    {
+      "from": "supplementary-invoice",
+      "to": "demands-needs-2",
+      "check": "Signature date matches the handover date",
+      "severity": "critical",
+      "when": {
+        "supplementaryInvoice": true
+      }
+    },
+    {
+      "from": "insurance-registration",
+      "to": "demands-needs-2",
+      "check": "Inception date matches the handover date, except a policy sold after the car had left",
+      "severity": "critical",
+      "when": {
+        "insurance": true
+      }
+    },
+    {
+      "from": "insurance-registration",
+      "to": "supervisor-notes",
+      "check": "A policy sold after the car had left has clear supervisor notes",
+      "severity": "high",
+      "when": {
+        "insurance": true
+      }
+    },
+    {
+      "from": "customer-declaration",
+      "to": "finance-agreement",
+      "check": "Agreement mileage",
+      "severity": "critical",
+      "when": {
+        "finance": true
+      }
+    },
+    {
+      "from": "demands-needs-2",
+      "to": "sales-invoice",
+      "check": "Final decision on method of funding",
+      "severity": "critical"
+    },
+    {
+      "from": "demands-needs-2",
+      "to": "customer-declaration",
+      "check": "Ineligible products are marked accordingly",
+      "severity": "high"
+    },
+    {
+      "from": "commission-disclosure",
+      "to": "proof-of-proposal",
+      "check": "Commission disclosure completed before the proposal",
+      "severity": "critical",
+      "when": {
+        "finance": true
+      }
+    }
+  ]
+}
